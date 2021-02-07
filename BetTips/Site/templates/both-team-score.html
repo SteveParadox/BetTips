@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+
+<div id="about" class="about">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12">
+                <div class="about-box">
+                    <h3> Both Teams To Score Suggestion This Week </h3>
+                    {% for picks in pick%}
+                    <p>
+                        {{ picks.content }}
+                    </p>
+
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+{%endblock content%}
