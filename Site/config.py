@@ -15,4 +15,5 @@ class Config:
     else:
         SECRET_KEY = "795849f0d2328258710ae9c71cb795849f0d2328258710ae9c71cb4b5ea4b5ea"
         SQLALCHEMY_TRACK_MODIFICATIONS = False
-        SQLALCHEMY_DATABASE_URI = ""
+        SQLALCHEMY_DATABASE_URI = "postgres://ubroabdhsiwxxn:1edd0690d626c9b0fa720fcce44e5a15afa5a11d12e69c1f586bc7bcd9f5d723@ec2-34-252-251-16.eu-west-1.compute.amazonaws.com:5432/df8bvf9f9npn3o
+"
