@@ -9,14 +9,27 @@
             <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12">
                 <div class="about-box">
                     <h3> Both Teams To Score Suggestion This Week </h3>
-                    {% for picks in bts%}
-                    <h6 style="color: white;
-                        padding: 16px 50px;
-                        font-size: 15px;">
-                        {{ picks.content }} &nbsp;&nbsp;&nbsp;&nbsp; {{ picks.country }} &nbsp;&nbsp;&nbsp;&nbsp;{{ picks.league }}
-                    </h6>
-
-                    {% endfor %}
+                    <table>
+                    
+                        <thead>
+                            <tr>
+                                <th scope="col">Team</th>
+                                <th scope="col">Country</th>
+                                <th scope="col">League</th>
+                            </tr>
+                        </thead>
+                        {% for picks in bts %}
+                        <tbody>
+                            <tr>
+                                <td data-label="Account">{{ picks.content }}</td>
+                                <td data-label="Due Date">{{ picks.country }}</td>
+                                <td data-label="Amount">{{ picks.league }}</td>
+                    
+                            </tr>
+                    
+                        </tbody>
+                        {% endfor %}
+                    </table>
                 </div>
             </div>
         </div>
