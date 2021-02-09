@@ -7,8 +7,9 @@ from Site import db
 
 class RandomPrediction(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    publicId = db.Column(db.String(), nullable=False)
     content = db.Column(db.String())
+    country = db.Column(db.String())
+    league = db.Column(db.String())
     dateUploaded = db.Column(db.DateTime, nullable=False, default=datetime.now)
 
     def __repr__(self):
@@ -18,8 +19,9 @@ class RandomPrediction(db.Model):
 
 class HighScoring(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    publicId = db.Column(db.String(), nullable=False)
     content = db.Column(db.String())
+    country = db.Column(db.String())
+    league = db.Column(db.String())
     dateUploaded = db.Column(db.DateTime, nullable=False, default=datetime.now)
 
     def __repr__(self):
@@ -28,8 +30,9 @@ class HighScoring(db.Model):
 
 class BettingTips(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    publicId = db.Column(db.String(), nullable=False)
     content = db.Column(db.String())
+    country = db.Column(db.String())
+    league = db.Column(db.String())
     dateUploaded = db.Column(db.DateTime, nullable=False, default=datetime.now)
 
     def __repr__(self):
@@ -38,8 +41,9 @@ class BettingTips(db.Model):
 
 class InForm(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    publicId = db.Column(db.String(), nullable=False)
     content = db.Column(db.String())
+    country = db.Column(db.String())
+    league = db.Column(db.String())
     dateUploaded = db.Column(db.DateTime, nullable=False, default=datetime.now)
 
     def __repr__(self):
@@ -49,8 +53,9 @@ class InForm(db.Model):
 
 class Bts(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    publicId = db.Column(db.String(), nullable=False)
     content = db.Column(db.String())
+    country = db.Column(db.String())
+    league = db.Column(db.String())
     dateUploaded = db.Column(db.DateTime, nullable=False, default=datetime.now)
 
     def __repr__(self):
@@ -59,8 +64,9 @@ class Bts(db.Model):
 
 class Championship(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    publicId = db.Column(db.String(), nullable=False)
     content = db.Column(db.String())
+    country = db.Column(db.String())
+    league = db.Column(db.String())
     dateUploaded = db.Column(db.DateTime, nullable=False, default=datetime.now)
 
     def __repr__(self):
@@ -71,8 +77,9 @@ class Championship(db.Model):
 
 class HighConceding(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    publicId = db.Column(db.String(), nullable=False)
     content = db.Column(db.String())
+    country = db.Column(db.String())
+    league = db.Column(db.String())
     dateUploaded = db.Column(db.DateTime, nullable=False, default=datetime.now)
 
     def __repr__(self):
@@ -82,8 +89,9 @@ class HighConceding(db.Model):
 
 class SureOdds(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    publicId = db.Column(db.String(), nullable=False)
     content = db.Column(db.String())
+    country = db.Column(db.String())
+    league = db.Column(db.String())
     dateUploaded = db.Column(db.DateTime, nullable=False, default=datetime.now)
 
     def __repr__(self):
@@ -94,8 +102,9 @@ class SureOdds(db.Model):
   
 class BetAgainst(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    publicId = db.Column(db.String(), nullable=False)
     content = db.Column(db.String())
+    country = db.Column(db.String())
+    league = db.Column(db.String())
     dateUploaded = db.Column(db.DateTime, nullable=False, default=datetime.now)
 
     def __repr__(self):

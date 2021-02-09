@@ -7,10 +7,12 @@
             <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12">
                 <div class="about-box">
                     <h3>95%+ Sure Free Odds</h3>
-                    {% for picks in pick%}
-                    <p>
-                        {{ picks.content }}
-                    </p>
+                    {% for picks in sureodds %}
+                    <h6 style="color: white;
+                        padding: 16px 50px;
+                        font-size: 15px;">
+                        {{ picks.content }} &nbsp;&nbsp;&nbsp;&nbsp; {{ picks.country }} &nbsp;&nbsp;&nbsp;&nbsp;{{ picks.league }}
+                    </h6>
 
                     {% endfor %}
                 </div>

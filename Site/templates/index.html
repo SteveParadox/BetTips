@@ -10,9 +10,11 @@
                     <div class="about-box">
                         <h3> Betting Picks For Today</h3>
                      {% for picks in pick%}
-                       <p>
-                           {{ picks.content }}
-                       </p>
+                    <h6 style="color: white;
+                        padding: 16px 50px;
+                        font-size: 15px;">
+                        {{ picks.content }} &nbsp;&nbsp;&nbsp;&nbsp; {{ picks.country }} &nbsp;&nbsp;&nbsp;&nbsp;{{ picks.league }}
+                    </h6>
 
                        {% endfor %}
                     </div>
