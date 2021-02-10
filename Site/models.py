@@ -13,7 +13,7 @@ class RandomPrediction(db.Model):
     dateUploaded = db.Column(db.DateTime, nullable=False, default=datetime.now)
 
     def __repr__(self):
-        return f"RandomPrediction('{self.content}', '{self.publicId}')"
+        return f"RandomPrediction('{self.content}', '{self.league}')"
   
 
 
@@ -25,7 +25,7 @@ class HighScoring(db.Model):
     dateUploaded = db.Column(db.DateTime, nullable=False, default=datetime.now)
 
     def __repr__(self):
-        return f"HighScoring('{self.content}', '{self.publicId}')"
+        return f"HighScoring('{self.content}', '{self.league}')"
   
 
 class BettingTips(db.Model):
@@ -36,7 +36,7 @@ class BettingTips(db.Model):
     dateUploaded = db.Column(db.DateTime, nullable=False, default=datetime.now)
 
     def __repr__(self):
-        return f"BettingTips('{self.content}', '{self.publicId}')"
+        return f"BettingTips('{self.content}', '{self.league}')"
 
 
 class InForm(db.Model):
@@ -47,7 +47,7 @@ class InForm(db.Model):
     dateUploaded = db.Column(db.DateTime, nullable=False, default=datetime.now)
 
     def __repr__(self):
-        return f"InForm('{self.content}', '{self.publicId}')"
+        return f"InForm('{self.content}', '{self.league}')"
 
 
 
@@ -59,7 +59,7 @@ class Bts(db.Model):
     dateUploaded = db.Column(db.DateTime, nullable=False, default=datetime.now)
 
     def __repr__(self):
-        return f"Bts('{self.content}', '{self.publicId}')"
+        return f"Bts('{self.content}', '{self.league}')"
 
 
 class Championship(db.Model):
@@ -70,7 +70,7 @@ class Championship(db.Model):
     dateUploaded = db.Column(db.DateTime, nullable=False, default=datetime.now)
 
     def __repr__(self):
-        return f"Championship('{self.content}', '{self.publicId}')"
+        return f"Championship('{self.content}', '{self.league}')"
 
 
 
@@ -83,7 +83,7 @@ class HighConceding(db.Model):
     dateUploaded = db.Column(db.DateTime, nullable=False, default=datetime.now)
 
     def __repr__(self):
-        return f"HighConceding('{self.content}', '{self.publicId}')"
+        return f"HighConceding('{self.content}', '{self.league}')"
 
 
 
@@ -95,7 +95,7 @@ class SureOdds(db.Model):
     dateUploaded = db.Column(db.DateTime, nullable=False, default=datetime.now)
 
     def __repr__(self):
-        return f"SureOdds('{self.content}', '{self.publicId}')"
+        return f"SureOdds('{self.content}', '{self.league}')"
   
 
 
@@ -108,5 +108,14 @@ class BetAgainst(db.Model):
     dateUploaded = db.Column(db.DateTime, nullable=False, default=datetime.now)
 
     def __repr__(self):
-        return f"BetAgainst('{self.content}', '{self.publicId}')"
+        return f"BetAgainst('{self.content}', '{self.league}')"
+  
+
+    
+class Notification(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String())
+    email = db.Column(db.String())
+    def __repr__(self):
+        return f"BetAgainst('{self.name}', '{self.email}')"
   
