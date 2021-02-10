@@ -1,38 +1,32 @@
+# importing libraries
 import os
-#import json
 
 
-basedir = os.path.abspath(os.path.dirname(__file__))
-TOP_LEVEL_DIR = os.path.abspath(os.curdir)
-WHOOSH_BASE = os.path.join(basedir, 'search.db')
-MAX_SEARCH_RESULTS = 50
-
-'''with open('/etc/config.json') as config_file:
-    config = json.load(config_file)
-'''
+# app configuration
 class Config:
-    SECRET_KEY = '795849f0d2328258710ae9c71cb4b5ea'
+
     ENV = 'dev'
 
     if ENV == 'dev':
-        SQLALCHEMY_DATABASE_URI = 'sqlite:///site.db'
+        SECRET_KEY = "43rtgtrf04o0gkomrg0gmr0gtgmg0trgo"
+        SQLALCHEMY_DATABASE_URI = 'sqlite:///store.db'
         SQLALCHEMY_TRACK_MODIFICATIONS = False
+        MAIL_SERVER = 'smtp.googlemail.com'
+        MAIL_PORT = 465
+        MAIL_USE_TLS = False
+        MAIL_USE_SSL = True
+        MAIL_USERNAME = 'vond499y@gmail.com'
+        MAIL_PASSWORD = 'saintvirus11'
+        MAIL_DEFAULT_SENDER = 'from@example.com'
+
     else:
-
-        SQLALCHEMY_DATABASE_URI = 'postgres://xtxivwdedrdqiq:dca0e349351bad9191732318455e178bd99eec6326c351c09a4d70b475833b32@ec2-174-129-32-240.compute-1.amazonaws.com:5432/dagkfphn1hgj9d'
-
-    SECURITY_PASSWORD_SALT = 'my_precious_two'
-    MAIL_SERVER = 'smtp.googlemail.com'
-    MAIL_PORT = 465
-    MAIL_USE_TLS = False
-    MAIL_USE_SSL = True
-    MAIL_USERNAME = 'crazythoughtverify@gmail.com'
-    MAIL_PASSWORD = 'saintvirus11'
-    MAIL_DEFAULT_SENDER = 'from@example.com'
-    BABEL_DEFAULT_LOCALE = 'en'
-    WHOOSH_BASE = 'whoosh'
-
-
-
-
-
+        SECRET_KEY = "795849f0d2328258710ae9c71cb795849f0d2328258710ae9c71cb4b5ea4b5ea"
+        SQLALCHEMY_TRACK_MODIFICATIONS = False
+        SQLALCHEMY_DATABASE_URI = "postgres://ubroabdhsiwxxn:1edd0690d626c9b0fa720fcce44e5a15afa5a11d12e69c1f586bc7bcd9f5d723@ec2-34-252-251-16.eu-west-1.compute.amazonaws.com:5432/df8bvf9f9npn3o"
+        MAIL_SERVER = 'smtp.googlemail.com'
+        MAIL_PORT = 465
+        MAIL_USE_TLS = False
+        MAIL_USE_SSL = True
+        MAIL_USERNAME = 'vond499y@gmail.com'
+        MAIL_PASSWORD = 'saintvirus11'
+        MAIL_DEFAULT_SENDER = 'from@example.com'
