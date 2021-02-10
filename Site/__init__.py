@@ -1,33 +1,71 @@
-# importing libraries
 import datetime
-from flask import Flask
+from flask import *
 from flask_bcrypt import Bcrypt
+from flask_jwt_extended import JWTManager
+from flask_login import LoginManager
+from flask_mail import Mail
 from flask_marshmallow import Marshmallow
+from flask_socketio import SocketIO
 from flask_sqlalchemy import SQLAlchemy
+from flaskblog.config import Config
 
-from .config import Config
 
-
-# framework initialization
 app = Flask(__name__)
-
 app.config.from_object(Config)
-
-# database Iniitialization
 db = SQLAlchemy()
+ma = Marshmallow()
+bcrypt = Bcrypt()
+login_manager = LoginManager()
+login_manager.login_view = 'users.login'
+login_manager.login_message = None
+login_manager.session_protection = "strong"
+REMEMBER_COOKIE_NAME= 'remember_token'
+REMEMBER_COOKIE_DURATION=datetime.timedelta(days=64, seconds=29156, microseconds=10)
+REMEMBER_COOKIE_REFRESH_EACH_REQUEST=False
+io = SocketIO()
+mail = Mail()
+jwt = JWTManager()
+
 
 def create_app(config_class=Config):
-
-# initializing required modules to app
     db.init_app(app)
+    bcrypt.init_app(app)
+    ma.init_app(app)
+    login_manager.init_app(app)
+    mail.init_app(app)
+    io.init_app(app)
+    jwt.init_app(app)
+
+    from flaskblog.users.routes import users
+    from flaskblog.groups.routes import groups
+    from flaskblog.posts.routes import posts
+    from flaskblog.main.routes import main
+    from flaskblog.rooms.socket_routes import sock
+    from flaskblog.business.routes import business
+    from flaskblog.errors.handlers import errors
 
 
-# Creating blueprint configuration for app
-    from .editor.routes import edit
+    from flaskblog.api.users.routes import apiUsers
+    from flaskblog.api.group.routes import apiGroups
+    from flaskblog.api.posts.routes import apiPosts
+    from flaskblog.api.main.routes import apiMain
+    from flaskblog.api.rooms.routes import apiSock
+    from flaskblog.api.errors.handlers import apiErrors
+
+    app.register_blueprint(apiUsers)
+    app.register_blueprint(apiGroups)
+    app.register_blueprint(apiPosts)
+    app.register_blueprint(apiSock)
+    app.register_blueprint(apiMain)
+    app.register_blueprint(apiErrors)
 
 
-# registering packages to blueprint
-    app.register_blueprint(edit)
-
+    app.register_blueprint(users)
+    app.register_blueprint(groups)
+    app.register_blueprint(posts)
+    app.register_blueprint(sock)
+    app.register_blueprint(main)
+    app.register_blueprint(business)
+    app.register_blueprint(errors)
 
     return app
