@@ -5,7 +5,7 @@ import os
 # app configuration
 class Config:
 
-    ENV = 'dev'
+    ENV = 'prod'
 
     if ENV == 'dev':
         SECRET_KEY = "43rtgtrf04o0gkomrg0gmr0gtgmg0trgo"
