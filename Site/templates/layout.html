@@ -181,9 +181,14 @@
                     <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12">
                         <div class="address">
                             <h3>Subscribe to get our free betting tips </h3>
-                              <input class="form-control" placeholder="Enter your email" type="type"
-                                name="Enter your email">
-                            <button class="submit-btn">Subscribe</button>
+                             
+                            <form method="POST" action="" enctype="multipart/form-data">
+                                {{ form.hidden_tag() }}
+                                {{ form.email(class="form-control", placeholder="Enter your email") }}
+                                
+                                {{ form.submit(class="submit-btn") }}
+                            </form>
+
                         </div>
                     </div>
                 </div>
