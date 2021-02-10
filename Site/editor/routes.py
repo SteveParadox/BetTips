@@ -90,13 +90,26 @@ class RandomPickForm(FlaskForm):
     submit = SubmitField('Post')
 
 
-@edit.route('/')
+class NotificationForm(FlaskForm):
+    name = StringField(validators=[DataRequired()])
+    email = StringField(validators=[DataRequired()])
+    submit = SubmitField('Subscribe')
+
+@edit.route('/', methods=['GET','POST'])
 def home():
 
     pick = RandomPrediction.query.all()
     prediction = RandomPrediction.query.filter(RandomPrediction.dateUploaded >= (datetime.datetime.now() - datetime.timedelta(days=7))).all()
+    form = NotificationForm()
+    if form.validate_on_submit():
+        notify = Notification()
+        notify.name = form.name.data
+        notify.email = form.email.data
+        db.session.add(notify)
+        db.session.commit()
 
-    return render_template('index.html', pick=pick)
+        return redirect(url_for('edit.home'))
+    return render_template('index.html', pick=pick, form=form)
 
 
 @edit.route('/1', methods=['GET','POST'])
@@ -208,7 +221,12 @@ def g():
 def h():
     form= championshipDrawForm()
     if form.validate_on_submit():
-        
+        champ = Championship()
+        champ.content= form.content.data
+        champ.country = form.country.data
+        champ.league = form.league.data
+        db.session.add(champ)
+        db.session.commit()
         return redirect(url_for("edit.h"))
 
     return render_template('post.html', form=form, legend='Championship draws')
@@ -236,46 +254,120 @@ def contact():
 @edit.route('/in-form-teams', methods=['GET','POST'])
 def mostInFormTeams():
     inform = InForm.query.all()
-    return render_template('informteam.html', inform=inform)
+    form = NotificationForm()
+    if form.validate_on_submit():
+        notify = Notification()
+        notify.name = form.name.data
+        notify.email = form.email.data
+        db.session.add(notify)
+        db.session.commit()
+        
+        return redirect(url_for('edit.home'))
+    return render_template('informteam.html', inform=inform, form = form)
 
 
 
 @edit.route('/betting-tips', methods=['GET','POST'])
 def bettingTips():
     bet=BettingTips.query.all()
-    return render_template('betting-tips.html',  bet=bet)
+    form = NotificationForm()
+    if form.validate_on_submit():
+        notify = Notification()
+        notify.name = form.name.data
+        notify.email = form.email.data
+        db.session.add(notify)
+        db.session.commit()
+        
+        return redirect(url_for('edit.home'))
+    return render_template('betting-tips.html',  bet=bet, form= form)
 
 @edit.route('/teams-with-high-scoring-stats', methods=['GET','POST'])
 def teamsWithHighGoalStats():
     highscore= HighScoring.query.all()
-    return render_template('high-scoring-stats.html',  highscore=highscore)
+    form = NotificationForm()
+    if form.validate_on_submit():
+        notify = Notification()
+        notify.name = form.name.data
+        notify.email = form.email.data
+        db.session.add(notify)
+        db.session.commit()
+        
+        return redirect(url_for('edit.home'))
+    return render_template('high-scoring-stats.html',  highscore=highscore,form = form)
 
 @edit.route('/both-team-score-tips', methods=['GET','POST'])
 def bothTeamScoreTips():
     bts = Bts.query.all()
-
-    return render_template('both-team-score.html',  bts=bts)
+    form = NotificationForm()
+    if form.validate_on_submit():
+        notify = Notification()
+        notify.name = form.name.data
+        notify.email = form.email.data
+        db.session.add(notify)
+        db.session.commit()
+        
+        return redirect(url_for('edit.home'))
+    return render_template('both-team-score.html',  bts=bts, form=form)
 
 
 
 @edit.route('/teams-with-high-conceding-rate', methods=['GET','POST'])
 def teamsWithHighConcedingRate():
     highconcede =HighConceding.query.all()
-    return render_template('high-conceding.html', highconcede=highconcede)
+    form = NotificationForm()
+    if form.validate_on_submit():
+        notify = Notification()
+        notify.name = form.name.data
+        notify.email = form.email.data
+        db.session.add(notify)
+        db.session.commit()
+        
+        return redirect(url_for('edit.home'))
+    return render_template('high-conceding.html', highconcede=highconcede, form=form)
 
 
 @edit.route('/teams-to-bet-against', methods=['GET','POST'])
 def teamsToBetAgainst():
     betagainst = BetAgainst.query.all()
-    return render_template('bet-against.html', betagainst=betagainst)
+    form = NotificationForm()
+    if form.validate_on_submit():
+        notify = Notification()
+        notify.name = form.name.data
+        notify.email = form.email.data
+        db.session.add(notify)
+        db.session.commit()
+        
+        return redirect(url_for('edit.home'))
+    return render_template('bet-against.html', betagainst=betagainst, form=form)
 
 @edit.route('/sure-odds', methods=['GET','POST'])
 def sureOdds():
     sureodds= SureOdds.query.all()
-    return render_template('sure-odds.html', sureodds=sureodds)
+    form = NotificationForm()
+    if form.validate_on_submit():
+        notify = Notification()
+        notify.name = form.name.data
+        notify.email = form.email.data
+        db.session.add(notify)
+        db.session.commit()
+        
+        return redirect(url_for('edit.home'))
+    return render_template('sure-odds.html', sureodds=sureodds, form=form)
 
 
 @edit.route('/championship-draws', methods=['GET','POST'])
 def championshipDraw():
     championship= Championship.query.all()
-    return render_template('championship-draws.html', championship=championship)
+    form = NotificationForm()
+    if form.validate_on_submit():
+        notify = Notification()
+        notify.name = form.name.data
+        notify.email = form.email.data
+        db.session.add(notify)
+        db.session.commit()
+        
+        return redirect(url_for('edit.home'))
+    return render_template('championship-draws.html', championship=championship, form=form)
+
+
+
