@@ -8,9 +8,9 @@
 <form method=POST enctype=multipart/form-data action="" >
         {{ form.hidden_tag() }}
     <div class="left section">
-      {{ form.content(type="text", name="Prediction", placeholder="Prediction") }}
-    {{ form.country(type="text", name="Country", placeholder="Country") }}
-     {{ form.league(type="text", name="League", placeholder="League") }}
+      {{ form.content(type="text",  placeholder="Prediction") }}
+    {{ form.country(type="text",  placeholder="Country") }}
+     {{ form.league(type="text", placeholder="League") }}
     </div>
    {{ form.submit(class="sendForm left", onclick="submit") }}
     <label for="showForm" class="closeFormLabel left">Cancel</label>
