@@ -1,6 +1,25 @@
 {% extends 'layout.html' %}
 {% block content %}
 
+<input type="checkbox" name="showForm" id="showForm" class="showForm">
+
+<div class="form">
+  <h2>Contact Us</h2>
+  <form>
+    <div class="left section">
+      <input type="text" name="name" placeholder="Your name" required>
+      <input type="email" name="email" placeholder="Your email" required>
+      <input type="tel" name="tel" placeholder="Your telephone number" required>
+    </div>
+    <div class="right section">
+      <textarea name="comment" placeholder="Your comment" required></textarea>
+    </div>
+    <button type="submit" class="sendForm left">Send</button>
+    <label for="showForm" class="closeFormLabel left">Cancel</label>
+  </form>
+</div>
+
+<label for="showForm" class="showFormLabel">Contact</label>
     <!-- about  -->
     <div id="about" class="about">
         <div class="container">
