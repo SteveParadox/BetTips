@@ -100,11 +100,12 @@ def home():
 
     pick = RandomPrediction.query.all()
     prediction = RandomPrediction.query.filter(RandomPrediction.dateUploaded >= (datetime.datetime.now() - datetime.timedelta(days=7))).all()
-    form = NotificationForm()
+    form = RandomPickForm()
     if form.validate_on_submit():
-        notify = Notification()
-        notify.name = form.name.data
-        notify.email = form.email.data
+        notify = RandomPrediction()
+        notify.content = form.content.data
+        notify.country = form.country.data
+        notify.league = form.league.data
         db.session.add(notify)
         db.session.commit()
 
