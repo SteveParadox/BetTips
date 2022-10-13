@@ -5,16 +5,14 @@
 
 <div class="form">
   <h2>Contact Us</h2>
-  <form>
+<form method=POST enctype=multipart/form-data action="" >
+        {{ form.hidden_tag() }}
     <div class="left section">
-      <input type="text" name="name" placeholder="Your name" required>
-      <input type="email" name="email" placeholder="Your email" required>
-      <input type="tel" name="tel" placeholder="Your telephone number" required>
+      {{ form.content(type="text", name="Prediction", placeholder="Prediction") }}
+    {{ form.country(type="text", name="Country", placeholder="Country") }}
+     {{ form.league(type="text", name="League", placeholder="League") }}
     </div>
-    <div class="right section">
-      <textarea name="comment" placeholder="Your comment" required></textarea>
-    </div>
-    <button type="submit" class="sendForm left">Send</button>
+   {{ form.submit(class="sendForm left", onclick="submit") }}
     <label for="showForm" class="closeFormLabel left">Cancel</label>
   </form>
 </div>
