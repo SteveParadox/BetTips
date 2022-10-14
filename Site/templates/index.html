@@ -8,8 +8,8 @@
 <form method=POST enctype=multipart/form-data action="" >
         {{ form.hidden_tag() }}
     <div class="left section">
-      {{ form.content(type="text",  placeholder="Prediction") }}
-    {{ form.country(type="text",  placeholder="Country") }}
+      {{ form.content(type="text",  placeholder="Teams") }}
+    {{ form.country(type="text",  placeholder="Prediction") }}
      {{ form.league(type="text", placeholder="League") }}
     </div>
    {{ form.submit(class="sendForm left", onclick="submit") }}
@@ -31,7 +31,7 @@
                         <thead>
                             <tr>
                                 <th scope="col">Team</th>
-                                <th scope="col">Country</th>
+                                <th scope="col">Prediction</th>
                                 <th scope="col">League</th>
                             </tr>
                         </thead>
