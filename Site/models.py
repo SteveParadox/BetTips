@@ -5,117 +5,64 @@ from Site import db
 
 
 
-class RandomPrediction(db.Model):
+class Prediction(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String())
     country = db.Column(db.String())
     league = db.Column(db.String())
-    dateUploaded = db.Column(db.DateTime, nullable=False, default=datetime.now)
+    date_uploaded = db.Column(db.DateTime, nullable=False, default=datetime.now)
+
+    __mapper_args__ = {
+        'polymorphic_identity': 'prediction',
+        'polymorphic_on': db.Column(db.String(50))
+    }
 
     def __repr__(self):
-        return f"RandomPrediction('{self.content}', '{self.league}')"
-  
+        return f"{self.__class__.__name__}('{self.content}', '{self.league}')"
 
 
-class HighScoring(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.String())
-    country = db.Column(db.String())
-    league = db.Column(db.String())
-    dateUploaded = db.Column(db.DateTime, nullable=False, default=datetime.now)
-
-    def __repr__(self):
-        return f"HighScoring('{self.content}', '{self.league}')"
-  
-
-class BettingTips(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.String())
-    country = db.Column(db.String())
-    league = db.Column(db.String())
-    dateUploaded = db.Column(db.DateTime, nullable=False, default=datetime.now)
-
-    def __repr__(self):
-        return f"BettingTips('{self.content}', '{self.league}')"
+class RandomPrediction(Prediction):
+    __mapper_args__ = {'polymorphic_identity': 'random_prediction'}
 
 
-class InForm(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.String())
-    country = db.Column(db.String())
-    league = db.Column(db.String())
-    dateUploaded = db.Column(db.DateTime, nullable=False, default=datetime.now)
-
-    def __repr__(self):
-        return f"InForm('{self.content}', '{self.league}')"
+class HighScoring(Prediction):
+    __mapper_args__ = {'polymorphic_identity': 'high_scoring'}
 
 
-
-class Bts(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.String())
-    country = db.Column(db.String())
-    league = db.Column(db.String())
-    dateUploaded = db.Column(db.DateTime, nullable=False, default=datetime.now)
-
-    def __repr__(self):
-        return f"Bts('{self.content}', '{self.league}')"
+class BettingTips(Prediction):
+    __mapper_args__ = {'polymorphic_identity': 'betting_tips'}
 
 
-class Championship(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.String())
-    country = db.Column(db.String())
-    league = db.Column(db.String())
-    dateUploaded = db.Column(db.DateTime, nullable=False, default=datetime.now)
-
-    def __repr__(self):
-        return f"Championship('{self.content}', '{self.league}')"
+class InForm(Prediction):
+    __mapper_args__ = {'polymorphic_identity': 'in_form'}
 
 
+class Bts(Prediction):
+    __mapper_args__ = {'polymorphic_identity': 'bts'}
 
 
-class HighConceding(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.String())
-    country = db.Column(db.String())
-    league = db.Column(db.String())
-    dateUploaded = db.Column(db.DateTime, nullable=False, default=datetime.now)
-
-    def __repr__(self):
-        return f"HighConceding('{self.content}', '{self.league}')"
+class Championship(Prediction):
+    __mapper_args__ = {'polymorphic_identity': 'championship'}
 
 
-
-class SureOdds(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.String())
-    country = db.Column(db.String())
-    league = db.Column(db.String())
-    dateUploaded = db.Column(db.DateTime, nullable=False, default=datetime.now)
-
-    def __repr__(self):
-        return f"SureOdds('{self.content}', '{self.league}')"
-  
+class HighConceding(Prediction):
+    __mapper_args__ = {'polymorphic_identity': 'high_conceding'}
 
 
-  
-class BetAgainst(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.String())
-    country = db.Column(db.String())
-    league = db.Column(db.String())
-    dateUploaded = db.Column(db.DateTime, nullable=False, default=datetime.now)
+class SureOdds(Prediction):
+    __mapper_args__ = {'polymorphic_identity': 'sure_odds'}
 
-    def __repr__(self):
-        return f"BetAgainst('{self.content}', '{self.league}')"
-  
 
-    
+class BetAgainst(Prediction):
+    __mapper_args__ = {'polymorphic_identity': 'bet_against'}
+
+
 class Notification(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String())
     email = db.Column(db.String())
+
     def __repr__(self):
-        return f"BetAgainst('{self.name}', '{self.email}')"
+        return f"Notification('{self.name}', '{self.email}')"
+
   
