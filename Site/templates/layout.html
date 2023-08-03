@@ -37,6 +37,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="static/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="static/favicon/favicon-16x16.png">
     <link rel="manifest" href="static/favicon/site.webmanifest">
+    
 </head>
 <!-- body -->
 
@@ -147,7 +148,7 @@
                         <div class="row">
                             <div class="col-lg-4 col-md-4 col-sm-6">
                                 <div class="address">
-                                    <h3>Menu</h3>
+                                    <h3 style="font-size: 15px;">Menu</h3>
                                     <ul class="Menu_footer">
                                         <li><a href="{{ url_for('analysis.mostInFormTeams') }}">In Form Teams</a></li>
                                         <li><a href="{{ url_for('analysis.bettingTips') }}">Betting Tips</a></li>
@@ -169,29 +170,25 @@
                     </div>
                     <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12">
                         <div class="address">
-                            <h3>Subscribe to get our free betting tips </h3>
-                             
-    
-                              <form>
-                            
-                                  
-                                        <input class="contactus" placeholder="Name" type="text" name="Name">
-                                
-                                
-                                        <input class="contactus" placeholder="Email" type="text" name="Email">
-                                  
-                                
-                                        <button class="submit-btn">Send</button>
-                             
+                            <h3 style="font-size: 15px;">Subscribe to get our free betting tips</h3>
+                            <form class="form-inline">
+                                <div class="form-group mb-2">
+                                    <input class="form-control mr-2" placeholder="Name" type="text" name="Name">
+                                </div>
+                                <div class="form-group mb-2">
+                                    <input class="form-control mr-2" placeholder="Email" type="text" name="Email">
+                                </div>
+                                <button class="btn btn-primary mb-2 ">Send</button>
                             </form>
                         </div>
                     </div>
+                    
                 </div>
 
             </div>
             <div class="copyright">
                 <div class="container">
-                    <p>© 2021 All Rights Reserved.</p>
+                    <p>© 2023 All Rights Reserved.</p>
                 </div>
             </div>
         </div>
