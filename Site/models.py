@@ -1,9 +1,6 @@
-# importing libraries
 from datetime import datetime
-from marshmallow_sqlalchemy import ModelSchema
+from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from Site import db
-
-
 
 class Prediction(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -12,22 +9,21 @@ class Prediction(db.Model):
     league = db.Column(db.String())
     date_uploaded = db.Column(db.DateTime, nullable=False, default=datetime.now)
 
+    prediction_type = db.Column(db.String(50))  # Add a column for the polymorphic identity
+
     __mapper_args__ = {
-        'polymorphic_identity': 'prediction',
-        'polymorphic_on': db.Column(db.String(50))
+        'polymorphic_on': prediction_type,
+        'polymorphic_identity': 'prediction'
     }
 
     def __repr__(self):
         return f"{self.__class__.__name__}('{self.content}', '{self.league}')"
 
-
 class RandomPrediction(Prediction):
     __mapper_args__ = {'polymorphic_identity': 'random_prediction'}
 
-
 class HighScoring(Prediction):
     __mapper_args__ = {'polymorphic_identity': 'high_scoring'}
-
 
 class BettingTips(Prediction):
     __mapper_args__ = {'polymorphic_identity': 'betting_tips'}

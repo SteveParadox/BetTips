@@ -1,11 +1,17 @@
 # importing libraries
 import os
 
+CACHE_CONFIG = {
+    'CACHE_TYPE': 'redis',
+    'CACHE_REDIS_URL': 'redis://default:RIb4Sy6hNvnuRxSR8us3S99paPOCAU21@redis-12331.c309.us-east-2-1.ec2.cloud.redislabs.com:12331',
+    'CACHE_DEFAULT_TIMEOUT': 3000,  
+    'CACHE_REDIS_SOCKET_TIMEOUT': 30,
+}
 
 # app configuration
 class Config:
 
-    ENV = 'prod'
+    ENV = 'dev'
 
     if ENV == 'dev':
         SECRET_KEY = "43rtgtrf04o0gkomrg0gmr0gtgmg0trgo"
