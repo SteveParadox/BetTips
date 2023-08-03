@@ -1,24 +1,9 @@
 {% extends 'layout.html' %}
 {% block content %}
 
-<input type="checkbox" name="showForm" id="showForm" class="showForm">
-
-<div class="form">
-  <h2>Contact Us</h2>
-<form method=POST enctype=multipart/form-data action="" >
-        {{ form.hidden_tag() }}
-    <div class="left section">
-      {{ form.content(type="text",  placeholder="Teams") }}
-    {{ form.country(type="text",  placeholder="Prediction") }}
-     {{ form.league(type="text", placeholder="League") }}
-    </div>
-   {{ form.submit(class="sendForm left", onclick="submit") }}
-    <label for="showForm" class="closeFormLabel left">Cancel</label>
-  </form>
-</div>
-
-<label for="showForm" class="showFormLabel">Contact</label>
     <!-- about  -->
+    <br>
+    <br>
     <div id="about" class="about">
         <div class="container">
             <div class="row">
@@ -153,12 +138,12 @@
     </div>
     <!-- end We are -->
     <!-- contact -->
-    <div  class="contact">
+    <div  class="contact" >
         <div class="container">
             <div class="row">
-                <div class="col-md-12">
-                    <div class="titlepage">
-                        <h3>Get Sure Games For Booking</h3>
+                <div class="col-md-12" >
+                    <div class="titlepage"  >
+                        <h3 style="color: #837e7e;">Get Sure Games For Booking</h3>
                     </div>
                 </div>
             </div>
@@ -201,3 +186,25 @@
     <!-- end clients -->
 
     {% endblock content%}
+
+    <!-- 
+
+        
+<input type="checkbox" name="showForm" id="showForm" class="showForm">
+
+<div class="form">
+  <h2>Contact Us</h2>
+<form method=POST enctype=multipart/form-data action="" >
+        {{ form.hidden_tag() }}
+    <div class="left section">
+      {{ form.content(type="text",  placeholder="Teams") }}
+    {{ form.country(type="text",  placeholder="Prediction") }}
+     {{ form.league(type="text", placeholder="League") }}
+    </div>
+   {{ form.submit(class="sendForm left", onclick="submit") }}
+    <label for="showForm" class="closeFormLabel left">Cancel</label>
+  </form>
+</div>
+
+<label for="showForm" class="showFormLabel">Contact</label>
+    -->
