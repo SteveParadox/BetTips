@@ -191,6 +191,10 @@ except Exception as e:
     print(f"Error: {e}")
 
 # ----------------------------------------------------------------------
+def write_to_txt(data, file_path):
+    with open(file_path, 'w') as file:
+        for item in data:
+            file.write(str(item) + "\n")
 
 def prediction():
     try:
@@ -214,9 +218,16 @@ def prediction():
 
         # Printing the teams that can potentially win any match
         any_win = team_predictions[le.transform(team_predictions["Prediction"]) == 2]["Team"].values
-    
+
+        write_to_txt(for_team, 'for_team.txt')
+        write_to_txt(against_team, 'against_team.txt')
+        write_to_txt(any_win, 'any_win.txt')
+
         return for_team, against_team, any_win, data_, data
         
     except Exception as e:
         print(f"Error: {e}")
         return None
+
+for_team, _, _ = precision()
+print()
