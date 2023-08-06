@@ -1,3 +1,11 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# <a href="https://colab.research.google.com/github/SteveParadox/Organizer-Automator/blob/main/_ext.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
+# In[1]:
+
+
 import requests
 from bs4 import BeautifulSoup
 import random
@@ -8,11 +16,11 @@ import pandas as pd
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 from sklearn.metrics import log_loss
 import numpy as np
-import time
-import concurrent.futures
 
 
-start = time.time()
+# In[2]:
+
+
 urls = [
     "https://www.goal.com/en-us/premier-league/table/6wubmo7di3kdpflluf6s8c7vs",
     "https://www.goal.com/en-us/ligue-1/table/57nu0wygurzkp6fuy5hhrtaa2",
@@ -88,8 +96,11 @@ urls = [
     "https://www.goal.com/en-us/mls/table/287tckirbfj9nb8ar2k9r60vn",
     "https://www.goal.com/en-us/vleague-1/table/aho73e5udydy96iun3tkzdzsi",
     "https://www.goal.com/en-us/premier-soccer-league/table/4azsryi40zahspm5h6d0f0pgl"
-    
+
 ]
+
+
+# In[13]:
 
 
 def teams():
@@ -120,23 +131,27 @@ def teams():
                 row_list = [row.split() for row in _data][0]
                 # Converting the last five results into a win-draw-loss record
                 last_five_record = [0, 0, 0]  # Wins, Draws, Losses
+
                 last_five_record[0] = row_list.count("W")
                 last_five_record[1] = row_list.count("D")
                 last_five_record[2] = row_list.count("L")
 
-
-                # Checking if the team has less than 6 losses or more than 17 losses
                 team_form = last_five_record[0] - (last_five_record[1] * last_five_record[2])
-                if played > 2:
+                if played > 5:
+                    win_rate = won / played
+                    loss_rate = lost / played
+                    draw_rate = drawn / played
+                    performance_trend = (last_five_record[0] - last_five_record[2]) / 5
+
                     data.append([name, played, won, drawn, lost, gf, ga, gd, points,
                                 last_five_record[0], last_five_record[1],
-                                last_five_record[2], team_form])
+                                last_five_record[2], team_form, win_rate, loss_rate, draw_rate, performance_trend])
 
-                    if lost <= 9 or won >= 17:
+                    if loss_rate <= 0.45 or win_rate >= 0.65:
                         outcome = 1
-                    elif lost >= 14 or won <= 7:
+                    elif loss_rate >= 0.6 or win_rate <= 0.35:
                         outcome = 0
-                    elif drawn < 20:
+                    elif draw_rate < 0.35:
                         outcome = 2
 
                     data_.append(data[-1] + [outcome])
@@ -144,16 +159,32 @@ def teams():
 
     return data, data_
 
+
+# In[14]:
+
+
 data, data_ = teams()
-print(data)
 print(data_)
 
-# --------------------------------------------------------------------------------------------------------
+
+# In[15]:
+
+
 df = pd.DataFrame(data_, columns=["Team", "Played", "Won", "Drawn", "Lost",
                                   "GF", "GA", "GD", "Points", "Last_5_W",
                                   "Last_5_D", "Last_5_L", "Team_Form",
-                                  "Outcome"])
+                                  "Win_rate", "Loss_rate", "Draw_rate",
+                                  "Performance_trend","Outcome"])
+print(df)
 
+
+# In[16]:
+
+
+try:
+    df = df.query('Team_Form > 2 or Team_Form < -1')
+except:
+    pass
 
 # Encoding the labels
 le = LabelEncoder()
@@ -168,36 +199,34 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 X_train["Team"] = le.transform(X_train["Team"])
 X_test["Team"] = le.transform(X_test["Team"])
 
-#-------------------------------------------------------------------------------------------------------------------------
 
-try:
 
-    rf_model = RandomForestClassifier(n_estimators=100, random_state=42)
 
-    rf_model.fit(X_train, y_train)
+# In[17]:
 
-    # Evaluating the model on the testing data
-    y_pred = rf_model.predict(X_test)
-    accuracy = accuracy_score(y_test, y_pred)
-    precision = precision_score(y_test, y_pred, average='weighted')
-    recall = recall_score(y_test, y_pred, average='weighted')
-    f1 = f1_score(y_test, y_pred, average='weighted')
-    print(f"Accuracy: {accuracy}")
-    print(f"Precision: {precision}")
-    print(f"Recall: {recall}")
-    print(f"F1-score: {f1}")
 
-except Exception as e:
-    print(f"Error: {e}")
+rf_model = RandomForestClassifier(n_estimators=100, random_state=42)
+rf_model.fit(X_train, y_train)
 
-# ----------------------------------------------------------------------
-def write_to_txt(data, file_path):
-    with open(file_path, 'w') as file:
-        for item in data:
-            file.write(str(item) + "\n")
+# Evaluating the model on the testing data
+y_pred = rf_model.predict(X_test)
+
+accuracy = accuracy_score(y_test, y_pred)
+precision = precision_score(y_test, y_pred, average='weighted')
+recall = recall_score(y_test, y_pred, average='weighted')
+f1 = f1_score(y_test, y_pred, average='weighted')
+print(f"Accuracy: {accuracy}")
+print(f"Precision: {precision}")
+print(f"Recall: {recall}")
+print(f"F1-score: {f1}")
+
+
+# In[18]:
+
 
 def prediction():
     try:
+        # Getting predictions for all the data
         all_data = pd.concat([X_train, X_test])
         all_predictions = rf_model.predict(all_data)
         all_outcome = pd.concat([y_train, y_test])
@@ -209,7 +238,7 @@ def prediction():
 
         # Creating a dataframe with team names and their predicted outcomes
         team_predictions = pd.DataFrame({"Team": team_names, "Outcome": outcomes, "Prediction": predictions})
-        
+
         # Printing the teams to be considered as favorites
         for_team = team_predictions[le.transform(team_predictions["Prediction"]) == 1]["Team"].values
 
@@ -219,15 +248,183 @@ def prediction():
         # Printing the teams that can potentially win any match
         any_win = team_predictions[le.transform(team_predictions["Prediction"]) == 2]["Team"].values
 
-        write_to_txt(for_team, 'for_team.txt')
-        write_to_txt(against_team, 'against_team.txt')
-        write_to_txt(any_win, 'any_win.txt')
+        return for_team, against_team, any_win
 
-        return for_team, against_team, any_win, data_, data
-        
     except Exception as e:
         print(f"Error: {e}")
         return None
+# In form team, Teams to bet against
 
-for_team, _, _ = precision()
-print()
+
+# In[22]:
+
+
+for_team, against_team, any_win = prediction()
+print(against_team)
+
+
+# In[34]:
+
+
+from datetime import datetime, timedelta
+
+# Getting the fixtures of the already predicted teams
+import requests
+from bs4 import BeautifulSoup
+from datetime import datetime, timedelta
+import numpy as np
+
+def get_fixtures():
+    for_team, against_team, any_win = prediction()
+    start_date = datetime.today() + timedelta(days=1)
+    end_date = start_date + timedelta(days=2)
+    delta = timedelta(days=1)
+    match_fix = []
+
+    while start_date <= end_date:
+        date_str = start_date.strftime('%d-%B-%Y')
+        url = f'https://www.skysports.com/football/fixtures-results/{date_str}'
+        response = requests.get(url)
+        soup = BeautifulSoup(response.content, 'html.parser')
+        fixtures = soup.find_all('div', class_='fixres__item')
+        for fixture in fixtures:
+            league = fixture.find_previous_sibling('h5').text.strip()
+            team_1 = fixture.find('span', class_='swap-text__target').text.strip()
+            team_2 = fixture.find_all('span', class_='swap-text__target')[1].text.strip()
+            time = fixture.find('span', class_='matches__date').text.strip()
+            match_fix.append(f'{team_1} vs {team_2}')
+
+        start_date += delta
+
+    match_fix = np.array(match_fix)
+    selection_set = np.array([line.strip() for line in for_team])
+    compiled_for = np.array([item for item in match_fix if np.any(np.isin(item.split(' vs '), selection_set))] )
+
+    selection_set_against = np.array([line.strip() for line in against_team])
+    compiled_against = np.array([item for item in match_fix if np.any(np.isin(item.split(' vs '), selection_set_against))])
+
+    selection_set_any = np.array([line.strip() for line in any_win])
+    compiled_any = np.array([item for item in match_fix if np.any(np.isin(item.split(' vs '), selection_set_any))])
+
+    return compiled_for, compiled_against, compiled_any
+
+    """except Exception as e:
+        print(f"Error: {e}")
+        return None """
+
+
+# In[35]:
+
+
+compiled_for, compiled_against, compiled_any = get_fixtures()
+print(compiled_for)
+print(compiled_against)
+print(compiled_any)
+
+
+# In[36]:
+
+
+compiled_for, compiled_against, compiled_any = get_fixtures()
+compiled_for = {match for match in compiled_for if 'Ladies' not in match and 'Women' not in match}
+compiled_against = {match for match in compiled_against if 'Ladies' not in match and 'Women' not in match}
+compiled_any = {match for match in compiled_any if 'Ladies' not in match and 'Women' not in match}
+
+compiled_for = [[s.strip() for s in item.split('vs')] for item in compiled_for]
+compiled_against = [[s.strip() for s in item.split('vs')] for item in compiled_against]
+compiled_any = [[s.strip() for s in item.split('vs')] for item in compiled_any]
+
+print(compiled_for)
+print(compiled_against)
+print(compiled_any)
+# weekly Prediction
+
+
+# In[37]:
+
+
+print(df['GF'])
+
+
+# In[59]:
+
+
+def high_gf_ga():
+    high_scoring_teams = []
+    high_conceding_team = []
+
+    df['Average_GF_per_Match'] = df['GF'] / df['Played']
+    df['Average_GA_per_Match'] = df['GA'] / df['Played']
+    mean_avg_goal_per_match = df['Average_GF_per_Match'].mean()
+    std_deviation_avg_goal_per_match = df['Average_GF_per_Match'].std()
+
+    mean_avg_goal_against_per_match = df['Average_GA_per_Match'].mean()
+    std_deviation_avg_goal_against_per_match = df['Average_GA_per_Match'].std()
+
+    threshold_high_goal_scoring = mean_avg_goal_per_match + std_deviation_avg_goal_per_match
+    threshold_high_goal_conceding = mean_avg_goal_against_per_match + std_deviation_avg_goal_against_per_match
+
+    high_scoring_teams = df[df['Average_GF_per_Match'] > threshold_high_goal_scoring]['Team'].tolist()
+    high_conceding_teams = df[df['Average_GA_per_Match'] > threshold_high_goal_conceding]['Team'].tolist()
+
+    return high_scoring_teams, high_conceding_teams
+
+# High Scoring Teams / High conceding
+
+
+# In[60]:
+
+
+high_scoring_teams, high = high_gf_ga()
+print(high_scoring_teams)
+print(high)
+
+
+# In[61]:
+
+
+def win_fav():
+    MIN_GOAL_DIFFERENCE = 2
+    MIN_POINTS = 14
+    MAX_GOAL_DIFFERENCE = -1
+    MAX_POINTS = 13
+
+    pick_for = []
+    pick_against = []
+
+    # Extract team data for compiled_against fixtures
+    comp_against = [row for pair in compiled_against for item in pair for row in data if item in row and len(row) == 26]
+
+    # Extract team data for compiled_for fixtures
+    comp_for = [row for pair in compiled_for for item in pair for row in data if item in row and len(row) == 26]
+
+    # Identify pick_against teams based on conditions
+    for team_data in comp_against:
+        points = team_data[-1]
+        goal_difference = team_data[15]
+
+        if points >= MIN_POINTS and goal_difference >= MIN_GOAL_DIFFERENCE:
+            pick_against.append(team_data[0])
+        elif points >= 2 and team_data[2] >= MIN_POINTS:
+            pick_against.append(team_data[13])
+
+    # Identify pick_for teams based on conditions
+    for team_data in comp_for:
+        points = team_data[-1]
+        goal_difference = team_data[15]
+
+        if points <= MAX_POINTS and goal_difference <= MAX_GOAL_DIFFERENCE:
+            pick_for.append(team_data[0])
+        elif points <= -1 and team_data[2] <= MAX_POINTS:
+            pick_for.append(team_data[13])
+
+    return pick_for, pick_against
+
+
+
+# In[62]:
+
+
+pick_for, pick_against = win_fav()
+print(pick_for)
+

@@ -1,17 +1,21 @@
 {% extends 'layout.html' %}
 {% block content %}
+<style>
+    .in_form {
+        font-size: 30px;
+        margin-top: 2rem;
+        text-align: center;
+    }
+</style>
 
-
-<div id="about" class="about">
+<div id="about" >
     <div class="container">
         <div class="row">
 
             <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12">
                 <div class="about-box">
-                    <h3> Most In Form Teams</h3>
+                    <h3 class="in_form"> Most In Form Teams</h3>
                     
-                   
-
                     <table>
                   
                         <thead>
@@ -21,10 +25,10 @@
                                 <th scope="col">League</th>
                             </tr>
                         </thead>
-                        {% for picks in inform %}
+                        {% for picks in in_form %}
                         <tbody>
                             <tr>
-                                <td data-label="Team">{{ picks.content }}</td>
+                                <td data-label="Team">{{picks.content}}</td>
                                 <td data-label="Country">{{ picks.country }}</td>
                                 <td data-label="League">{{ picks.league }}</td>
                             
@@ -33,12 +37,11 @@
                         </tbody>
                         {% endfor %}
                     </table>
-                    
-                </div>
-            </div>
-        </div>
-
-    </div>
-</div>
+                    </div>
+                    </div>
+                    </div>
+                    </div>
+</div>                    
+           
 
 {%endblock content%}
