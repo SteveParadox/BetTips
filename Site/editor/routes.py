@@ -7,15 +7,10 @@ from flask_login import current_user, login_required, login_user, logout_user # 
 from werkzeug.security import check_password_hash, generate_password_hash # using flask security
 import datetime
 from Site.editor.form import *
-from Site.openai.langchainhelper import league
 import os
 import time
 from Site.models import InForm
-_dir = os.path.dirname(os.path.abspath(__file__))
-file_path = r'C:\Users\USER\Desktop\BetTips\for_team.txt'
-
-
-# registering blueprint 
+from .utils import load_league
 
 edit = Blueprint('edit', __name__)
 
@@ -37,51 +32,13 @@ def home():
         return redirect(url_for('edit.home'))
     return render_template('index.html', pick=pick, form=form)
     
-import time
-
-def load_league():
-    data_list = []  
-
-    try:
-        with open(file_path, 'r') as file:
-            for line in file:
-                response = league(line.strip())
-                text = response['text']
-                league_info = text.strip().split(', ')
-                league_name = league_info[0].split(': ')[1].strip()
-                league_country = league_info[1].split(': ')[1].strip()
-                data_dict = {
-                    'team': line.strip(),
-                    'league': league_name,
-                    'country': league_country
-                }
-                data_list.append(data_dict)  
-                time.sleep(60)
-    except FileNotFoundError:
-        print(f"File not found at: {file_path}")
-    except IOError:
-        print("Error reading the file.")
-
-    return data_list
-
 
 @edit.route('/1', methods=['GET','POST'])
 def a():
-    #data_list = load_league()
-    data_list = [
-        {'team': 'Karviná', 'league': 'Czech First League', 'country': 'Czech Republic'},
-        {'team': 'Triangle United', 'league': 'National Premier Soccer League', 'country': 'United States'},
-        {'team': 'Petrolul 52', 'league': 'Liga II', 'country': 'Romania'},
-        {'team': 'Sportivo Luqueño', 'league': 'Paraguayan Primera División', 'country': 'Paraguay'}
-    ]    
-    for data in data_list:
-        team = data['team']
-        league = data['league']
-        country = data['country']
-        
-        prediction = InForm(content=team, country=country, league=league)
-        
-        db.session.add(prediction)
+   
+    prediction = InForm(content=team, country=country, league=league)
+    
+    db.session.add(prediction)
 
     db.session.commit()
 
@@ -150,17 +107,16 @@ def e():
 
 @edit.route('/6', methods=['GET','POST'])
 def f():
-    
-    form= BetAgainst()
-    if form.validate_on_submit():
-        betagainst= BetAgainst()
-        betagainst.content = form.content.data
-        betagainst.country = form.country.data
-        betagainst.league = form.league.data
-        db.session.add(betagainst)
-        db.session.commit()
-        return redirect(url_for("edit.f"))
-    return render_template('post.html', form=form, legend='Teams to bet against')
+    data = load_league('against_team.txt')
+    bet_against = BetAgainst()
+    for items in data:
+        bet_against.content = item['team']
+        bet_against.league = item['league']
+        bet_against.country = item['country']
+        db.session.add(bet_against)
+    db.session.commit()
+
+    return 'done'
 
 
 @edit.route('/7', methods=['GET','POST'])
@@ -210,8 +166,4 @@ def i():
 def contact():
 
     return render_template('contact.html')
-
-
-
-
 

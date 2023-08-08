@@ -3,7 +3,7 @@
 
 # <a href="https://colab.research.google.com/github/SteveParadox/Organizer-Automator/blob/main/_ext.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
-# In[1]:
+# In[42]:
 
 
 import requests
@@ -18,7 +18,7 @@ from sklearn.metrics import log_loss
 import numpy as np
 
 
-# In[2]:
+# In[43]:
 
 
 urls = [
@@ -98,10 +98,11 @@ urls = [
     "https://www.goal.com/en-us/premier-soccer-league/table/4azsryi40zahspm5h6d0f0pgl"
 
 ]
+print(len(urls))
 
 
-# In[13]:
-
+# In[44]:
+urls = urls[:5]
 
 def teams():
     data = []
@@ -143,7 +144,7 @@ def teams():
                     draw_rate = drawn / played
                     performance_trend = (last_five_record[0] - last_five_record[2]) / 5
 
-                    data.append([name, played, won, drawn, lost, gf, ga, gd, points,
+                    data_.append([name, played, won, drawn, lost, gf, ga, gd, points,
                                 last_five_record[0], last_five_record[1],
                                 last_five_record[2], team_form, win_rate, loss_rate, draw_rate, performance_trend])
 
@@ -154,35 +155,35 @@ def teams():
                     elif draw_rate < 0.35:
                         outcome = 2
 
-                    data_.append(data[-1] + [outcome])
+                    data.append(data_[-1] + [outcome])
 
 
-    return data, data_
+    return data
 
 
-# In[14]:
+# In[45]:
 
 
-data, data_ = teams()
-print(data_)
+data = teams()
+print(len(data))
 
 
-# In[15]:
+# In[46]:
 
 
-df = pd.DataFrame(data_, columns=["Team", "Played", "Won", "Drawn", "Lost",
+dff = pd.DataFrame(data, columns=["Team", "Played", "Won", "Drawn", "Lost",
                                   "GF", "GA", "GD", "Points", "Last_5_W",
                                   "Last_5_D", "Last_5_L", "Team_Form",
                                   "Win_rate", "Loss_rate", "Draw_rate",
                                   "Performance_trend","Outcome"])
-print(df)
+print(len(dff))
 
 
-# In[16]:
+# In[47]:
 
 
 try:
-    df = df.query('Team_Form > 2 or Team_Form < -1')
+    df = dff.query('Team_Form >= 2 or Team_Form <= -1')
 except:
     pass
 
@@ -200,9 +201,10 @@ X_train["Team"] = le.transform(X_train["Team"])
 X_test["Team"] = le.transform(X_test["Team"])
 
 
+print(len(df))
 
 
-# In[17]:
+# In[48]:
 
 
 rf_model = RandomForestClassifier(n_estimators=100, random_state=42)
@@ -221,7 +223,16 @@ print(f"Recall: {recall}")
 print(f"F1-score: {f1}")
 
 
-# In[18]:
+# In[49]:
+def write_to_txt(data, filename):
+    try:
+        with open(filename, 'w') as file:
+            for item in data:
+                file.write(f"{item}\n")
+        print(f"Data written to {filename} successfully.")
+    except Exception as e:
+        print(f"Error writing to {filename}: {e}")
+
 
 
 def prediction():
@@ -247,6 +258,11 @@ def prediction():
 
         # Printing the teams that can potentially win any match
         any_win = team_predictions[le.transform(team_predictions["Prediction"]) == 2]["Team"].values
+        
+        write_to_txt(for_team, './Site/Output_Data/for_team.txt')
+        write_to_txt(against_team, './Site/Output_Data/against_team.txt')
+        write_to_txt(any_win, './Site/Output_Data/any_win.txt')
+
 
         return for_team, against_team, any_win
 
@@ -256,45 +272,58 @@ def prediction():
 # In form team, Teams to bet against
 
 
-# In[22]:
+# In[50]:
 
 
 for_team, against_team, any_win = prediction()
-print(against_team)
+print(any_win)
 
 
-# In[34]:
+# In[152]:
 
 
-from datetime import datetime, timedelta
-
-# Getting the fixtures of the already predicted teams
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
+
+start_date = datetime.today() + timedelta(days=1)
+end_date = start_date + timedelta(days=2)
+delta = timedelta(days=1)
+match_fix = []
+
+
+while start_date <= end_date:
+    date_str = start_date.strftime('%d-%B-%Y')
+    url = f'https://www.skysports.com/football/fixtures-results/{date_str}'
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    fixtures = soup.find_all('div', class_='fixres__item')
+    for fixture in fixtures:
+        league = fixture.find_previous_sibling('h5').text.strip()
+        team_1 = fixture.find('span', class_='swap-text__target').text.strip()
+        team_2 = fixture.find_all('span', class_='swap-text__target')[1].text.strip()
+        time = fixture.find('span', class_='matches__date').text.strip()
+        match_fix.append(f'{team_1} vs {team_2}')
+
+    start_date += delta
+
+
+
+# In[153]:
+
+
+print(len(match_fix))
+
+
+# In[154]:
+
+
+# Getting the fixtures of the already predicted teams
+
 import numpy as np
 
-def get_fixtures():
+def get_fixtures(match_fix):
     for_team, against_team, any_win = prediction()
-    start_date = datetime.today() + timedelta(days=1)
-    end_date = start_date + timedelta(days=2)
-    delta = timedelta(days=1)
-    match_fix = []
-
-    while start_date <= end_date:
-        date_str = start_date.strftime('%d-%B-%Y')
-        url = f'https://www.skysports.com/football/fixtures-results/{date_str}'
-        response = requests.get(url)
-        soup = BeautifulSoup(response.content, 'html.parser')
-        fixtures = soup.find_all('div', class_='fixres__item')
-        for fixture in fixtures:
-            league = fixture.find_previous_sibling('h5').text.strip()
-            team_1 = fixture.find('span', class_='swap-text__target').text.strip()
-            team_2 = fixture.find_all('span', class_='swap-text__target')[1].text.strip()
-            time = fixture.find('span', class_='matches__date').text.strip()
-            match_fix.append(f'{team_1} vs {team_2}')
-
-        start_date += delta
 
     match_fix = np.array(match_fix)
     selection_set = np.array([line.strip() for line in for_team])
@@ -313,19 +342,18 @@ def get_fixtures():
         return None """
 
 
-# In[35]:
+# In[155]:
 
 
-compiled_for, compiled_against, compiled_any = get_fixtures()
+compiled_for, compiled_against, compiled_any = get_fixtures(match_fix)
 print(compiled_for)
 print(compiled_against)
 print(compiled_any)
 
 
-# In[36]:
+# In[131]:
 
 
-compiled_for, compiled_against, compiled_any = get_fixtures()
 compiled_for = {match for match in compiled_for if 'Ladies' not in match and 'Women' not in match}
 compiled_against = {match for match in compiled_against if 'Ladies' not in match and 'Women' not in match}
 compiled_any = {match for match in compiled_any if 'Ladies' not in match and 'Women' not in match}
@@ -340,91 +368,84 @@ print(compiled_any)
 # weekly Prediction
 
 
-# In[37]:
+# In[56]:
 
 
-print(df['GF'])
+print(dff['GF'])
 
 
-# In[59]:
+# In[132]:
 
 
 def high_gf_ga():
     high_scoring_teams = []
     high_conceding_team = []
 
-    df['Average_GF_per_Match'] = df['GF'] / df['Played']
-    df['Average_GA_per_Match'] = df['GA'] / df['Played']
-    mean_avg_goal_per_match = df['Average_GF_per_Match'].mean()
-    std_deviation_avg_goal_per_match = df['Average_GF_per_Match'].std()
+    dff['Average_GF_per_Match'] = dff['GF'] / dff['Played']
+    dff['Average_GA_per_Match'] = dff['GA'] / dff['Played']
+    mean_avg_goal_per_match = dff['Average_GF_per_Match'].mean()
+    std_deviation_avg_goal_per_match = dff['Average_GF_per_Match'].std()
 
-    mean_avg_goal_against_per_match = df['Average_GA_per_Match'].mean()
-    std_deviation_avg_goal_against_per_match = df['Average_GA_per_Match'].std()
+    mean_avg_goal_against_per_match = dff['Average_GA_per_Match'].mean()
+    std_deviation_avg_goal_against_per_match = dff['Average_GA_per_Match'].std()
 
     threshold_high_goal_scoring = mean_avg_goal_per_match + std_deviation_avg_goal_per_match
     threshold_high_goal_conceding = mean_avg_goal_against_per_match + std_deviation_avg_goal_against_per_match
 
-    high_scoring_teams = df[df['Average_GF_per_Match'] > threshold_high_goal_scoring]['Team'].tolist()
-    high_conceding_teams = df[df['Average_GA_per_Match'] > threshold_high_goal_conceding]['Team'].tolist()
+    high_scoring_teams = dff[dff['Average_GF_per_Match'] > threshold_high_goal_scoring]['Team'].tolist()
+    high_conceding_teams = dff[dff['Average_GA_per_Match'] > threshold_high_goal_conceding]['Team'].tolist()
+    
+    write_to_txt(high_scoring_teams, './Site/Output_Data/high_scoring_teams.txt')
+    write_to_txt(high_conceding_teams, './Site/Output_Data/high_conceding_teams.txt')
 
-    return high_scoring_teams, high_conceding_teams
+
+
+    return high_scoring_teams, high_conceding_teams, threshold_high_goal_scoring
 
 # High Scoring Teams / High conceding
 
 
-# In[60]:
+# In[133]:
 
 
-high_scoring_teams, high = high_gf_ga()
+high_scoring_teams, high, threshold_high_goal_scoring= high_gf_ga()
 print(high_scoring_teams)
 print(high)
 
 
-# In[61]:
+# In[134]:
 
 
-def win_fav():
-    MIN_GOAL_DIFFERENCE = 2
-    MIN_POINTS = 14
-    MAX_GOAL_DIFFERENCE = -1
-    MAX_POINTS = 13
-
-    pick_for = []
-    pick_against = []
-
-    # Extract team data for compiled_against fixtures
-    comp_against = [row for pair in compiled_against for item in pair for row in data if item in row and len(row) == 26]
-
-    # Extract team data for compiled_for fixtures
-    comp_for = [row for pair in compiled_for for item in pair for row in data if item in row and len(row) == 26]
-
-    # Identify pick_against teams based on conditions
-    for team_data in comp_against:
-        points = team_data[-1]
-        goal_difference = team_data[15]
-
-        if points >= MIN_POINTS and goal_difference >= MIN_GOAL_DIFFERENCE:
-            pick_against.append(team_data[0])
-        elif points >= 2 and team_data[2] >= MIN_POINTS:
-            pick_against.append(team_data[13])
-
-    # Identify pick_for teams based on conditions
-    for team_data in comp_for:
-        points = team_data[-1]
-        goal_difference = team_data[15]
-
-        if points <= MAX_POINTS and goal_difference <= MAX_GOAL_DIFFERENCE:
-            pick_for.append(team_data[0])
-        elif points <= -1 and team_data[2] <= MAX_POINTS:
-            pick_for.append(team_data[13])
-
-    return pick_for, pick_against
+compiled = compiled_for + compiled_against + compiled_any
+print (threshold_high_goal_scoring)
 
 
+# In[151]:
 
-# In[62]:
 
+def predict_both_teams_score(compiled, threshold_high_goal_scoring):
+    predictions = []
+    for fixture in compiled:
+        team_1, team_2 = fixture[0], fixture[1]
+        try:
+            team_1_gf = dff[dff['Team'] == team_1]['GF'].values[0] +\
+             dff[dff['Team'] == team_1]['GA'].values[0]
+            team_2_gf = dff[dff['Team'] == team_2]['GF'].values[0] +\
+             dff[dff['Team'] == team_2]['GA'].values[0]
 
-pick_for, pick_against = win_fav()
-print(pick_for)
+            if team_1_gf >= threshold_high_goal_scoring and team_2_gf >= threshold_high_goal_scoring:
+                predictions.append(f'{team_1} vs {team_2}: Both Teams to Score')
+            else:
+                predictions.append(f'{team_1} vs {team_2}: Both Teams Not to Score')
+
+        except IndexError:
+           # print(f"Team data not found for {team_1} or {team_2}. Skipping...")
+            pass
+    
+    write_to_txt(predictions, './Site/Output_Data/bts_predictions.txt')
+    
+    return predictions
+
+predictions = predict_both_teams_score(compiled, threshold_high_goal_scoring)
+print(predictions)
 

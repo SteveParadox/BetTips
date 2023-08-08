@@ -31,9 +31,6 @@ def create_app(config_class=Config):
 
 # registering packages to blueprint
     app.register_blueprint(analysis)
-
-
-# registering packages to blueprint
     app.register_blueprint(edit)
 
 
