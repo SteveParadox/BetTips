@@ -23,6 +23,7 @@
                                 <th scope="col">Team</th>
                                 <th scope="col">Country</th>
                                 <th scope="col">League</th>
+                                <th scope="col">Win %</th>
                             </tr>
                         </thead>
                         {% for picks in in_form %}
@@ -31,7 +32,7 @@
                                 <td data-label="Team">{{picks.content}}</td>
                                 <td data-label="Country">{{ picks.country }}</td>
                                 <td data-label="League">{{ picks.league }}</td>
-                            
+                                <td data-label="Win"></td>
                             </tr>
                            
                         </tbody>

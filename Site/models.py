@@ -62,3 +62,32 @@ class Notification(db.Model):
         return f"Notification('{self.name}', '{self.email}')"
 
   
+class Teams(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String())
+    played = db.Column(db.Integer())
+    won = db.Column(db.Integer())
+    drawn = db.Column(db.Integer())
+    lost = db.Column(db.Integer())
+    gf = db.Column(db.Integer())
+    ga = db.Column(db.Integer())
+    gd = db.Column(db.Integer())
+    points = db.Column(db.Integer())
+    team_form = db.Column(db.Integer())
+    win_rate = db.Column(db.Integer())
+    loss_rate = db.Column(db.Integer())
+    draw_rate = db.Column(db.Integer())
+    performance_trend = db.Column(db.Integer())
+
+
+    def __repr__(self):
+        return f"Notification('{self.name}', '{self.email}')"
+
+
+class TeamsSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = Teams
+
+
+team_schema = TeamsSchema()
+teams_schema = TeamsSchema(many=True)

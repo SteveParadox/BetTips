@@ -56,7 +56,7 @@
                             <div class="full">
                                 <div class="center-desk">
                                     <div class="logo" >
-                                        <a style="font-size: 34px;" href="{{ url_for('edit.home') }}"><img style="height: 36px;" alt='' src="static/favicon/favicon-32x32.png">BettingFixed</a>
+                                        <a style="font-size: 17px;" href="{{ url_for('edit.home') }}"><img style="height: 17px;" alt='' src="static/favicon/favicon-32x32.png">BettingFixed</a>
                                     </div>
                                 </div>
                             </div>
@@ -71,9 +71,9 @@
                                             <li><a href="{{ url_for('analysis.teamsWithHighGoalStats') }}">High Goal Scoring Teams</a></li>
                                             <li><a href="{{ url_for('analysis.bothTeamScoreTips') }}">Both Teams To Score Tips</a></li>
                                             <li><a href="{{ url_for('analysis.teamsWithHighConcedingRate') }}">High Goal Conceding Teams</a></li>
-                                            <li class="active"><a href="{{ url_for('analysis.sureOdds') }}">Sure Free Odds</a></li>
+                                            <li class="active"><a href="{{ url_for('analysis.sureOdds') }}"> Free Odds</a></li>
                                             <li><a href="{{ url_for('analysis.championshipDraw') }}">Championship Draw/Under 2.5</a></li>
-                                            <li><a href="" style="font-size: 13px;">Team Statistics</a></li>
+                                            <li><a href="{{ url_for('analysis.team_statistics')}}" style="font-size: 13px;">Team Statistics</a></li>
 
                                         </ul>
                                     </nav>
@@ -85,32 +85,6 @@
             </div>
             <!-- end header inner -->
 
-            <!-- end header -->
-            <section class="slider_section">
-                <div class="banner_main">
-
-                    <div class="container">
-
-                        <div class="row">
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 ">
-                                <div class="text-bg">
-                                    <h1>Get  <br> <strong class="b_bold">Betting Tips </strong></h1>
-                                   
-                                    <a href="https://web.bet9ja.com/Sport/Default.aspx">Book Online</a>
-                                </div>
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                                <div class="text-img">
-                                    <figure><img src="static/images/hpg-logo-preview.png" /></figure>
-
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-        </div>
-        </section>
         </div>
         </div>
     </header>
@@ -139,7 +113,7 @@
                         <div class="location_section">
                             <ul class="loca">
                                 <li>
-                                    <a href="#"><img src="static/icon/1.png" alt="#" /></a>vond499@gmail.com
+                                    <a href="#"><img src="static/icon/1.png" alt="#" /></a>
                                 </li>
                                 
                             </ul>
@@ -156,9 +130,9 @@
                                         <li><a href="{{ url_for('analysis.teamsWithHighGoalStats') }}" style="font-size: 13px;">High Goal Scoring Teams</a></li>
                                         <li><a href="{{ url_for('analysis.bothTeamScoreTips') }}" style="font-size: 13px;">Both Teams To Score Tips</a></li>
                                         <li><a href="{{ url_for('analysis.teamsWithHighConcedingRate') }}" style="font-size: 13px;">High Goal Conceding Teams</a></li>
-                                        <li class="active"><a href="{{ url_for('analysis.sureOdds') }}" style="font-size: 13px;">Sure Free Odds</a></li>
+                                        <li class="active"><a href="{{ url_for('analysis.sureOdds') }}" style="font-size: 13px;"> Free Odds</a></li>
                                         <li><a href="{{ url_for('analysis.championshipDraw') }}" style="font-size: 13px;">Championship Draw/Under 2.5</a></li>
-                                        <li><a href="" style="font-size: 13px;">Team Statistics</a></li>
+                                        <li><a href="{{ url_for('analysis.team_statistics')}}" style="font-size: 13px;">Team Statistics</a></li>
 
                                     </ul>
                                 </div>

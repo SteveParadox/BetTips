@@ -16,6 +16,7 @@ import pandas as pd
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 from sklearn.metrics import log_loss
 import numpy as np
+from info import write_to_txt
 
 
 # In[43]:
@@ -167,6 +168,8 @@ def teams():
 data = teams()
 print(len(data))
 
+write_to_txt(data, './Site/Output_Data/data.txt')
+
 
 # In[46]:
 
@@ -224,15 +227,6 @@ print(f"F1-score: {f1}")
 
 
 # In[49]:
-def write_to_txt(data, filename):
-    try:
-        with open(filename, 'w') as file:
-            for item in data:
-                file.write(f"{item}\n")
-        print(f"Data written to {filename} successfully.")
-    except Exception as e:
-        print(f"Error writing to {filename}: {e}")
-
 
 
 def prediction():

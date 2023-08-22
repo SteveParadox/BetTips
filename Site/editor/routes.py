@@ -6,13 +6,13 @@ from Site import db, app # importing database and app configuration from folder 
 from flask_login import current_user, login_required, login_user, logout_user # using flask login
 from werkzeug.security import check_password_hash, generate_password_hash # using flask security
 import datetime
-from Site.editor.form import *
 import os
 import time
-from Site.models import InForm
-from .utils import load_league
-
+from Site.models import InForm, BetAgainst, BettingTips, Bts, HighScoring, HighConceding, Teams
+from .utils import load_league, read_from_txt
+from .form import RandomPickForm
 edit = Blueprint('edit', __name__)
+
 
 @edit.route('/', methods=['GET','POST'])
 def home():
@@ -31,85 +31,109 @@ def home():
 
         return redirect(url_for('edit.home'))
     return render_template('index.html', pick=pick, form=form)
+
+
+@edit.route('/0', methods=['GET','POST'])
+def _():
+    data = load_league("data.txt")
+    for item in data:
+        teams = Teams()
+        teams.name =  item['name']     
+        teams.played = item['played']
+        teams.won = item['won']
+        teams.drawn = item['drawn']
+        teams.lost = item['lost']
+        teams.gf = item['gf']
+        teams.ga = item['ga']
+        teams.gd = item['gd']
+        teams.points = item['points']
+        teams.team_form = item['team_form']
+        teams.win_rate = item['win_rate']
+        teams.loss_rate = item['loss_rate']
+        teams.draw_rate = item['draw_rate']
+        teams.performance_trend = item['performance_trend']
+        teams.db.session.add(teams)
+    db.session.commit()
+
+    return 'done'
     
 
 @edit.route('/1', methods=['GET','POST'])
 def a():
-   
-    prediction = InForm(content=team, country=country, league=league)
-    
-    db.session.add(prediction)
-
+    data = load_league('for_team.txt')
+    for item in data:
+        in_form = InForm()
+        in_form.content = item['team']
+        in_form.league = item['league']
+        in_form.country = item['country']
+        db.session.add(in_form)
     db.session.commit()
 
-    return 'DONE'
+    return 'done'
 
 
 @edit.route('/2', methods=['GET','POST'])
 def b():
-    form= Tips()
-    if form.validate_on_submit():
-        bettips= BettingTips()
-        bettips.content= form.content.data
-        bettips.country = form.country.data
-        bettips.league = form.league.data
-        db.session.add(bettips)
-        db.session.commit()
-        return redirect(url_for("edit.b"))
-    return render_template('post.html', form=form, legend='Betting Tips')
+    data = load_league('any_win.txt')
+    for item in data:
+        in_form = BettingTips()
+        in_form.content = item['team']
+        in_form.league = item['league']
+        in_form.country = item['country']
+        db.session.add(in_form)
+    db.session.commit()
+
+    return 'done'
 
 
 
 @edit.route('/3', methods=['GET','POST'])
 def c():
-    form = HighGoalStats()
-    if form.validate_on_submit():
-        highscoring= HighScoring()
-        highscoring.content= form.content.data
-        highscoring.country = form.country.data
-        highscoring.league = form.league.data
-        db.session.add(highscoring)
-        db.session.commit()
-        return redirect(url_for("edit.c"))
-    return render_template('post.html', form=form, legend='High scoring stats')
+    data = load_league('high_scoring_teams.txt')
+    for item in data:
+        in_form = HighScoring()
+        in_form.content = item['team']
+        in_form.league = item['league']
+        in_form.country = item['country']
+        db.session.add(in_form)
+    db.session.commit()
 
+    return 'done'
 
 @edit.route('/4', methods=['GET','POST'])
 def d():
-    form= Bothteamsscore()
-    if form.validate_on_submit():
-        bts= Bts()
-        bts.content = form.content.data
-        bts.country = form.country.data
-        bts.league = form.league.data
-        db.session.add(bts)
-        db.session.commit()
-        return redirect(url_for("edit.d"))
-    return render_template('post.html', form=form, legend='Both teams to score')
+    data = load_league('high_conceding_teams.txt')
+    for item in data:
+        in_form = HighConceding()
+        in_form.content = item['team']
+        in_form.league = item['league']
+        in_form.country = item['country']
+        db.session.add(in_form)
+    db.session.commit()
 
+    return 'done'
 
 
 @edit.route('/5', methods=['GET','POST'])
 def e():
-    form = HighConcedingRate()
-    if form.validate_on_submit():
-        highconcede = HighConceding()
-        highconcede.content = form.content.data
-        highconcede.country = form.country.data
-        highconcede.league = form.league.data
-        db.session.add(highconcede)
-        db.session.commit()
-        return redirect(url_for("edit.e"))
-    return render_template('post.html', form=form, legend='High concedeing rate')
+    data = load_league('bts_predictions.txt')
+    for item in data:
+        in_form = Bts()
+        in_form.content = item['team']
+        in_form.league = item['league']
+        in_form.country = item['country']
+        db.session.add(in_form)
+    db.session.commit()
 
-
+    return 'done'
 
 
 @edit.route('/6', methods=['GET','POST'])
 def f():
     data = load_league('against_team.txt')
-    bet_against = BetAgainst()
-    for items in data:
+    for item in data:  
+        bet_against = BetAgainst()
+
         bet_against.content = item['team']
         bet_against.league = item['league']
         bet_against.country = item['country']
@@ -117,7 +141,6 @@ def f():
     db.session.commit()
 
     return 'done'
-
 
 @edit.route('/7', methods=['GET','POST'])
 def g():

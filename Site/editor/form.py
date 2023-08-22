@@ -52,12 +52,6 @@ class HighConcedingRate(FlaskForm):
     submit = SubmitField('Post')
 
 
-class BetAgainst(FlaskForm):
-    content = StringField(validators=[DataRequired()])
-    country = StringField(validators=[DataRequired()])
-    league = StringField(validators=[DataRequired()])
-    submit = SubmitField('Post')
-
 
 
 class sureOddsForm(FlaskForm):

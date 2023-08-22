@@ -361,7 +361,7 @@
      color: #409cfb;
 }
  .menu-area-main li.active a {
-     color: #409cfb;
+     color:springgreen;
 }
  .right_cart_section {
      float: right;
@@ -1101,6 +1101,12 @@
 /*--------------------------------------------------------------------- top banner area ---------------------------------------------------------------------*/
 /*--------------------------------------------------------------------- layout new css ---------------------------------------------------------------------*/
  .header-top {
+    background:black;
+     background-size: 100% 100%;
+     background-repeat: no-repeat;
+     padding-bottom: 90px;
+}
+.header-top2 {
     background:url(../images/banner2.jpg);
      background-size: 100% 100%;
      background-repeat: no-repeat;
@@ -1110,7 +1116,7 @@
      position: absolute;
      z-index: 999;
      width: 100%;
-     padding: 40px 40px 40px 40px;
+     padding: 20px 30px 30px 30px;
 }
  .logo a {
      font-size: 40px;
@@ -1266,7 +1272,7 @@
 }
  .about .about-box {
      padding: 80px 30px;
-     background-color:#08082d;
+     background-color:black;
      margin-top: 224px;
 }
  .about .about-box span {
@@ -1354,7 +1360,7 @@
     padding-left: 0;
 }
  .how_it .two-box_text {
-    background-color: #08082d;
+    background-color: black;
      height: 100%;
 }
  .how_it .two-box_text .travel {
@@ -1590,7 +1596,7 @@
      width: 25%;
 }
  .footer {
-     background: #08082d;
+     background: black;
      padding-top: 90px;
 }
  .footer .address h3 {
@@ -1866,6 +1872,7 @@ table {
   padding: 0;
   width: 100%;
   table-layout: fixed;
+  margin-bottom: 1rem;
 }
 
 table caption {
