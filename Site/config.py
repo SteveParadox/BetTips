@@ -1,38 +1,46 @@
-# importing libraries
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 CACHE_CONFIG = {
-    'CACHE_TYPE': 'redis',
-    'CACHE_REDIS_URL': 'redis://default:RIb4Sy6hNvnuRxSR8us3S99paPOCAU21@redis-12331.c309.us-east-2-1.ec2.cloud.redislabs.com:12331',
-    'CACHE_DEFAULT_TIMEOUT': 3000,  
-    'CACHE_REDIS_SOCKET_TIMEOUT': 30,
+    'CACHE_TYPE': os.environ.get('CACHE_TYPE'),
+    'CACHE_REDIS_URL':  os.environ.get('CACHE_REDIS_URL'),
+    'CACHE_DEFAULT_TIMEOUT':  os.environ.get('CACHE_DEFAULT_TIMEOUT'),  
+    'CACHE_REDIS_SOCKET_TIMEOUT':  os.environ.get('CACHE_REDIS_SOCKET_TIMEOUT'),
 }
 
-# app configuration
-class Config:
+CELERY_CONFIG = {
+        "broker_url":CACHE_CONFIG['CACHE_REDIS_URL'],
+        "result_backend":CACHE_CONFIG['CACHE_REDIS_URL']
+    }
 
+CSP = {
+    'default-src': ["'self'"],
+    'script-src': ["'self'"],
+    'style-src': ["'self'"],
+    'img-src': ["'self'", 'data:'],
+}
+
+class Config:
+    SECRET_KEY = os.environ.get('SECRET_KEY')
     ENV = 'dev'
 
     if ENV == 'dev':
-        SECRET_KEY = "43rtgtrf04o0gkomrg0gmr0gtgmg0trgo"
-        SQLALCHEMY_DATABASE_URI = 'sqlite:///store.db'
-        SQLALCHEMY_TRACK_MODIFICATIONS = False
-        MAIL_SERVER = 'smtp.googlemail.com'
-        MAIL_PORT = 465
-        MAIL_USE_TLS = False
-        MAIL_USE_SSL = True
-        MAIL_USERNAME = 'vond499y@gmail.com'
-        MAIL_PASSWORD = 'saintvirus11'
-        MAIL_DEFAULT_SENDER = 'from@example.com'
-
+        SQLALCHEMY_DATABASE_URI = 'sqlite:///site.db'
     else:
-        SECRET_KEY = "795849f0d2328258710ae9c71cb795849f0d2328258710ae9c71cb4b5ea4b5ea"
-        SQLALCHEMY_TRACK_MODIFICATIONS = False
-        SQLALCHEMY_DATABASE_URI = "postgres://ubroabdhsiwxxn:1edd0690d626c9b0fa720fcce44e5a15afa5a11d12e69c1f586bc7bcd9f5d723@ec2-34-252-251-16.eu-west-1.compute.amazonaws.com:5432/df8bvf9f9npn3o"
-        MAIL_SERVER = 'smtp.googlemail.com'
-        MAIL_PORT = 465
-        MAIL_USE_TLS = False
-        MAIL_USE_SSL = True
-        MAIL_USERNAME = 'vond499y@gmail.com'
-        MAIL_PASSWORD = 'saintvirus11'
-        MAIL_DEFAULT_SENDER = 'from@example.com'
+        SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+
+    SECURITY_PASSWORD_SALT =  os.environ.get('SECURITY_PASSWORD_SALT')
+    MAIL_SERVER =  os.environ.get('MAIL_SERVER')
+    MAIL_PORT = 465
+    MAIL_USE_TLS = False
+    MAIL_USE_SSL = True
+    MAIL_USERNAME =  os.environ.get('MAIL_USERNAME')
+    MAIL_PASSWORD =  os.environ.get('MAIL_PASSWORD')
+    MAIL_DEFAULT_SENDER = 'from@example.com'
+    SQLALCHEMY_POOL_SIZE = 100
+    SQLALCHEMY_POOL_TIMEOUT = 3000
+    SQLALCHEMY_POOL_RECYCLE = 3600 
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SESSION_TYPE = 'filesystem'
