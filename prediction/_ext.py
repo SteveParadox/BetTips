@@ -158,8 +158,8 @@ def teams():
 
                     data.append(data_[-1] + [outcome])
 
-
     return data
+
 
 
 # In[45]:

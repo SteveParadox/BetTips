@@ -27,7 +27,7 @@ class Config:
     ENV = 'dev'
 
     if ENV == 'dev':
-        SQLALCHEMY_DATABASE_URI = 'sqlite:///site.db'
+        SQLALCHEMY_DATABASE_URI = 'sqlite:///store.db'
     else:
         SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
 

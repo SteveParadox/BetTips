@@ -1105,6 +1105,7 @@
      background-size: 100% 100%;
      background-repeat: no-repeat;
      padding-bottom: 90px;
+     height: 7rem;
 }
 .header-top2 {
     background:url(../images/banner2.jpg);
@@ -1113,10 +1114,16 @@
      padding-bottom: 90px;
 }
  .header {
-     position: absolute;
+     position: relative;
      z-index: 999;
      width: 100%;
      padding: 20px 30px 30px 30px;
+}
+.header2 {
+    position: absolute;
+    z-index: 999;
+    width: 100%;
+    padding: 20px 30px 30px 30px;
 }
  .logo a {
      font-size: 40px;
