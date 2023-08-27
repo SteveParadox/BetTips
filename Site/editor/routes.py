@@ -3,8 +3,6 @@ from flask import Flask, render_template, redirect, request, url_for, Blueprint,
 import uuid # using random string generator
 from ..models import * # importing classes from models.py 
 from Site import db, app # importing database and app configuration from folder package
-from flask_login import current_user, login_required, login_user, logout_user # using flask login
-from werkzeug.security import check_password_hash, generate_password_hash # using flask security
 import datetime
 import os
 import time
