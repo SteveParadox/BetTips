@@ -1,0 +1,113 @@
+{% extends 'layout.html' %}
+{% block content %}
+<style>
+    .in_form {
+        font-size: 30px;
+        margin-top: 2rem;
+        text-align: center;
+    }
+    .doha {
+        width: 100%;
+        border-radius: 29px;
+        height: 45px;
+        text-align: center;
+        border-color: deeppink;
+        font-size: 20px;
+    }
+</style>
+
+<div id="about">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12">
+                <div class="about-box">
+                    <h3 class="in_form"> Search Team</h3>
+                    <div class="location_section">
+                        <form action="">
+                        <input class="doha" type="search" placeholder="Search Team..." id="livebox">
+                    </form>
+                    </div>
+
+                    <table>
+                        <thead>
+                            <tr style="font-size: 11px;">
+                                <th scope="col">Team</th>
+                                <th scope="col">Country</th>
+                                <th scope="col">League</th>
+                                <th scope="col">Played</th>
+                                <th scope="col">Won</th>
+                                <th scope="col">Drawn</th>
+                                <th scope="col">Lost</th>
+                                <th scope="col">GF</th>
+                                <th scope="col">GA</th>
+                                <th scope="col">GD</th>
+                                <th scope="col">Points</th>
+                                <th scope="col">Form</th>
+                                <th scope="col">Win%</th>
+                                <th scope="col">Loss%</th>
+                                <th scope="col">Draw%</th>
+                                <th scope="col"> Trend</th>
+                             
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-label="Team"> <span id="datalist"></span></td>
+                                <td data-label="Team"> </td>
+                                <td data-label="Country"> </td>
+                                <td data-label="League"> </td>
+                                <td data-label="Played"> </td>
+                                <td data-label="Won"> </td>
+                                <td data-label="Drawn"> </td>
+                                <td data-label="Lost"> </td>
+                                <td data-label="GF"> </td>
+                                <td data-label="GA"> </td>
+                                <td data-label="GD"> </td>
+                                <td data-label="Points"> </td>
+                                <td data-label="Form"> </td>
+                                <td data-label="Win">  </td>
+                                <td data-label="Loss">  </td>
+                                <td data-label="Draw">  </td>
+                                <td data-label="Trend">  </td>
+                            
+                            </tr>
+                    
+                        </tbody>
+                       
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function(){
+      $("#livebox").keyup(function(e){
+          text = $("#livebox").val();
+          $.ajax({
+              method: "post",
+              url: '/searche',
+              data: {text: text},
+              success: function(res){
+                  console.log(res);
+                  var data = "<ul>";
+                  $.each(res,function(index,value){
+                      if(value.name != -1){
+                          data += <a href="team/'+value.name+'"> value.name </a>;
+                      }
+                  });
+                  data += "</ul>";
+                  $("#datalist").html(data);
+              },
+              error: function(err) {
+                  console.log("Error:", err); 
+              }
+          });
+      });
+  });
+</script>
+
+{%endblock content%}
