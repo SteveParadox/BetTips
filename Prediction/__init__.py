@@ -54,7 +54,5 @@ def create_app(config_class=Config):
 
 # registering packages to blueprint
     app.register_blueprint(analysis)
-    app.register_blueprint(edit)
-
 
     return app, celery
