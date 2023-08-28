@@ -80,7 +80,7 @@ class Bts(db.Model):
     date_uploaded = db.Column(db.DateTime, nullable=False, default=datetime.now)
 
 
-"""class RandomPrediction(Prediction):
+class RandomPrediction(Prediction):
     __mapper_args__ = {'polymorphic_identity': 'random_prediction'}
 
 
@@ -95,7 +95,7 @@ class SureOdds(Prediction):
 
 
 class BetAgainst(Prediction):
-    __mapper_args__ = {'polymorphic_identity': 'bet_against'}"""
+    __mapper_args__ = {'polymorphic_identity': 'bet_against'}
 
 
 class Notification(db.Model):
