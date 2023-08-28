@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- mobile metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <!-- site metas -->
+    <title>BettingFixed</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- bootstrap css -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <!-- style css -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Responsive-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/responsive.css') }}">
+    <!-- fevicon -->
+    <link rel="icon" type="image/gif" href="{{ url_for('static', filename='images/fevicon.png') }}">
+    <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/jquery.mCustomScrollbar.min.css') }}">
+    <!-- Tweaks for older IEs-->
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css"
+        media="screen">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/modal.css') }}">
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='/favicon/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon/favicon-16x16.png') }}">
+    <link rel="manifest" href="static/favicon/site.webmanifest">
+    
+</head>
+<!-- body -->
+
+<body class="main-layout">
+    <!-- loader  -->
+    
+    <!-- end loader -->
+    <!-- header -->
+    <header>
+        <!-- header inner -->
+        <div class="header-top2">
+            <div class="header2">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col logo_section">
+                            <div class="full">
+                                <div class="center-desk">
+                                    <div class="logo" >
+                                        <a style="font-size: 34px;" href="{{ url_for('edit.home') }}"><img style="height: 36px;" alt='' src="static/favicon/favicon-32x32.png">BettingFixed</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9">
+                            <div class="menu-area">
+                                <div class="limit-box">
+                                    <nav class="main-menu">
+                                        <ul class="menu-area-main">
+                                            <li><a href="{{ url_for('analysis.mostInFormTeams') }}">In Form Teams</a></li>
+                                            <li><a href="{{ url_for('analysis.bettingTips') }}">Betting Tips</a></li>
+                                            <li><a href="{{ url_for('analysis.teamsWithHighGoalStats') }}">High Goal Scoring Teams</a></li>
+                                            <li><a href="{{ url_for('analysis.bothTeamScoreTips') }}">Both Teams To Score Tips</a></li>
+                                            <li><a href="{{ url_for('analysis.teamsWithHighConcedingRate') }}">High Goal Conceding Teams</a></li>
+                                            <li class="active"><a href="{{ url_for('analysis.sureOdds') }}"> Free Odds</a></li>
+                                            <li><a href="{{ url_for('analysis.championshipDraw') }}">Championship Draw/Under 2.5</a></li>
+                                            <li><a href="{{ url_for('analysis.team_statistics')}}" style="font-size: 13px;">Team Statistics</a></li>
+
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end header inner -->
+
+            <!-- end header -->
+            <section class="slider_section">
+                <div class="banner_main">
+
+                    <div class="container">
+
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 ">
+                                <div class="text-bg">
+                                    <h1>Get  <br> <strong class="b_bold">Betting Tips </strong></h1>
+                                   
+                                    <a href="https://web.bet9ja.com/Sport/Default.aspx">Book Online</a>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                                <div class="text-img">
+                                    <figure><img src="static/images/hpg-logo-preview.png" /></figure>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        </section>
+        </div>
+        </div>
+    </header>
+
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+
+<div class="alert alert-{{ category }}">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+{% block content %}{% endblock %}
+    <!--  footer -->
+    <footr>
+        <div class="footer top_layer ">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-10 offset-md-1">
+                        <div class="location_section">
+                            <ul class="loca">
+                                <li>
+                                    <a href="#"><img src="static/icon/1.png" alt="#" /></a>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12 ">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4 col-sm-6">
+                                <div class="address">
+                                    <h3 style="font-size: 15px;">Menu</h3>
+                                    <ul class="Menu_footer">
+                                        <li><a href="{{ url_for('analysis.mostInFormTeams') }}" style="font-size: 13px;">In Form Teams</a></li>
+                                        <li><a href="{{ url_for('analysis.bettingTips') }}" style="font-size: 13px;">Betting Tips</a></li>
+                                        <li><a href="{{ url_for('analysis.teamsWithHighGoalStats') }}" style="font-size: 13px;">High Goal Scoring Teams</a></li>
+                                        <li><a href="{{ url_for('analysis.bothTeamScoreTips') }}" style="font-size: 13px;">Both Teams To Score Tips</a></li>
+                                        <li><a href="{{ url_for('analysis.teamsWithHighConcedingRate') }}" style="font-size: 13px;">High Goal Conceding Teams</a></li>
+                                        <li class="active"><a href="{{ url_for('analysis.sureOdds') }}" style="font-size: 13px;"> Free Odds</a></li>
+                                        <li><a href="{{ url_for('analysis.championshipDraw') }}" style="font-size: 13px;">Championship Draw/Under 2.5</a></li>
+                                        <li><a href="{{ url_for('analysis.team_statistics')}}" style="font-size: 13px;">Team Statistics</a></li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                           
+                            <div class="col-lg-4 col-md-4 col-sm-6">
+                                <div class="address">
+                                    <h3 style="font-size: 15px;">Menu</h3>
+                                    <ul class="Menu_footer">
+                                        <li><a href="{{ url_for('analysis.mostInFormTeams') }}" style="font-size: 13px;">In Form Teams</a></li>
+                                        <li><a href="{{ url_for('analysis.bettingTips') }}" style="font-size: 13px;">Betting Tips</a></li>
+                                        <li><a href="{{ url_for('analysis.teamsWithHighGoalStats') }}" style="font-size: 13px;">High Goal Scoring Teams</a></li>
+                                        <li><a href="{{ url_for('analysis.bothTeamScoreTips') }}" style="font-size: 13px;">Both Teams To Score Tips</a></li>
+                                        <li><a href="{{ url_for('analysis.teamsWithHighConcedingRate') }}" style="font-size: 13px;">High Goal Conceding Teams</a></li>
+                                        <li class="active"><a href="{{ url_for('analysis.sureOdds') }}" style="font-size: 13px;"> Free Odds</a></li>
+                                        <li><a href="{{ url_for('analysis.championshipDraw') }}" style="font-size: 13px;">Championship Draw/Under 2.5</a></li>
+                                        <li><a href="{{ url_for('analysis.team_statistics')}}" style="font-size: 13px;">Team Statistics</a></li>
+
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+
+            </div>
+            <div class="copyright">
+                <div class="container">
+                    <p>© 2023 All Rights Reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footr>
+    <!-- end footer -->
+    <!-- Javascript files-->
+    <script src="static/js/jquery.min.js"></script>
+    <script src="static/js/popper.min.js"></script>
+    <script src="static/js/bootstrap.bundle.min.js"></script>
+    <script src="static/js/jquery-3.0.0.min.js"></script>
+    <script src="static/js/plugin.js"></script>
+    <!-- sidebar -->
+    <script src="static/js/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="static/js/custom.js"></script>
+</body>
+
+</html>
