@@ -1,7 +1,7 @@
 from Prediction import create_app, db
 
 
-app = create_app()
+app, celery = create_app()
 app.app_context().push()
 
 ENV = 'dev'
