@@ -4,7 +4,7 @@ from flask import Flask
 from flask_marshmallow import Marshmallow
 from flask_sqlalchemy import SQLAlchemy
 from .config import Config, CACHE_CONFIG
-from Prediction.config import Config, CACHE_CONFIG, CSP,
+from Prediction.config import Config, CACHE_CONFIG, CSP
 from flask_caching import Cache
 import redis
 from Prediction.celery_config import celery_init_app
