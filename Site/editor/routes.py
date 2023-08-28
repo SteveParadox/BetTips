@@ -39,5 +39,6 @@ def contact():
 @edit.route('/create_tables')
 def create_tables():
     with app.app_context():
+        db.drop_all()
         db.create_all()
     return 'Database tables created successfully'
