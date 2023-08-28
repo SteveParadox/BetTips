@@ -3,8 +3,6 @@ import uuid
 from ..models import  Teams, InForm, Bts, BettingTips, HighScoring, HighConceding
 from Prediction import db, app 
 import datetime
-from Prediction.editor.form import NotificationForm
-
 
 # registering blueprint 
 analysis = Blueprint('analysis', __name__)
