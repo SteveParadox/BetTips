@@ -36,3 +36,8 @@ def contact():
 
     return render_template('contact.html')
 
+@edit.route('/create_tables')
+def create_tables():
+    with app.app_context():
+        db.create_all()
+    return 'Database tables created successfully'

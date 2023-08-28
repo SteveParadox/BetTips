@@ -24,7 +24,7 @@ CSP = {
 
 class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY')
-    ENV = 'dev'
+    ENV = 'prod'
 
     if ENV == 'dev':
         SQLALCHEMY_DATABASE_URI = 'sqlite:///store.db'
