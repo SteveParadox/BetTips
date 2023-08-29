@@ -6,6 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 from .config import Config, CACHE_CONFIG
 from Prediction.config import Config, CACHE_CONFIG, CSP
 from flask_caching import Cache
+from flask_marshmallow import Marshmallow
 import redis
 from Prediction.celery_config import celery_init_app
 import sentry_sdk
@@ -31,12 +32,14 @@ app.config.from_object(Config)
 # database Iniitialization
 db = SQLAlchemy()
 cache = Cache(config=CACHE_CONFIG)
+ma = Marshmallow()
 
 
 def create_app(config_class=Config):
 
 # initializing required modules to app
     db.init_app(app)
+    ma.init_app(app)
     cache.init_app(app)
     celery=celery_init_app(app)
     celery.conf.update(
