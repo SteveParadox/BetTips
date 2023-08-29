@@ -66,11 +66,27 @@ def teams():
     return data
 
 
+# In[45]:
+
+
+data = teams()
+print(len(data))
+
+
+# In[46]:
+
+
 dff = pd.DataFrame(data, columns=["Team", "Played", "Won", "Drawn", "Lost",
-                                "GF", "GA", "GD", "Points", "Last_5_W",
-                                "Last_5_D", "Last_5_L", "Team_Form",
-                                "Win_rate", "Loss_rate", "Draw_rate",
-                                "Performance_trend","Outcome"])
+                                  "GF", "GA", "GD", "Points", "Last_5_W",
+                                  "Last_5_D", "Last_5_L", "Team_Form",
+                                  "Win_rate", "Loss_rate", "Draw_rate",
+                                  "Performance_trend","Outcome"])
+print(len(dff))
+
+
+# In[47]:
+
+
 try:
     df = dff.query('Team_Form >= 2 or Team_Form <= -1')
 except:
@@ -89,6 +105,13 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 X_train["Team"] = le.transform(X_train["Team"])
 X_test["Team"] = le.transform(X_test["Team"])
 
+
+print(len(df))
+
+
+# In[48]:
+
+
 rf_model = RandomForestClassifier(n_estimators=100, random_state=42)
 rf_model.fit(X_train, y_train)
 
@@ -103,6 +126,10 @@ print(f"Accuracy: {accuracy}")
 print(f"Precision: {precision}")
 print(f"Recall: {recall}")
 print(f"F1-score: {f1}")
+
+
+# In[49]:
+
 
 def prediction():
     try:
@@ -133,3 +160,11 @@ def prediction():
     except Exception as e:
         print(f"Error: {e}")
         return None
+# In form team, Teams to bet against
+
+
+# In[50]:
+
+
+for_team, against_team, any_win = prediction()
+print(any_win)
