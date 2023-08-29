@@ -67,66 +67,58 @@ def teams():
     return data
 
 
-# In[45]:
+def df_analysis():
+    data = teams()
+    dff = pd.DataFrame(data, columns=["Team", "Played", "Won", "Drawn", "Lost",
+                                    "GF", "GA", "GD", "Points", "Last_5_W",
+                                    "Last_5_D", "Last_5_L", "Team_Form",
+                                    "Win_rate", "Loss_rate", "Draw_rate",
+                                    "Performance_trend","Outcome"])
+    print(len(dff))
 
 
-data = teams()
-print(len(data))
+    # In[47]:
 
 
-# In[46]:
+    try:
+        df = dff.query('Team_Form >= 2 or Team_Form <= -1')
+    except:
+        pass
+
+    # Encoding the labels
+    le = LabelEncoder()
+    le.fit(df["Team"])
+
+    # Splitting the data into training and testing sets
+    X = df.drop(columns=["Outcome"])
+    y = df["Outcome"]
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+    # Transforming the labels
+    X_train["Team"] = le.transform(X_train["Team"])
+    X_test["Team"] = le.transform(X_test["Team"])
 
 
-dff = pd.DataFrame(data, columns=["Team", "Played", "Won", "Drawn", "Lost",
-                                  "GF", "GA", "GD", "Points", "Last_5_W",
-                                  "Last_5_D", "Last_5_L", "Team_Form",
-                                  "Win_rate", "Loss_rate", "Draw_rate",
-                                  "Performance_trend","Outcome"])
-print(len(dff))
+    print(len(df))
 
 
-# In[47]:
+    # In[48]:
 
 
-try:
-    df = dff.query('Team_Form >= 2 or Team_Form <= -1')
-except:
-    pass
+    rf_model = RandomForestClassifier(n_estimators=100, random_state=42)
+    rf_model.fit(X_train, y_train)
 
-# Encoding the labels
-le = LabelEncoder()
-le.fit(df["Team"])
+    # Evaluating the model on the testing data
+    y_pred = rf_model.predict(X_test)
 
-# Splitting the data into training and testing sets
-X = df.drop(columns=["Outcome"])
-y = df["Outcome"]
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-# Transforming the labels
-X_train["Team"] = le.transform(X_train["Team"])
-X_test["Team"] = le.transform(X_test["Team"])
-
-
-print(len(df))
-
-
-# In[48]:
-
-
-rf_model = RandomForestClassifier(n_estimators=100, random_state=42)
-rf_model.fit(X_train, y_train)
-
-# Evaluating the model on the testing data
-y_pred = rf_model.predict(X_test)
-
-accuracy = accuracy_score(y_test, y_pred)
-precision = precision_score(y_test, y_pred, average='weighted')
-recall = recall_score(y_test, y_pred, average='weighted')
-f1 = f1_score(y_test, y_pred, average='weighted')
-print(f"Accuracy: {accuracy}")
-print(f"Precision: {precision}")
-print(f"Recall: {recall}")
-print(f"F1-score: {f1}")
+    accuracy = accuracy_score(y_test, y_pred)
+    precision = precision_score(y_test, y_pred, average='weighted')
+    recall = recall_score(y_test, y_pred, average='weighted')
+    f1 = f1_score(y_test, y_pred, average='weighted')
+    print(f"Accuracy: {accuracy}")
+    print(f"Precision: {precision}")
+    print(f"Recall: {recall}")
+    print(f"F1-score: {f1}")
 
 
 # In[49]:
