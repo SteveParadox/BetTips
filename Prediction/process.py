@@ -119,12 +119,14 @@ def df_analysis():
     print(f"Precision: {precision}")
     print(f"Recall: {recall}")
     print(f"F1-score: {f1}")
+    return X_test, X_train, y_test, y_train
 
 
 # In[49]:
 
 
 def prediction():
+    X_test, X_train, y_test, y_train = df_analysis()
     try:
         # Getting predictions for all the data
         all_data = pd.concat([X_train, X_test])
