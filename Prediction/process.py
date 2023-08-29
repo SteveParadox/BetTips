@@ -158,8 +158,4 @@ def prediction():
 # In form team, Teams to bet against
 
 
-# In[50]:
 
-
-for_team, against_team, any_win = prediction()
-print(any_win)
