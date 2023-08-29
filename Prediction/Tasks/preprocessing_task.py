@@ -33,6 +33,6 @@ def commit_teams(self):
 
 
 @shared_task(bind=True, base=AbortableTask)
-commit_seperate(self):
+def commit_seperate(self):
     pass
 
