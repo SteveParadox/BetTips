@@ -3,7 +3,7 @@ from celery.contrib.abortable import AbortableTask
 from time import sleep
 from Prediction.models import *
 
-from .url_list import urls
+from ..url_list import urls
 from Prediction.process import teams
 
 
@@ -29,7 +29,6 @@ def commit_teams(self):
         )
         db.session.add(team)
     db.session.commit()
-
 
 
 @shared_task(bind=True, base=AbortableTask)
