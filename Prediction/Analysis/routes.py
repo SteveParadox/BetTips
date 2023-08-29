@@ -12,3 +12,7 @@ analysis = Blueprint('analysis', __name__)
 def add_teams():
     commit_teams.delay()
     return jsonify({'message': 'done'})
+
+@analysis.route('/api')
+def home():
+    return jsonify({'message': 'Heheheheh'})
