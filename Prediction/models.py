@@ -1,6 +1,6 @@
 from datetime import datetime
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
-from Site import db
+from Prediction import db
 
 class Prediction(db.Model):
     id = db.Column(db.Integer, primary_key=True)
