@@ -1,3 +1,4 @@
+"""
 urls = [
     "https://www.goal.com/en-us/premier-league/table/6wubmo7di3kdpflluf6s8c7vs",
     "https://www.goal.com/en-us/ligue-1/table/57nu0wygurzkp6fuy5hhrtaa2",
@@ -74,4 +75,12 @@ urls = [
     "https://www.goal.com/en-us/vleague-1/table/aho73e5udydy96iun3tkzdzsi",
     "https://www.goal.com/en-us/premier-soccer-league/table/4azsryi40zahspm5h6d0f0pgl"
 
+]
+"""
+
+urls =[
+    "https://www.goal.com/en-us/liga-profesional-argentina/table/581t4mywybx21wcpmpykhyzr3",
+      "https://www.goal.com/en-us/serie-a/table/scf9p4y91yjvqvg5jndxzhxj",
+      "https://www.goal.com/en-us/primera-divisi%C3%B3n/table/2y8bntiif3a9y6gtmauv30gt",
+    "https://www.goal.com/en-us/primera-b/table/bly7ema5au6j40i0grhl0pnub"
 ]
