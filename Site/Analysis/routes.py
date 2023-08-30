@@ -95,5 +95,4 @@ def team_detail(name):
     results = Teams.query.filter_by(name=name).first()
     teams_schema = TeamsSchema(many=True)
     res = teams_schema.dump(results)
-    print(res)
     return jsonify(res)
