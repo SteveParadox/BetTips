@@ -23,6 +23,7 @@ class Prediction(db.Model):
 class Teams(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String())
+    league_name = db.Column(db.String())
     played = db.Column(db.Integer())
     won = db.Column(db.Integer())
     drawn = db.Column(db.Integer())
@@ -32,10 +33,10 @@ class Teams(db.Model):
     gd = db.Column(db.Integer())
     points = db.Column(db.Integer())
     team_form = db.Column(db.Integer())
-    win_rate = db.Column(db.Integer())
-    loss_rate = db.Column(db.Integer())
-    draw_rate = db.Column(db.Integer())
-    performance_trend = db.Column(db.Integer())
+    win_rate = db.Column(db.Float())
+    loss_rate = db.Column(db.Float())
+    draw_rate = db.Column(db.Float())
+    performance_trend = db.Column(db.Float())
 
     def __repr__(self):
         return f"Notification('{self.name}', '{self.email}')"
@@ -43,7 +44,6 @@ class Teams(db.Model):
 class InForm(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     team = db.Column(db.String())
-    country = db.Column(db.String())
     league = db.Column(db.String())
     win_percent = db.Column(db.Float())
     date_uploaded = db.Column(db.DateTime, nullable=False, default=datetime.now)
@@ -53,7 +53,7 @@ class BettingTips(db.Model):
     team = db.Column(db.String())
     competition = db.Column(db.String())
     prediction = db.Column(db.String())
-    connfidence = db.Column(db.Float())
+    confidence = db.Column(db.Float())
     date_uploaded = db.Column(db.DateTime, nullable=False, default=datetime.now)
 
 class HighScoring(db.Model):

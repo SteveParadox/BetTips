@@ -89,7 +89,7 @@ def search():
 
 
 
-@analysis.route('/team/<string:name>', methods=['POST'])
+@analysis.route('/<string:name>', methods=['POST'])
 def team_detail(name):
     results = Teams.query.filter_by(name=name).first()
     teams_schema = TeamsSchema(many=True)

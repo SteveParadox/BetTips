@@ -4,7 +4,7 @@ from time import sleep
 from Prediction.models import *
 
 from ..url_list import urls
-from Prediction.process import teams
+from Prediction.process import teams, df_analysis
 
 
 @shared_task(bind=True, base=AbortableTask)
@@ -32,6 +32,21 @@ def commit_teams(self):
 
 
 @shared_task(bind=True, base=AbortableTask)
-def commit_seperate(self):
-    pass
+def inform_teams(self):
+    teams = Teams.query.all()
+    teams_schema = TeamsSchema(many=True)
+    data = teams_schema.dump(teams)
+    for_team, against_team, any_win =df_analysis(data)
+    for inform_ in for_team:
+        team = Teams.query.filter_by(name=inform_).first()
+        inform = InForm(
+                    team = team.name
+                    league = team.league_name
+                    win_percent = team.win_rate
+        )
+        db.session.add(inform)
+    db.session.commit()
+
+    
+
 

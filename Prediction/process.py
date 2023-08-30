@@ -18,6 +18,9 @@ def teams():
     for url in urls:
         response = requests.get(url)
         soup = BeautifulSoup(response.content, "lxml")
+        h1_tag = soup.find("h1")
+        league_name = h1_tag.get_text()
+        league_name = league_name.replace("Table & Standings", "").strip()
         table = soup.find("table")
         if table is not None:
             rows = table.find_all("tr")
@@ -51,7 +54,7 @@ def teams():
                     draw_rate = drawn / played
                     performance_trend = (last_five_record[0] - last_five_record[2]) / 5
 
-                    data_.append([name, played, won, drawn, lost, gf, ga, gd, points,
+                    data_.append([name, league_name, played, won, drawn, lost, gf, ga, gd, points,
                                 last_five_record[0], last_five_record[1],
                                 last_five_record[2], team_form, win_rate, loss_rate, draw_rate, performance_trend])
 
@@ -67,18 +70,12 @@ def teams():
     return data
 
 
-def df_analysis():
-    data = teams()
-    dff = pd.DataFrame(data, columns=["Team", "Played", "Won", "Drawn", "Lost",
+def df_analysis(data):
+    dff = pd.DataFrame(data, columns=["Team", "League", "Played", "Won", "Drawn", "Lost",
                                     "GF", "GA", "GD", "Points", "Last_5_W",
                                     "Last_5_D", "Last_5_L", "Team_Form",
                                     "Win_rate", "Loss_rate", "Draw_rate",
                                     "Performance_trend","Outcome"])
-    print(len(dff))
-
-
-    # In[47]:
-
 
     try:
         df = dff.query('Team_Form >= 2 or Team_Form <= -1')
@@ -90,20 +87,13 @@ def df_analysis():
     le.fit(df["Team"])
 
     # Splitting the data into training and testing sets
-    X = df.drop(columns=["Outcome"])
+    X = df.drop(columns=["Outcome", "League"])
     y = df["Outcome"]
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
     # Transforming the labels
     X_train["Team"] = le.transform(X_train["Team"])
     X_test["Team"] = le.transform(X_test["Team"])
-
-
-    print(len(df))
-
-
-    # In[48]:
-
 
     rf_model = RandomForestClassifier(n_estimators=100, random_state=42)
     rf_model.fit(X_train, y_train)
@@ -114,19 +104,9 @@ def df_analysis():
     accuracy = accuracy_score(y_test, y_pred)
     precision = precision_score(y_test, y_pred, average='weighted')
     recall = recall_score(y_test, y_pred, average='weighted')
-    f1 = f1_score(y_test, y_pred, average='weighted')
-    print(f"Accuracy: {accuracy}")
-    print(f"Precision: {precision}")
-    print(f"Recall: {recall}")
-    print(f"F1-score: {f1}")
-    return X_test, X_train, y_test, y_train
-
-
-# In[49]:
-
-
-def prediction():
+    f1 = f1_score(y_test, y_pred, average='weighted')    
     X_test, X_train, y_test, y_train = df_analysis()
+
     try:
         # Getting predictions for all the data
         all_data = pd.concat([X_train, X_test])
