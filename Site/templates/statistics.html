@@ -84,30 +84,31 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-  $(document).ready(function(){
-      $("#livebox").keyup(function(e){
-          text = $("#livebox").val();
-          $.ajax({
-              method: "post",
-              url: '/searche',
-              data: {text: text},
-              success: function(res){
-                  console.log(res);
-                  var data = "<ul>";
-                  $.each(res,function(index,value){
-                      if(value.name != -1){
-                          data += <a href="team/'+value.name+'"> value.name </a>;
-                      }
-                  });
-                  data += "</ul>";
-                  $("#datalist").html(data);
-              },
-              error: function(err) {
-                  console.log("Error:", err); 
-              }
-          });
-      });
-  });
-</script>
+    $(document).ready(function(){
+        $("#livebox").keyup(function(e){
+            var text = $("#livebox").val();
+            $.ajax({
+                method: "post",
+                url: '/searche',
+                data: {text: text},
+                success: function(res){
+                    console.log(res);
+                    var data = "<ul>";
+                    $.each(res, function(index, value){
+                        if(value.name !== -1){
+                            data += '<li><a href="team/' + value.name + '">' + value.name + '</a></li>';
+                        }
+                    });
+                    data += "</ul>";
+                    $("#datalist").html(data);
+                },
+                error: function(err) {
+                    console.log("Error:", err); 
+                }
+            });
+        });
+    });
+  </script>
+  
 
 {%endblock content%}
