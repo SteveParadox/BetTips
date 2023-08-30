@@ -85,7 +85,7 @@ def search():
     results = Teams.query.filter(Teams.name.ilike(f'%{data}%')).all()
     teams_schema = TeamsSchema(many=True)
     res = teams_schema.dump(results)
-    print(res)
+    print(res.encode('utf-8'))
     return jsonify(res)
 
 
