@@ -40,8 +40,8 @@ def inform_teams(self):
     for inform_ in for_team:
         team = Teams.query.filter_by(name=inform_).first()
         inform = InForm(
-                    team = team.name
-                    league = team.league_name
+                    team = team.name,
+                    league = team.league_name,
                     win_percent = team.win_rate
         )
         db.session.add(inform)
