@@ -16,3 +16,5 @@ def celery_init_app(app: Flask) -> Celery:
     app.extensions["celery"] = celery_app
     celery_app.conf.worker_disable_tracebacks  = True
     return celery_app
+
+#celery -A api.celery worker --pool=solo --loglevel=info

@@ -10,22 +10,23 @@ from Prediction.process import teams, df_analysis
 @shared_task(bind=True, base=AbortableTask)
 def commit_teams(self):
     data = teams()
-    for team_data in data:  # Assuming 'data' contains the formatted data
+    for team_data in data: 
         team = Teams(
             name=team_data[0],
-            played=team_data[1],
-            won=team_data[2],
-            drawn=team_data[3],
-            lost=team_data[4],
-            gf=team_data[5],
-            ga=team_data[6],
-            gd=team_data[7],
-            points=team_data[8],
-            team_form=team_data[9],
-            win_rate=team_data[10],
-            loss_rate=team_data[11],
-            draw_rate=team_data[12],
-            performance_trend=team_data[13]
+            league_name= team_data[1]
+            played=team_data[2],
+            won=team_data[3],
+            drawn=team_data[4],
+            lost=team_data[5],
+            gf=team_data[6],
+            ga=team_data[7],
+            gd=team_data[8],
+            points=team_data[9],
+            team_form=team_data[10],
+            win_rate=team_data[11],
+            loss_rate=team_data[12],
+            draw_rate=team_data[13],
+            performance_trend=team_data[14]
         )
         db.session.add(team)
     db.session.commit()
@@ -37,15 +38,17 @@ def inform_teams(self):
     teams_schema = TeamsSchema(many=True)
     data = teams_schema.dump(teams)
     for_team, against_team, any_win =df_analysis(data)
-    for inform_ in for_team:
-        team = Teams.query.filter_by(name=inform_).first()
-        inform = InForm(
-                    team = team.name,
-                    league = team.league_name,
-                    win_percent = team.win_rate
-        )
-        db.session.add(inform)
-    db.session.commit()
+    if for_team is not None:
+        for inform_ in for_team:
+            team = Teams.query.filter_by(name=inform_).first()
+            inform = InForm(
+                        team = team.name,
+                        league = team.league_name,
+                        win_percent = team.win_rate
+            )
+            db.session.add(inform)
+        db.session.commit()
+    return {'message': 'Error in Data'}
 
     
 
