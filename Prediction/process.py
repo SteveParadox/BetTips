@@ -70,6 +70,7 @@ def teams():
     return data
 
 
+
 def df_analysis(data):
     dff = pd.DataFrame(data, columns=["Team", "League", "Played", "Won", "Drawn", "Lost",
                                     "GF", "GA", "GD", "Points", "Last_5_W",
