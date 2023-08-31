@@ -30,13 +30,17 @@ class Teams(db.Model):
     lost = db.Column(db.Integer())
     gf = db.Column(db.Integer())
     ga = db.Column(db.Integer())
-    gd = db.Column(db.Integer())
+    gd = db.Column(db.Integer())    
     points = db.Column(db.Integer())
+    Last_5_W = db.Column(db.Integer())
+    Last_5_D = db.Column(db.Integer())
+    Last_5_L = db.Column(db.Integer())
     team_form = db.Column(db.Integer())
     win_rate = db.Column(db.Float())
     loss_rate = db.Column(db.Float())
     draw_rate = db.Column(db.Float())
     performance_trend = db.Column(db.Float())
+    outcome = db.Column(db.Integer())
 
     def __repr__(self):
         return f"Notification('{self.name}', '{self.email}')"
