@@ -3,7 +3,7 @@ import uuid
 from ..models import  Teams, InForm, Bts, BettingTips, HighScoring, HighConceding, TeamsSchema
 from Prediction import db, app 
 import datetime
-from Prediction.Tasks.preprocessing_task import commit_teams
+from Prediction.Tasks.preprocessing_task import commit_teams, inform_teams
 
 # registering blueprint 
 analysis = Blueprint('analysis', __name__)
@@ -23,3 +23,8 @@ def teams():
     teams_schema = TeamsSchema(many=True)
     res = teams_schema.dump(results)
     return jsonify(res)
+
+@analysis.route('/api/inform/teams')
+def add_teams():
+    inform_teams.delay()
+    return jsonify({'message': 'done'})
