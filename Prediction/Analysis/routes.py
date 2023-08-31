@@ -25,6 +25,6 @@ def teams():
     return jsonify(res)
 
 @analysis.route('/api/inform/teams')
-def add_teams():
+def add_inform_teams():
     inform_teams.delay()
     return jsonify({'message': 'done'})
