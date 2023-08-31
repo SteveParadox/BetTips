@@ -56,3 +56,6 @@ def inform_teams(self):
     
 
 
+@shared_task(bind=True, base=AbortableTask)
+def hello(self):
+    print('Hello App')
