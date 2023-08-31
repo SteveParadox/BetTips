@@ -22,11 +22,15 @@ def commit_teams(self):
             ga=team_data[7],
             gd=team_data[8],
             points=team_data[9],
-            team_form=team_data[10],
-            win_rate=team_data[11],
-            loss_rate=team_data[12],
-            draw_rate=team_data[13],
-            performance_trend=team_data[14]
+            Last_5_W= team_data[10],
+            Last_5_W= team_data[11],
+            Last_5_W= team_data[12],
+            team_form=team_data[13],
+            win_rate=team_data[14],
+            loss_rate=team_data[15],
+            draw_rate=team_data[16],
+            performance_trend=team_data[17],
+            outcome=team_data[18]
         )
         db.session.add(team)
     db.session.commit()
@@ -48,8 +52,7 @@ def inform_teams(self):
             )
             db.session.add(inform)
         db.session.commit()
-    return {'message': 'Error in Data'}
-
+    print('Data Is Empty')
     
 
 
