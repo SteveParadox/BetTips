@@ -13,7 +13,7 @@ def commit_teams(self):
     for team_data in data: 
         team = Teams(
             name=team_data[0],
-            league_name= team_data[1]
+            league_name= team_data[1],
             played=team_data[2],
             won=team_data[3],
             drawn=team_data[4],
