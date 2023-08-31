@@ -29,7 +29,7 @@ def add_inform_teams():
     inform_teams.delay()
     return jsonify({'message': 'done'})
 
-@analysis.route('/api')
+@analysis.route('/api/hello')
 def home_hello():
     hello.delay()
     return jsonify({'message': 'done'})
