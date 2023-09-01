@@ -106,8 +106,7 @@ def df_analysis(data):
     precision = precision_score(y_test, y_pred, average='weighted')
     recall = recall_score(y_test, y_pred, average='weighted')
     f1 = f1_score(y_test, y_pred, average='weighted')    
-    X_test, X_train, y_test, y_train = df_analysis()
-
+    
     try:
         # Getting predictions for all the data
         all_data = pd.concat([X_train, X_test])
