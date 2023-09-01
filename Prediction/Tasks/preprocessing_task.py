@@ -38,9 +38,30 @@ def commit_teams(self):
 
 @shared_task(bind=True, base=AbortableTask)
 def inform_teams(self):
+def inform_teams(self):
     teams = Teams.query.all()
-    teams_schema = TeamsSchema(many=True)
-    data = teams_schema.dump(teams)
+    data = [[
+        team.name,
+        team.league_name,
+        team.played,
+        team.won,
+        team.drawn,
+        team.lost,
+        team.gf,
+        team.ga,
+        team.gd,
+        team.points,
+        team.Last_5_W,
+        team.Last_5_D,
+        team.Last_5_L,
+        team.team_form,
+        team.win_rate,
+        team.loss_rate,
+        team.draw_rate,
+        team.performance_trend,
+        team.outcome
+    ] for team in teams]
+    
     for_team, against_team, any_win =df_analysis(data)
     if for_team is not None:
         for inform_ in for_team:
