@@ -28,9 +28,9 @@
                         {% for picks in in_form %}
                         <tbody>
                             <tr>
-                                <td data-label="Team">{{picks.content}}</td>
+                                <td data-label="Team">{{picks.team}}</td>
                                 <td data-label="League">{{ picks.league }}</td>
-                                <td data-label="Win"></td>
+                                <td data-label="Win">{{picks.win_rate}}</td>
                             </tr>
                            
                         </tbody>
