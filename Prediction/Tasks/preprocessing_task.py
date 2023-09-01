@@ -38,7 +38,6 @@ def commit_teams(self):
 
 @shared_task(bind=True, base=AbortableTask)
 def inform_teams(self):
-def inform_teams(self):
     teams = Teams.query.all()
     data = [[
         team.name,
