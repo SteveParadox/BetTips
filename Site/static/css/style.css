@@ -393,6 +393,9 @@
      margin: 0;
      font-weight: 300;
 }
+.deg{
+    font-size: 10px;
+}
  .right_cart_section ul.cart_update li span {
      font-size: 18px;
      font-weight: 300;
