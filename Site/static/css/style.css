@@ -667,6 +667,10 @@
      -webkit-transform: scaleY(1);
      transform: scaleY(1);
 }
+
+.deg{
+    font-size: 11px;
+}
  .inner-cart {
      background: #38c8a8;
      border-radius: 2px;
