@@ -3,7 +3,7 @@ from celery import shared_task
 from celery.contrib.abortable import AbortableTask
 
 from Prediction.models import *
-from Prediction.process import teams, df_analysis, high_gf_ga, match_fix, predict_both_teams_score
+from Prediction.process import teams, df_analysis, high_gf_ga, match_fix, predict_both_teams_score, predict_home_or_away
 
 
 def get_data():
@@ -84,7 +84,7 @@ def anyteamwin(self):
     data = get_data()
     _, _, any_win =df_analysis(data)
 
-    predictions = predict_both_teams_score(match_fix, data, any_win)
+    predictions = predict_home_or_away(match_fix, data, any_win)
     for pred in predictions:
         team = Teams.query.filter_by(name=pred[0]).first()
         h_or_a = H_or_A(
