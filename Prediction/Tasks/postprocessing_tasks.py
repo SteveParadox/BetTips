@@ -3,7 +3,7 @@ from celery import shared_task
 from celery.contrib.abortable import AbortableTask
 
 from Prediction.models import *
-from Prediction.process import teams, df_analysis, high_gf_ga, match_fix
+from Prediction.process import teams, df_analysis, high_gf_ga, match_fix, predict_both_teams_score
 
 
 def get_data():
