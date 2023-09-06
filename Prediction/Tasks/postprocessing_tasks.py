@@ -73,7 +73,7 @@ def both_teams_score(self):
         bts = Bts(
                     fixture = predictions,
                     league = team.league_name,
-                    prediction = ""
+                    prediction = 0.0
         )
         db.session.add(bts)
     db.session.commit()
@@ -108,4 +108,44 @@ def get_random():
 @shared_task(bind=True, base=AbortableTask)
 def bettingpick(self):
     random_rows = get_random()
-    print(random_rows)
+
+    for row in random_rows:
+
+        if isinstance(row, InForm):
+            bettips = BettingTips(
+                team=row.team,
+                competition=row.league,
+                prediction="Win",
+                confidence=0.0
+            )
+        elif isinstance(row, HighScoring):
+            bettips = BettingTips(
+                team=row.team,
+                competition=row.league,
+                prediction=f"To score Over {row.scoring_rate} goals",
+                confidence=0.0
+            )
+        elif isinstance(row, HighConceding):
+            bettips = BettingTips(
+                team=row.team,
+                competition=row.league,
+                prediction=f"To Concede Over {row.conceding_rate} goals",
+                confidence=0.0
+            )
+        elif isinstance(row, H_or_A):
+            bettips = BettingTips(
+                team=row.fixture,
+                competition=row.league,
+                prediction=row.prediction,
+                confidence=0.0
+            )
+        elif isinstance(row, Bts):
+            bettips = BettingTips(
+                team=row.fixture,
+                competition=row.league,
+                prediction=row.prediction,
+                confidence=0.0
+            )
+
+        db.session.add(bettips)
+    db.session.commit()
