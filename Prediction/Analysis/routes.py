@@ -41,6 +41,15 @@ def add_highga_teams():
     high_conceding_rate.delay()
     return jsonify({'message': 'done'})
 
+@analysis.route('/api/anyteam/teams')
+def add_anyteam():
+    anyteamwin.delay()
+    return jsonify({'message': 'done'})
+
+@analysis.route('/api/bts/teams')
+def add_btsteam():
+    both_teams_score.delay()
+    return jsonify({'message': 'done'})
 
 @analysis.route('/api/hello')
 def home_hello():
