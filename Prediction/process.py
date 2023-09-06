@@ -259,7 +259,6 @@ def predict_both_teams_score(data):
     return predictions
 
 def predict_home_or_away(data, any_win):
-    
     dff = pd.DataFrame(data, columns=["Team", "League", "Played", "Won", "Drawn", "Lost",
                                     "GF", "GA", "GD", "Points", "Last_5_W",
                                     "Last_5_D", "Last_5_L", "Team_Form",
@@ -271,7 +270,7 @@ def predict_home_or_away(data, any_win):
 
     for fixture in compiled:
         team_1, team_2 = fixture[0], fixture[1]
-        if any_win in team_1 or any_win in team_2:
+        if  team_1 in any_win or team_2 in any_win:
             predictions.append(f'{team_1} vs {team_2}')
     
     return predictions
