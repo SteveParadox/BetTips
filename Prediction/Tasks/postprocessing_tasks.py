@@ -3,7 +3,7 @@ from celery import shared_task
 from celery.contrib.abortable import AbortableTask
 
 from Prediction.models import *
-from Prediction.process import teams, df_analysis, high_gf_ga
+from Prediction.process import teams, df_analysis, high_gf_ga, match_fix
 
 
 
@@ -78,6 +78,42 @@ def high_conceding_rate(self):
                     league = team.league_name,
                     goal_conceded = team.ga,
                     conceding_rate = team.ga / team.played
+        )
+        db.session.add(high_conceding)
+    db.session.commit()
+
+
+@shared_task(bind=True, base=AbortableTask)
+def both_teams_score(self):
+    teams = Teams.query.all()
+    data = [[
+        team.name,
+        team.league_name,
+        team.played,
+        team.won,
+        team.drawn,
+        team.lost,
+        team.gf,
+        team.ga,
+        team.gd,
+        team.points,
+        team.Last_5_W,
+        team.Last_5_D,
+        team.Last_5_L,
+        team.team_form,
+        team.win_rate,
+        team.loss_rate,
+        team.draw_rate,
+        team.performance_trend,
+        team.outcome
+    ] for team in teams]
+    predictions = predict_both_teams_score(match_fix, data)
+    for pred in predictions:
+        team = Teams.query.filter_by(name=pred[0]).first()
+        bts = Bts(
+                    fixture = predictions,
+                    league = team.league_name,
+                    prediction = ""
         )
         db.session.add(high_conceding)
     db.session.commit()

@@ -189,7 +189,7 @@ def get_fixtures(match_fix, data):
 
 
 
-def high_gf_ga(data):
+def high_gf_ga(match_fix, data):
     dff = pd.DataFrame(data, columns=["Team", "League", "Played", "Won", "Drawn", "Lost",
                                     "GF", "GA", "GD", "Points", "Last_5_W",
                                     "Last_5_D", "Last_5_L", "Team_Form",
@@ -216,30 +216,62 @@ def high_gf_ga(data):
     return high_scoring_teams, high_conceding_teams, threshold_high_goal_scoring
 
 
-def predict_both_teams_score(match_fix, threshold_high_goal_scoring, data):
+def predict_both_teams_score(data):
+    
     dff = pd.DataFrame(data, columns=["Team", "League", "Played", "Won", "Drawn", "Lost",
                                     "GF", "GA", "GD", "Points", "Last_5_W",
                                     "Last_5_D", "Last_5_L", "Team_Form",
                                     "Win_rate", "Loss_rate", "Draw_rate",
                                     "Performance_trend","Outcome"])
 
-    match_fix = [item for item.split(' vs ') in match_fix ]
+    compiled = [fixture.split(' vs ') for fixture in match_fix]
     predictions = []
+
     for fixture in compiled:
         team_1, team_2 = fixture[0], fixture[1]
-        try:
-            team_1_gf = dff[dff['Team'] == team_1]['GF'].values[0] +\
-             dff[dff['Team'] == team_1]['GA'].values[0]
-            team_2_gf = dff[dff['Team'] == team_2]['GF'].values[0] +\
-             dff[dff['Team'] == team_2]['GA'].values[0]
 
-            if team_1_gf >= threshold_high_goal_scoring and team_2_gf >= threshold_high_goal_scoring:
-                predictions.append(f'{team_1} vs {team_2}: Both Teams to Score')
-            else:
-                predictions.append(f'{team_1} vs {team_2}: Both Teams Not to Score')
+        try:
+            # Check if any part of team name is in dff
+            team_1_data = dff[dff['Team'].str.contains(team_1, case=False, regex=False)]
+            team_2_data = dff[dff['Team'].str.contains(team_2, case=False, regex=False)]
+
+            if not team_1_data.empty and not team_2_data.empty:
+                team_1_gf = team_1_data['GF'].values[0]
+                team_2_gf = team_2_data['GF'].values[0]
+
+                dff['Average_GF_per_Match'] = dff['GF'] / dff['Played']
+                mean_avg_goal_per_match = dff['Average_GF_per_Match'].mean()
+                std_deviation_avg_goal_per_match = dff['Average_GF_per_Match'].std()
+
+                threshold_high_goal_scoring = mean_avg_goal_per_match + std_deviation_avg_goal_per_match
+
+                if team_1_gf >= threshold_high_goal_scoring and team_2_gf >= threshold_high_goal_scoring:
+                    predictions.append(f'{team_1} vs {team_2}')
+                else:
+                    predictions.append(f'{team_1} vs {team_2}')
+            #else:
+                #predictions.append(f'Team data not found for {team_1} or {team_2}. Skipping...')
 
         except IndexError:
-           # print(f"Team data not found for {team_1} or {team_2}. Skipping...")
+            # Handle exceptions if needed
             pass
-        
+
+    return predictions
+
+def predict_home_or_away(data, any_win):
+    
+    dff = pd.DataFrame(data, columns=["Team", "League", "Played", "Won", "Drawn", "Lost",
+                                    "GF", "GA", "GD", "Points", "Last_5_W",
+                                    "Last_5_D", "Last_5_L", "Team_Form",
+                                    "Win_rate", "Loss_rate", "Draw_rate",
+                                    "Performance_trend","Outcome"])
+
+    compiled = [fixture.split(' vs ') for fixture in match_fix]
+    predictions = []
+
+    for fixture in compiled:
+        team_1, team_2 = fixture[0], fixture[1]
+        if any_win in team_1 or any_win in team_2:
+            predictions.append(f'{team_1} vs {team_2}')
+    
     return predictions
