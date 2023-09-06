@@ -51,6 +51,11 @@ def add_btsteam():
     both_teams_score.delay()
     return jsonify({'message': 'done'})
 
+@analysis.route('/api/bet/picks')
+def bet_picks():
+    bettingpick.delay()
+    return jsonify({'message': 'done'})
+
 @analysis.route('/api/hello')
 def home_hello():
     hello.delay()
