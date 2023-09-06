@@ -28,10 +28,10 @@
                         {% for picks in high_scoring %}
                         <tbody>
                             <tr>
-                                <td data-label="Team">{{ picks.content }}</td>
+                                <td data-label="Team">{{ picks.team }}</td>
                                 <td data-label="League">{{ picks.league }}</td>
-                                <td data-label="League Goal Scored"></td>
-                                <td data-label="Scoring Rate"></td>
+                                <td data-label="League Goal Scored">{{ picks.goal_scored }}</td>
+                                <td data-label="Scoring Rate">{{ picks.scoring_rate }}</td>
                             
                             </tr>
                         </tbody>

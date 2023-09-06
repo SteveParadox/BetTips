@@ -28,10 +28,10 @@
                         {% for picks in high_conceding %}
                         <tbody>
                             <tr>
-                                <td data-label="Team">{{ picks.content }}</td>
+                                <td data-label="Team">{{ picks.team }}</td>
                                 <td data-label="League">{{ picks.league }}</td>
-                                <td data-label="League Goals Conceded"></td>
-                                <td data-label="Conceding Rate"></td>
+                                <td data-label="League Goals Conceded">{{ picks.goal_conceded }}</td>
+                                <td data-label="Conceding Rate">{{ picks.conceding_rate }}</td>
                             
                             </tr>
                     
