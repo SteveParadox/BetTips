@@ -4,7 +4,7 @@ from celery.contrib.abortable import AbortableTask
 
 from Prediction.models import *
 from Prediction.process import teams, df_analysis, high_gf_ga, match_fix, predict_both_teams_score, predict_home_or_away
-
+from random import sample
 
 def get_data():
     teams = Teams.query.all()
@@ -94,3 +94,18 @@ def anyteamwin(self):
         db.session.add(h_or_a)
     db.session.commit()
 
+def get_random():
+    random_rows = []
+
+    random_rows.extend(InForm.query.order_by(db.func.random()).limit(2).all())
+    random_rows.extend(HighScoring.query.order_by(db.func.random()).limit(2).all())
+    random_rows.extend(HighConceding.query.order_by(db.func.random()).limit(2).all())
+    random_rows.extend(H_or_A.query.order_by(db.func.random()).limit(2).all())
+    random_rows.extend(Bts.query.order_by(db.func.random()).limit(2).all())
+
+    return random_rows
+
+@shared_task(bind=True, base=AbortableTask)
+def bettingpick(self):
+    random_rows = get_random_rows_from_tables()
+    print(random_rows)
