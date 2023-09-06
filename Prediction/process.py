@@ -165,19 +165,22 @@ while start_date <= end_date:
 
     start_date += delta
 
-def get_fixtures(match_fix, self):
-    for_team, against_team, any_win = prediction()
-
+def get_fixtures(match_fix, data):
+    compiled_for, compiled_against, compiled_any = None, None, None   
     match_fix = np.array(match_fix)
-    selection_set = np.array([line.strip() for line in for_team])
-    compiled_for = np.array([item for item in match_fix if np.any(np.isin(item.split(' vs '), selection_set))] )
-
-    selection_set_against = np.array([line.strip() for line in against_team])
-    compiled_against = np.array([item for item in match_fix if np.any(np.isin(item.split(' vs '), selection_set_against))])
-
-    selection_set_any = np.array([line.strip() for line in any_win])
-    compiled_any = np.array([item for item in match_fix if np.any(np.isin(item.split(' vs '), selection_set_any))])
     
+    if data['outcome'] == 1:
+        selection_set = np.array([line.strip() for line in data])
+        compiled_for = np.array([item for item in match_fix if np.any(np.isin(item.split(' vs '), selection_set))] )
+    
+    elif data['outcome'] == 2:
+        selection_set_any = np.array([line.strip() for line in data])
+        compiled_any = np.array([item for item in match_fix if np.any(np.isin(item.split(' vs '), selection_set_any))])
+
+    else:   
+        selection_set_against = np.array([line.strip() for line in data])
+        compiled_against = np.array([item for item in match_fix if np.any(np.isin(item.split(' vs '), selection_set_against))])
+
     compiled_for = [[s.strip() for s in item.split('vs')] for item in compiled_for]
     compiled_against = [[s.strip() for s in item.split('vs')] for item in compiled_against]
     compiled_any = [[s.strip() for s in item.split('vs')] for item in compiled_any]
