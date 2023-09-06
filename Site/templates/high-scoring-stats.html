@@ -22,7 +22,7 @@
                                 <th scope="col">Team</th>
                                 <th scope="col">League</th>
                                 <th scope="col">League Goals Scored</th>
-                                <th scope="col">Scoring Rate</th>
+                                <th scope="col">Scoring Rate/Match</th>
                             </tr>
                         </thead>
                         {% for picks in high_scoring %}
@@ -31,7 +31,7 @@
                                 <td data-label="Team">{{ picks.team }}</td>
                                 <td data-label="League">{{ picks.league }}</td>
                                 <td data-label="League Goal Scored">{{ picks.goal_scored }}</td>
-                                <td data-label="Scoring Rate">{{ picks.scoring_rate }}</td>
+                                <td data-label="Scoring Rate">{{ picks.scoring_rate[:3]}}</td>
                             
                             </tr>
                         </tbody>

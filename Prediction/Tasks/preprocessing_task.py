@@ -6,6 +6,32 @@ from Prediction.models import *
 from ..url_list import urls
 from Prediction.process import teams, df_analysis
 
+def get_data():
+    teams = Teams.query.all()
+    data = [[
+        team.name,
+        team.league_name,
+        team.played,
+        team.won,
+        team.drawn,
+        team.lost,
+        team.gf,
+        team.ga,
+        team.gd,
+        team.points,
+        team.Last_5_W,
+        team.Last_5_D,
+        team.Last_5_L,
+        team.team_form,
+        team.win_rate,
+        team.loss_rate,
+        team.draw_rate,
+        team.performance_trend,
+        team.outcome
+    ] for team in teams]
+
+    return data
+
 
 @shared_task(bind=True, base=AbortableTask)
 def commit_teams(self):
@@ -38,29 +64,7 @@ def commit_teams(self):
 
 @shared_task(bind=True, base=AbortableTask)
 def inform_teams(self):
-    teams = Teams.query.all()
-    data = [[
-        team.name,
-        team.league_name,
-        team.played,
-        team.won,
-        team.drawn,
-        team.lost,
-        team.gf,
-        team.ga,
-        team.gd,
-        team.points,
-        team.Last_5_W,
-        team.Last_5_D,
-        team.Last_5_L,
-        team.team_form,
-        team.win_rate,
-        team.loss_rate,
-        team.draw_rate,
-        team.performance_trend,
-        team.outcome
-    ] for team in teams]
-    
+    data = get_data()
     for_team, against_team, any_win =df_analysis(data)
     if for_team is not None:
         for inform_ in for_team:
@@ -68,45 +72,7 @@ def inform_teams(self):
             inform = InForm(
                         team = team.name,
                         league = team.league_name,
-                        win_percent = team.win_rate
-            )
-            db.session.add(inform)
-        db.session.commit()
-
-    
-@shared_task(bind=True, base=AbortableTask)
-def any_win_(self):
-    teams = Teams.query.all()
-    data = [[
-        team.name,
-        team.league_name,
-        team.played,
-        team.won,
-        team.drawn,
-        team.lost,
-        team.gf,
-        team.ga,
-        team.gd,
-        team.points,
-        team.Last_5_W,
-        team.Last_5_D,
-        team.Last_5_L,
-        team.team_form,
-        team.win_rate,
-        team.loss_rate,
-        team.draw_rate,
-        team.performance_trend,
-        team.outcome
-    ] for team in teams]
-    
-    for_team, against_team, any_win =df_analysis(data)
-    if any_win is not None:
-        for inform_ in any_win:
-            team = Teams.query.filter_by(name=inform_).first()
-            inform = H_or_A(
-                        team = team.fixture,
-                        league = team.league_name,
-                        win_percent = team.win_rate
+                        win_percent = team.win_rate * 100
             )
             db.session.add(inform)
         db.session.commit()

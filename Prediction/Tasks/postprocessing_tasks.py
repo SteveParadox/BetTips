@@ -75,19 +75,22 @@ def both_teams_score(self):
                     league = team.league_name,
                     prediction = ""
         )
-        db.session.add(high_conceding)
+        db.session.add(bts)
     db.session.commit()
 
 
 @shared_task(bind=True, base=AbortableTask)
 def anyteamwin(self):
     data = get_data()
-    predictions = predict_both_teams_score(match_fix, data)
+    _, _, any_win =df_analysis(data)
+
+    predictions = predict_both_teams_score(match_fix, data, any_win)
     for pred in predictions:
         team = Teams.query.filter_by(name=pred[0]).first()
-        bts = Bts(
+        h_or_a = H_or_A(
                     fixture = predictions,
                     league = team.league_name,
         )
-        db.session.add(high_conceding)
+        db.session.add(h_or_a)
     db.session.commit()
+

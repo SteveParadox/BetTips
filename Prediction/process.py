@@ -216,7 +216,7 @@ def high_gf_ga(match_fix, data):
     return high_scoring_teams, high_conceding_teams, threshold_high_goal_scoring
 
 
-def predict_both_teams_score(data):
+def predict_both_teams_score(match_fix, data):
     
     dff = pd.DataFrame(data, columns=["Team", "League", "Played", "Won", "Drawn", "Lost",
                                     "GF", "GA", "GD", "Points", "Last_5_W",
@@ -231,7 +231,6 @@ def predict_both_teams_score(data):
         team_1, team_2 = fixture[0], fixture[1]
 
         try:
-            # Check if any part of team name is in dff
             team_1_data = dff[dff['Team'].str.contains(team_1, case=False, regex=False)]
             team_2_data = dff[dff['Team'].str.contains(team_2, case=False, regex=False)]
 
@@ -247,18 +246,13 @@ def predict_both_teams_score(data):
 
                 if team_1_gf >= threshold_high_goal_scoring and team_2_gf >= threshold_high_goal_scoring:
                     predictions.append(f'{team_1} vs {team_2}')
-                else:
-                    predictions.append(f'{team_1} vs {team_2}')
-            #else:
-                #predictions.append(f'Team data not found for {team_1} or {team_2}. Skipping...')
 
         except IndexError:
-            # Handle exceptions if needed
             pass
 
     return predictions
 
-def predict_home_or_away(data, any_win):
+def predict_home_or_away(match_fix, data, any_win):
     dff = pd.DataFrame(data, columns=["Team", "League", "Played", "Won", "Drawn", "Lost",
                                     "GF", "GA", "GD", "Points", "Last_5_W",
                                     "Last_5_D", "Last_5_L", "Team_Form",
