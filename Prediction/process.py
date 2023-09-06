@@ -168,7 +168,7 @@ while start_date <= end_date:
 def get_fixtures(match_fix, data):
     compiled_for, compiled_against, compiled_any = None, None, None   
     match_fix = np.array(match_fix)
-    
+
     if data['outcome'] == 1:
         selection_set = np.array([line.strip() for line in data])
         compiled_for = np.array([item for item in match_fix if np.any(np.isin(item.split(' vs '), selection_set))] )
@@ -216,12 +216,14 @@ def high_gf_ga(data):
     return high_scoring_teams, high_conceding_teams, threshold_high_goal_scoring
 
 
-def predict_both_teams_score(self, compiled, threshold_high_goal_scoring, data):
+def predict_both_teams_score(match_fix, threshold_high_goal_scoring, data):
     dff = pd.DataFrame(data, columns=["Team", "League", "Played", "Won", "Drawn", "Lost",
                                     "GF", "GA", "GD", "Points", "Last_5_W",
                                     "Last_5_D", "Last_5_L", "Team_Form",
                                     "Win_rate", "Loss_rate", "Draw_rate",
                                     "Performance_trend","Outcome"])
+
+    match_fix = [item for item.split(' vs ') in match_fix ]
     predictions = []
     for fixture in compiled:
         team_1, team_2 = fixture[0], fixture[1]
