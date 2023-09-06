@@ -209,8 +209,6 @@ def high_gf_ga(data):
     high_scoring_teams = dff[dff['Average_GF_per_Match'] > threshold_high_goal_scoring]['Team'].tolist()
     high_conceding_teams = dff[dff['Average_GA_per_Match'] > threshold_high_goal_conceding]['Team'].tolist()
     
-    compiled = compiled_for + compiled_against + compiled_any
-
 
     return high_scoring_teams, high_conceding_teams, threshold_high_goal_scoring
 
