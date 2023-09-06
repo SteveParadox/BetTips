@@ -76,8 +76,8 @@ def high_conceding_rate(self):
         high_conceding = HighConceding(
                     team = team.name,
                     league = team.league_name,
-                    goal_scored = team.ga,
-                    scoring_rate = team.ga / team.played
+                    goal_conceded = team.ga,
+                    conceding_rate = team.ga / team.played
         )
         db.session.add(high_conceding)
     db.session.commit()
