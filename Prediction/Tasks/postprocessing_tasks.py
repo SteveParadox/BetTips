@@ -107,5 +107,5 @@ def get_random():
 
 @shared_task(bind=True, base=AbortableTask)
 def bettingpick(self):
-    random_rows = get_random_rows_from_tables()
+    random_rows = get_random()
     print(random_rows)
