@@ -1286,7 +1286,7 @@
 }
  .about .about-box {
      padding: 80px 30px;
-     background-color:black;
+     background-color:rgb(107, 130, 153);
      margin-top: 224px;
 }
  .about .about-box span {
@@ -1374,7 +1374,7 @@
     padding-left: 0;
 }
  .how_it .two-box_text {
-    background-color: black;
+    background-color: slategray;
      height: 100%;
 }
  .how_it .two-box_text .travel {

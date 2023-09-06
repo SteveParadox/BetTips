@@ -3,7 +3,9 @@ import uuid
 from ..models import  Teams, InForm, Bts, BettingTips, HighScoring, HighConceding, TeamsSchema
 from Prediction import db, app 
 import datetime
-from Prediction.Tasks.preprocessing_task import commit_teams, inform_teams, hello
+from Prediction.Tasks.preprocessing_task import *
+from Prediction.Tasks.postprocessing_tasks import *
+
 
 # registering blueprint 
 analysis = Blueprint('analysis', __name__)
@@ -28,6 +30,17 @@ def teams():
 def add_inform_teams():
     inform_teams.delay()
     return jsonify({'message': 'done'})
+
+@analysis.route('/api/highgf/teams')
+def add_highgf_teams():
+    high_scoring_rate.delay()
+    return jsonify({'message': 'done'})
+
+@analysis.route('/api/highga/teams')
+def add_highga_teams():
+    high_conceding_rate.delay()
+    return jsonify({'message': 'done'})
+
 
 @analysis.route('/api/hello')
 def home_hello():

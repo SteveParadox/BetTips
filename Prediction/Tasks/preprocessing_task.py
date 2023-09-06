@@ -72,9 +72,44 @@ def inform_teams(self):
             )
             db.session.add(inform)
         db.session.commit()
-    print('Data Is Empty')
-    
 
+    
+@shared_task(bind=True, base=AbortableTask)
+def any_win_(self):
+    teams = Teams.query.all()
+    data = [[
+        team.name,
+        team.league_name,
+        team.played,
+        team.won,
+        team.drawn,
+        team.lost,
+        team.gf,
+        team.ga,
+        team.gd,
+        team.points,
+        team.Last_5_W,
+        team.Last_5_D,
+        team.Last_5_L,
+        team.team_form,
+        team.win_rate,
+        team.loss_rate,
+        team.draw_rate,
+        team.performance_trend,
+        team.outcome
+    ] for team in teams]
+    
+    for_team, against_team, any_win =df_analysis(data)
+    if any_win is not None:
+        for inform_ in any_win:
+            team = Teams.query.filter_by(name=inform_).first()
+            inform = H_or_A(
+                        team = team.fixture,
+                        league = team.league_name,
+                        win_percent = team.win_rate
+            )
+            db.session.add(inform)
+        db.session.commit()
 
 @shared_task(bind=True, base=AbortableTask)
 def hello(self):

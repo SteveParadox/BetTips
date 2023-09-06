@@ -61,13 +61,14 @@ def teamsToBetAgainst():
 
 @analysis.route('/teams/statistics', methods=['GET', 'POST'])
 def team_statistics():
-    betagainst = BetAgainst.query.order_by(BetAgainst.date_uploaded.desc()).all()[:25]
 
-    return render_template( 'statistics.html', betagainst=betagainst)
+    return render_template( 'statistics.html')
 
-@analysis.route('/sure-odds', methods=['GET', 'POST'])
-def sureOdds():
-    return handle_prediction_view(SureOdds, 'sure-odds.html')
+@analysis.route('/Home/Away', methods=['GET', 'POST'])
+def home_or_away():
+    anywin = H_or_A.query.order_by(H_or_A.date_uploaded.desc()).all()[:25]
+
+    return render_template( 'any_win.html', anywin=anywin)
 
 @analysis.route('/championship-draws', methods=['GET', 'POST'])
 def championshipDraw():

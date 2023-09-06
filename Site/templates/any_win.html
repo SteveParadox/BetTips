@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+
+<div id="about">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12">
+                <div class="about-box">
+                    <h3> Teams To Bet Against</h3>
+                    <table>
+                    
+                        <thead>
+                            <tr>
+                                <th scope="col">Fixture</th>
+                                <th scope="col">League</th>
+                                <th scope="col">Prediction</th>
+                            </tr>
+                        </thead>
+                        {% for picks in any_win %}
+                        <tbody>
+                            <tr>
+                                <td data-label="Team">{{ picks.fixture }}</td>
+                                <td data-label="League">{{ picks.league }}</td>
+                                <td data-label="prediction">{{ picks.prediction }}</td>
+                            
+                            </tr>
+                    
+                        </tbody>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{%endblock content%}

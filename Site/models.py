@@ -76,6 +76,13 @@ class HighConceding(db.Model):
     conceding_rate = db.Column(db.Float())
     date_uploaded = db.Column(db.DateTime, nullable=False, default=datetime.now)
 
+class H_or_A(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    fixture = db.Column(db.String())
+    league = db.Column(db.String())
+    prediction = db.Column(db.Integer(), default=12)
+    date_uploaded = db.Column(db.DateTime, nullable=False, default=datetime.now)
+
 class Bts(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     fixture = db.Column(db.String())
