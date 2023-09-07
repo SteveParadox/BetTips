@@ -60,3 +60,8 @@ def bet_picks():
 def home_hello():
     hello.delay()
     return jsonify({'message': 'done'})
+
+@analysis.route('/api/xxx')
+def db_create():
+    db_refresh.delay()
+    return jsonify({'message': 'done'})
