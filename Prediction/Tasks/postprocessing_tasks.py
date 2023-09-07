@@ -43,7 +43,7 @@ def high_scoring_rate(self):
                     team = team.name,
                     league = team.league_name,
                     goal_scored = team.gf,
-                    scoring_rate = ceil(float(team.gf) / float(team.played))
+                    scoring_rate = math.ceil(float(team.gf) / float(team.played))
         )
         db.session.add(high_scoring)
     db.session.commit()
