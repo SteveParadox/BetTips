@@ -1,4 +1,4 @@
-"""
+
 urls = [
     "https://www.goal.com/en-us/premier-league/table/6wubmo7di3kdpflluf6s8c7vs",
     "https://www.goal.com/en-us/ligue-1/table/57nu0wygurzkp6fuy5hhrtaa2",
@@ -84,3 +84,4 @@ urls =[
       "https://www.goal.com/en-us/primera-divisi%C3%B3n/table/2y8bntiif3a9y6gtmauv30gt",
     "https://www.goal.com/en-us/primera-b/table/bly7ema5au6j40i0grhl0pnub"
 ]
+"""
