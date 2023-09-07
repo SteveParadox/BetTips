@@ -28,10 +28,11 @@
                         {% for picks in betting_tips %}
                         <tbody>
                             <tr>
-                                <td data-label="Team">{{ picks.content }}</td>
-                                <td data-label="League">{{ picks.league }}</td>
-                                <td data-label="League"></td>
-                            
+                                <td data-label="Team">{{ picks.team }}</td>
+                                <td data-label="League">{{ picks.competition }}</td>
+                                <td data-label="prediction">{{pick.prediction}}</td>
+                                <td data-label="confidence">{{pick.Confidence}}</td>
+
                             </tr>
                         </tbody>
                         {% endfor %}
