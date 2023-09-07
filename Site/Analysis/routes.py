@@ -90,9 +90,8 @@ def search():
 
 
 
-@analysis.route('/<string:name>', methods=['POST'])
+@analysis.route('/<string:name>', methods=['GET'])
 def team_detail(name):
-    results = Teams.query.filter_by(name=name).first()
-    teams_schema = TeamsSchema(many=True)
-    res = teams_schema.dump(results)
-    return jsonify(res)
+    team = Teams.query.filter_by(name=name).first()
+
+    return render_template('team.html',team=team )

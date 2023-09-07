@@ -146,6 +146,5 @@ def bettingpick(self):
                 prediction=row.prediction,
                 confidence=0.0
             )
-
         db.session.add(bettips)
     db.session.commit()

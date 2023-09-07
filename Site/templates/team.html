@@ -1,0 +1,68 @@
+{% extends 'layout.html' %}
+{% block content %}
+<style>
+    .in_form {
+        font-size: 30px;
+        margin-top: 2rem;
+        text-align: center;
+    }
+
+</style>
+
+<div id="about" class="about">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12">
+                <div class="about-box">
+                    <h3 class="in_form"> {{team.name}}</h3>
+                    <table>
+                        <thead>
+                            <tr style="font-size: 11px;">
+                                <th scope="col">League</th>
+                                <th scope="col">Played</th>
+                                <th scope="col">Won</th>
+                                <th scope="col">Drawn</th>
+                                <th scope="col">Lost</th>
+                                <th scope="col">GF</th>
+                                <th scope="col">GA</th>
+                                <th scope="col">GD</th>
+                                <th scope="col">Points</th>
+                                <th scope="col">Form</th>
+                                <th scope="col">Win%</th>
+                                <th scope="col">Loss%</th>
+                                <th scope="col">Draw%</th>
+                                <th scope="col"> Trend</th>
+                             
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-label="League">{{team.league_name}}</td>
+                                <td data-label="Played"> {{team.played}}</td>
+                                <td data-label="Won">{{team.won}} </td>
+                                <td data-label="Drawn">{{team.drawn}} </td>
+                                <td data-label="Lost">{{team.lost}} </td>
+                                <td data-label="GF"> {{team.gf}}</td>
+                                <td data-label="GA"> {{team.ga}}</td>
+                                <td data-label="GD"> {{team.gd}}</td>
+                                <td data-label="Points"> {{team.points}}</td>
+                                <td data-label="Form"> {{team.team_form}}</td>
+                                <td data-label="Win"> {{team.win_rate}} </td>
+                                <td data-label="Loss">{{team.loss_rate}}  </td>
+                                <td data-label="Draw">{{team.draw_rate}}  </td>
+                                <td data-label="Trend">{{team.performance_trend}}  </td>
+                            
+                            </tr>
+                    
+                        </tbody>
+                       
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{%endblock content%}
