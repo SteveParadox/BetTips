@@ -25,7 +25,7 @@ def handle_prediction_view(template_name):
 
 @analysis.route('/in-form-teams', methods=['GET', 'POST'])
 def mostInFormTeams():
-    in_form = InForm.query.order_by(InForm.date_uploaded.desc()).all()[:25]
+    in_form = InForm.query.order_by(InForm.win_percent.desc()).all()[:25]
 
     return render_template( 'informteam.html', in_form=in_form)
 
@@ -37,19 +37,19 @@ def bettingTips():
 
 @analysis.route('/teams-with-high-scoring-stats', methods=['GET', 'POST'])
 def teamsWithHighGoalStats():
-    high_scoring = HighScoring.query.order_by(HighScoring.date_uploaded.desc()).all()[:25]
+    high_scoring = HighScoring.query.order_by(HighScoring.scoring_rate.desc()).all()[:25]
 
     return render_template('high-scoring-stats.html', high_scoring=high_scoring)
 
 @analysis.route('/both-team-score-tips', methods=['GET', 'POST'])
 def bothTeamScoreTips():
-    bts_tip = Bts.query.order_by(Bts.date_uploaded.desc()).all()[:25]
+    bts_tip = Bts.query.order_by(Bts.prediction.desc()).all()[:25]
 
     return render_template( 'both-team-score.html', bts_tip=bts_tip)
 
 @analysis.route('/teams-with-high-conceding-rate', methods=['GET', 'POST'])
 def teamsWithHighConcedingRate():
-    high_conceding = HighConceding.query.order_by(HighConceding.date_uploaded.desc()).all()[:25]
+    high_conceding = HighConceding.query.order_by(HighConceding.conceding_rate.desc()).all()[:25]
 
     return render_template('high-conceding.html', high_conceding=high_conceding)
 

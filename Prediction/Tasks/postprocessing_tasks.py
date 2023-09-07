@@ -5,6 +5,7 @@ from celery.contrib.abortable import AbortableTask
 from Prediction.models import *
 from Prediction.process import teams, df_analysis, high_gf_ga, match_fix, predict_both_teams_score, predict_home_or_away
 from random import sample
+from math import ceil 
 
 def get_data():
     teams = Teams.query.all()
@@ -42,7 +43,7 @@ def high_scoring_rate(self):
                     team = team.name,
                     league = team.league_name,
                     goal_scored = team.gf,
-                    scoring_rate = float(team.gf) / float(team.played)
+                    scoring_rate = ceil(float(team.gf) / float(team.played))
         )
         db.session.add(high_scoring)
     db.session.commit()
@@ -58,7 +59,7 @@ def high_conceding_rate(self):
                     team = team.name,
                     league = team.league_name,
                     goal_conceded = team.ga,
-                    conceding_rate = team.ga / team.played
+                    conceding_rate = ceil(team.ga / team.played)
         )
         db.session.add(high_conceding)
     db.session.commit()

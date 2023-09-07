@@ -5,6 +5,8 @@ from Prediction.models import *
 
 from ..url_list import urls
 from Prediction.process import teams, df_analysis
+import math
+from Prediction import db
 
 def get_data():
     teams = Teams.query.all()
@@ -72,7 +74,7 @@ def inform_teams(self):
             inform = InForm(
                         team = team.name,
                         league = team.league_name,
-                        win_percent = team.win_rate * 100
+                        win_percent = math.ceil(team.win_rate * 100)
             )
             db.session.add(inform)
         db.session.commit()
@@ -80,3 +82,9 @@ def inform_teams(self):
 @shared_task(bind=True, base=AbortableTask)
 def hello(self):
     print('Hello App')
+
+
+@shared_task(bind=True, base=AbortableTask)
+def db_refresh(self):
+    db.drop_all()
+    db.create_all()
