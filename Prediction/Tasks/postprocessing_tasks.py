@@ -5,7 +5,7 @@ from celery.contrib.abortable import AbortableTask
 from Prediction.models import *
 from Prediction.process import teams, df_analysis, high_gf_ga, match_fix, predict_both_teams_score, predict_home_or_away
 from random import sample
-from math import ceil 
+import math 
 
 def get_data():
     teams = Teams.query.all()
@@ -36,7 +36,7 @@ def get_data():
 @shared_task(bind=True, base=AbortableTask)
 def high_scoring_rate(self):
     data = get_data()
-    high_scoring_teams, _, _ = high_gf_ga(data)
+    high_scoring_teams, _, _ = high_gf_ga(match_fix, data)
     for high_gf in high_scoring_teams:
         team = Teams.query.filter_by(name=high_gf).first()
         high_scoring = HighScoring(
@@ -52,14 +52,14 @@ def high_scoring_rate(self):
 @shared_task(bind=True, base=AbortableTask)
 def high_conceding_rate(self):
     data = get_data()
-    _, high_conceding_teams, _ = high_gf_ga(data)
+    _, high_conceding_teams, _ = high_gf_ga(match_fix, data)
     for high_ga in high_conceding_teams:
         team = Teams.query.filter_by(name=high_ga).first()
         high_conceding = HighConceding(
                     team = team.name,
                     league = team.league_name,
                     goal_conceded = team.ga,
-                    conceding_rate = ceil(team.ga / team.played)
+                    conceding_rate = math.ceil(team.ga / team.played)
         )
         db.session.add(high_conceding)
     db.session.commit()
@@ -87,6 +87,7 @@ def anyteamwin(self):
 
     predictions = predict_home_or_away(match_fix, data, any_win)
     for pred in predictions:
+        pred = pred.split(' vs ')
         team = Teams.query.filter_by(name=pred[0]).first()
         h_or_a = H_or_A(
                     fixture = predictions,
