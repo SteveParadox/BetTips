@@ -9,13 +9,14 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from sklearn.metrics import log_loss
 import numpy as np
 from .url_list import urls
+from tqdm import tqdm
 
 
 def teams():
     data = []
     data_ = []
     outcome = None
-    for url in urls:
+    for url in tqdm(urls, desc="Extracting Data"):
         response = requests.get(url)
         soup = BeautifulSoup(response.content, "lxml")
         h1_tag = soup.find("h1")
