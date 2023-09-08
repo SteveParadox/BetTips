@@ -126,3 +126,11 @@ class TeamsSchema(SQLAlchemyAutoSchema):
 
 team_schema = TeamsSchema()
 teams_schema = TeamsSchema(many=True)
+
+class AnyteamSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = H_or_A
+
+
+anyteam_schema = AnyteamSchema()
+anyteams_schema = AnyteamSchema(many=True)

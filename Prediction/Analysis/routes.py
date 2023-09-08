@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, request, url_for, Blueprint, abort, jsonify # importing libraries from framework
 import uuid 
-from ..models import  Teams, InForm, Bts, BettingTips, HighScoring, HighConceding, TeamsSchema
+from ..models import  Teams, InForm, Bts, BettingTips, HighScoring, HighConceding, TeamsSchema, AnyteamSchema
 from Prediction import db, app 
 import datetime
 from Prediction.Tasks.preprocessing_task import *
@@ -23,6 +23,13 @@ def home():
 def teams():
     results = Teams.query.all()
     teams_schema = TeamsSchema(many=True)
+    res = teams_schema.dump(results)
+    return jsonify(res)
+
+@analysis.route('/api/h_or_a')
+def amyteams():
+    results = H_or_A.query.all()
+    teams_schema = AnyteamSchema(many=True)
     res = teams_schema.dump(results)
     return jsonify(res)
 
