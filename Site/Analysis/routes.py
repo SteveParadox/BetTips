@@ -67,6 +67,7 @@ def team_statistics():
 @analysis.route('/Home/Away', methods=['GET', 'POST'])
 def home_or_away():
     anywin = H_or_A.query.order_by(H_or_A.date_uploaded.desc()).all()[:25]
+    print(anywin)
     for i in anywin:
         print(i.fixture)
 
