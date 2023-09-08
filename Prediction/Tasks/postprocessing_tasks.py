@@ -70,9 +70,10 @@ def both_teams_score(self):
     data = get_data()
     predictions = predict_both_teams_score(match_fix, data)
     for pred in predictions:
-        team = Teams.query.filter_by(name=pred[0]).first()
+        pred_ = pred.split(' vs ')
+        team = Teams.query.filter_by(name=pred_[0]).first()
         bts = Bts(
-                    fixture = predictions,
+                    fixture = str(pred),
                     league = team.league_name,
                     prediction = 0.0
         )
@@ -87,10 +88,10 @@ def anyteamwin(self):
 
     predictions = predict_home_or_away(match_fix, data, any_win)
     for pred in predictions:
-        pred = pred.split(' vs ')
-        team = Teams.query.filter_by(name=pred[0]).first()
+        pred_ = pred.split(' vs ')
+        team = Teams.query.filter_by(name=pred_[0]).first()
         h_or_a = H_or_A(
-                    fixture = predictions,
+                    fixture = str(pred),
                     league = team.league_name,
         )
         db.session.add(h_or_a)
