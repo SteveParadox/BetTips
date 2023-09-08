@@ -54,9 +54,9 @@ def commit_teams(self):
             Last_5_D= team_data[11],
             Last_5_L= team_data[12],
             team_form=team_data[13],
-            win_rate=team_data[14],
-            loss_rate=team_data[15],
-            draw_rate=team_data[16],
+            win_rate=round(team_data[14], 2),
+            loss_rate=round(team_data[15], 2),
+            draw_rate=round(team_data[16], 2),
             performance_trend=team_data[17],
             outcome=team_data[18]
         )
@@ -74,7 +74,7 @@ def inform_teams(self):
             inform = InForm(
                         team = team.name,
                         league = team.league_name,
-                        win_percent = math.ceil(team.win_rate * 100)
+                        win_percent = round(team.win_rate * 100, 2)
             )
             db.session.add(inform)
         db.session.commit()

@@ -43,7 +43,7 @@ def high_scoring_rate(self):
                     team = team.name,
                     league = team.league_name,
                     goal_scored = team.gf,
-                    scoring_rate = math.ceil(float(team.gf) / float(team.played))
+                    scoring_rate = round((float(team.gf) / float(team.played)), 2)
         )
         db.session.add(high_scoring)
     db.session.commit()
@@ -59,7 +59,7 @@ def high_conceding_rate(self):
                     team = team.name,
                     league = team.league_name,
                     goal_conceded = team.ga,
-                    conceding_rate = math.ceil(team.ga / team.played)
+                    conceding_rate = round((team.ga / team.played), 2)
         )
         db.session.add(high_conceding)
     db.session.commit()
