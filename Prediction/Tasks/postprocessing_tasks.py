@@ -92,10 +92,9 @@ def anyteamwin(self):
     predictions = predict_home_or_away(match_fix, data, any_win)
     for pred in predictions:
         pred_ = pred.split(' vs ')
-        print(predictions)
-        print(pred)
-        print(pred_)
+        print(pred_[0])
         team = Teams.query.filter_by(name=pred_[0]).first()
+        print(team.league_name)
         h_or_a = H_or_A(
                     fixture = str(pred),
                     league = team.league_name,
