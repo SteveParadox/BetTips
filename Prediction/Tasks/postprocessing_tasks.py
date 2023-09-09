@@ -70,30 +70,26 @@ def both_teams_score(self):
     data = get_data()
     bts_list = Bts.query.order_by(Bts.week.desc()).all()
     predictions = predict_both_teams_score(match_fix, data)
-    print(predictions)
     for pred in predictions:
         pred_ = pred.split(' vs ')
-        print(pred_)
-
         team = Teams.query.filter_by(name=pred_[0]).first()
-        print(team.name)
-
-        if bts_list:
-            bts = bts_list[0]
-            bts_ = Bts(
-                fixture=str(pred),
-                league=team.league_name,
-                prediction=0.0,
-                week=bts.week + 1
-            )
-            bts_list.pop(0)
-        else:
-            bts_ = Bts(
-                fixture=str(pred),
-                league=team.league_name
-            )
-        
-        db.session.add(bts_)
+        if team is not None:
+            if bts_list:
+                bts = bts_list[0]
+                bts_ = Bts(
+                    fixture=str(pred),
+                    league=team.league_name,
+                    prediction=0.0,
+                    week=bts.week + 1
+                )
+                bts_list.pop(0)
+            else:
+                bts_ = Bts(
+                    fixture=str(pred),
+                    league=team.league_name
+                )
+            
+            db.session.add(bts_)
 
     db.session.commit()
 
