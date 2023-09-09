@@ -1244,33 +1244,11 @@
  .top_layer {
      position: relative;
 }
- .top_layer::before {
-     position: absolute;
-     width: 208px;
-     content: "";
-     background: url(..images/balls-preview.png);
-     background-repeat: repeat;
-     height: 444px;
-     background-repeat: no-repeat;
-     top: -131px;
-     text-align: left;
-     float: left;
-}
+
  .top_layer2 {
      position: relative;
 }
- .top_layer2::before {
-     position: absolute;
-     width: 208px;
-     content: "";
-     background: url(../images/3.png);
-     background-repeat: repeat;
-     height: 444px;
-     background-repeat: no-repeat;
-     right: 0;
-     bottom: -312px;
-     z-index: 999;
-}
+
  .about .titlepage {
      text-align: center;
      padding-bottom: 60px;
