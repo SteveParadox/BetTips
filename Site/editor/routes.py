@@ -42,3 +42,12 @@ def create_tables():
         db.drop_all()
         db.create_all()
     return 'Database tables created successfully'
+
+@edit.route('/home/away/previous')
+def last_pred():
+    data = H_or_A.query.filter_by(week=week).all()
+    bts_data = Bts.query.filter_by(week=week).all()
+    bpicks_data = BettingTips.query.filter_by(week=week).all()
+
+
+    return render_template('previous.html', data=data, bts_data=bts_data, bpicks_data=bpicks_data)
