@@ -68,54 +68,65 @@ def high_conceding_rate(self):
 @shared_task(bind=True, base=AbortableTask)
 def both_teams_score(self):
     data = get_data()
-    bts_ = Bts.query.order_by(Bts.week.desc()).all()
+    bts_list = Bts.query.order_by(Bts.week.desc()).all()
     predictions = predict_both_teams_score(match_fix, data)
+    
     for pred in predictions:
         pred_ = pred.split(' vs ')
 
         team = Teams.query.filter_by(name=pred_[0]).first()
 
-        if bts_:
-            bts_ = bts_[0]  
-            bts = Bts(
-                    fixture = str(pred),
-                    league = team.league_name,
-                    prediction = 0.0,
-                    week = bts_.week + 1
-                    )
-        else: 
-            bts = Bts(
-                    fixture = str(pred),
-                    league = team.league_name,
-                    )
-        db.session.add(bts)
+        if bts_list:
+            bts = bts_list[0]
+            bts_ = Bts(
+                fixture=str(pred),
+                league=team.league_name,
+                prediction=0.0,
+                week=bts.week + 1
+            )
+            bts_list.pop(0)
+        else:
+            bts_ = Bts(
+                fixture=str(pred),
+                league=team.league_name
+            )
+        
+        db.session.add(bts_)
+
     db.session.commit()
+
 
 
 @shared_task(bind=True, base=AbortableTask)
 def anyteamwin(self):
-    h_a = H_or_A.query.order_by(H_or_A.week.desc()).all()
+    h_a_list = H_or_A.query.order_by(H_or_A.week.desc()).all()
     data = get_data()
-    _, _, any_win =df_analysis(data)
+    _, _, any_win = df_analysis(data)
 
     predictions = predict_home_or_away(match_fix, data, any_win)
+    
     for pred in predictions:
         pred_ = pred.split(' vs ')
         team = Teams.query.filter_by(name=pred_[0]).first()
-        if h_a:
-            h_a = h_a[0]  
+
+        if h_a_list:
+            h_a = h_a_list[0]  # Get the first element
             h_or_a = H_or_A(
-                    fixture = str(pred),
-                    league = team.league_name,
-                    week = h_a.week + 1
-                    )
-        else: 
+                fixture=str(pred),
+                league=team.league_name,
+                week=h_a.week + 1
+            )
+            h_a_list.pop(0) 
+        else:
             h_or_a = H_or_A(
-                    fixture = str(pred),
-                    league = team.league_name,
-                    )
+                fixture=str(pred),
+                league=team.league_name
+            )
+        
         db.session.add(h_or_a)
+
     db.session.commit()
+
 
 def get_random():
     random_rows = []
