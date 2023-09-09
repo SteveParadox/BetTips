@@ -68,6 +68,7 @@ def high_conceding_rate(self):
 @shared_task(bind=True, base=AbortableTask)
 def both_teams_score(self):
     data = get_data()
+    bts_ = Bts.query.order_by(Bts.week.desc()).all()[0]
     predictions = predict_both_teams_score(match_fix, data)
     for pred in predictions:
         pred_ = pred.split(' vs ')
@@ -79,6 +80,7 @@ def both_teams_score(self):
                     fixture = str(pred),
                     league = team.league_name,
                     prediction = 0.0
+                    week = bts_.week + 1
         )
         db.session.add(bts)
     db.session.commit()
@@ -86,6 +88,7 @@ def both_teams_score(self):
 
 @shared_task(bind=True, base=AbortableTask)
 def anyteamwin(self):
+    h_a = H_or_A.query.order_by(H_or_A.week.desc()).all()[0]
     data = get_data()
     _, _, any_win =df_analysis(data)
 
@@ -98,6 +101,7 @@ def anyteamwin(self):
         h_or_a = H_or_A(
                     fixture = str(pred),
                     league = team.league_name,
+                    week = h_a.week + 1
         )
         db.session.add(h_or_a)
     db.session.commit()
@@ -116,9 +120,9 @@ def get_random():
 @shared_task(bind=True, base=AbortableTask)
 def bettingpick(self):
     random_rows = get_random()
-
+    bpicks = BettingTips.query.order_by(BettingTips.week.desc()).all()[0]
+    bettips = BettingTips()
     for row in random_rows:
-
         if isinstance(row, InForm):
             bettips = BettingTips(
                 team=row.team,
@@ -154,5 +158,6 @@ def bettingpick(self):
                 prediction=row.prediction,
                 confidence=0.0
             )
+        bettips.week = bpicks.week + 1
         db.session.add(bettips)
     db.session.commit()

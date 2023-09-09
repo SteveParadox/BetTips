@@ -58,6 +58,7 @@ class BettingTips(db.Model):
     competition = db.Column(db.String())
     prediction = db.Column(db.String())
     confidence = db.Column(db.Float())
+    week = db.Column(db.Integer(), default = 0)
     date_uploaded = db.Column(db.DateTime, nullable=False, default=datetime.now)
 
 class HighScoring(db.Model):
@@ -81,6 +82,7 @@ class H_or_A(db.Model):
     fixture = db.Column(db.String())
     league = db.Column(db.String())
     prediction = db.Column(db.Integer(), default=12)
+    week = db.Column(db.Integer(), default = 0)
     date_uploaded = db.Column(db.DateTime, nullable=False, default=datetime.now)
 
 class Bts(db.Model):
@@ -88,6 +90,7 @@ class Bts(db.Model):
     fixture = db.Column(db.String())
     league = db.Column(db.String())
     prediction = db.Column(db.Float())
+    week = db.Column(db.Integer(), default = 0)
     date_uploaded = db.Column(db.DateTime, nullable=False, default=datetime.now)
 
 
