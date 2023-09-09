@@ -24,12 +24,12 @@
                                 <th scope="col">Prediction %</th>
                             </tr>
                         </thead>
-                        {% for picks in bts_tips %}
+                        {% for picks in bts_tip %}
                         <tbody>
                             <tr>
-                                <td data-label="Fixture">{{ picks.content }}</td>
+                                <td data-label="Fixture">{{ picks.fixture }}</td>
                                 <td data-label="League">{{ picks.league }}</td>
-                                <td data-label="Prediction"></td>
+                                <td data-label="Prediction">{{ picks.prediction }}</td>
                             
                             </tr>
                     
