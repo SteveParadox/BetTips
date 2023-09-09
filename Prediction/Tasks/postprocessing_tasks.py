@@ -82,12 +82,12 @@ def both_teams_score(self):
                     league = team.league_name,
                     prediction = 0.0,
                     week = bts_.week + 1
-            )
+                    )
         else: 
             bts = Bts(
                     fixture = str(pred),
                     league = team.league_name,
-                )
+                    )
         db.session.add(bts)
     db.session.commit()
 
@@ -108,12 +108,12 @@ def anyteamwin(self):
                     fixture = str(pred),
                     league = team.league_name,
                     week = h_a.week + 1
-            ``)
+                    )
         else: 
             h_or_a = H_or_A(
                     fixture = str(pred),
                     league = team.league_name,
-                )
+                    )
         db.session.add(h_or_a)
     db.session.commit()
 
