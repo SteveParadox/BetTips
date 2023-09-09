@@ -72,37 +72,48 @@ def both_teams_score(self):
     predictions = predict_both_teams_score(match_fix, data)
     for pred in predictions:
         pred_ = pred.split(' vs ')
-        print(predictions)
-        print(pred)
-        print(pred_)
+
         team = Teams.query.filter_by(name=pred_[0]).first()
-        bts = Bts(
+
+        if bts_:
+            bts_ = bts_[0]  
+            bts = Bts(
                     fixture = str(pred),
                     league = team.league_name,
                     prediction = 0.0,
                     week = bts_.week + 1
-        )
+            )
+        else: 
+            bts = Bts(
+                    fixture = str(pred),
+                    league = team.league_name,
+                )
         db.session.add(bts)
     db.session.commit()
 
 
 @shared_task(bind=True, base=AbortableTask)
 def anyteamwin(self):
-    h_a = H_or_A.query.order_by(H_or_A.week.desc()).all()[0]
+    h_a = H_or_A.query.order_by(H_or_A.week.desc()).all()
     data = get_data()
     _, _, any_win =df_analysis(data)
 
     predictions = predict_home_or_away(match_fix, data, any_win)
     for pred in predictions:
         pred_ = pred.split(' vs ')
-        print(pred_[0])
         team = Teams.query.filter_by(name=pred_[0]).first()
-        print(team.league_name)
-        h_or_a = H_or_A(
+        if h_a:
+            h_a = h_a[0]  
+            h_or_a = H_or_A(
                     fixture = str(pred),
                     league = team.league_name,
                     week = h_a.week + 1
-        )
+            )
+        else: 
+            h_or_a = H_or_A(
+                    fixture = str(pred),
+                    league = team.league_name,
+                )
         db.session.add(h_or_a)
     db.session.commit()
 
@@ -120,7 +131,7 @@ def get_random():
 @shared_task(bind=True, base=AbortableTask)
 def bettingpick(self):
     random_rows = get_random()
-    bpicks = BettingTips.query.order_by(BettingTips.week.desc()).all()[0]
+    bpicks = BettingTips.query.order_by(BettingTips.week.desc()).all()
     bettips = BettingTips()
     for row in random_rows:
         if isinstance(row, InForm):
@@ -158,6 +169,8 @@ def bettingpick(self):
                 prediction=row.prediction,
                 confidence=0.0
             )
-        bettips.week = bpicks.week + 1
+        if bpicks:
+            bpicks = bpicks[0]
+            bettips.week = bpicks.week + 1
         db.session.add(bettips)
     db.session.commit()
