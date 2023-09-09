@@ -68,7 +68,7 @@ def high_conceding_rate(self):
 @shared_task(bind=True, base=AbortableTask)
 def both_teams_score(self):
     data = get_data()
-    bts_ = Bts.query.order_by(Bts.week.desc()).all()[0]
+    bts_ = Bts.query.order_by(Bts.week.desc()).all()
     predictions = predict_both_teams_score(match_fix, data)
     for pred in predictions:
         pred_ = pred.split(' vs ')
@@ -108,7 +108,7 @@ def anyteamwin(self):
                     fixture = str(pred),
                     league = team.league_name,
                     week = h_a.week + 1
-            )
+            ``)
         else: 
             h_or_a = H_or_A(
                     fixture = str(pred),
