@@ -79,7 +79,7 @@ def both_teams_score(self):
         bts = Bts(
                     fixture = str(pred),
                     league = team.league_name,
-                    prediction = 0.0
+                    prediction = 0.0,
                     week = bts_.week + 1
         )
         db.session.add(bts)
