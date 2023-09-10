@@ -76,12 +76,15 @@ urls = [
     "https://www.goal.com/en-us/premier-soccer-league/table/4azsryi40zahspm5h6d0f0pgl"
 
 ]
-"""
 
-urls =[
-    "https://www.goal.com/en-us/liga-profesional-argentina/table/581t4mywybx21wcpmpykhyzr3",
-      "https://www.goal.com/en-us/serie-a/table/scf9p4y91yjvqvg5jndxzhxj",
-      "https://www.goal.com/en-us/primera-divisi%C3%B3n/table/2y8bntiif3a9y6gtmauv30gt",
-    "https://www.goal.com/en-us/primera-b/table/bly7ema5au6j40i0grhl0pnub"
+
+draw_urls =[
+    "https://www.goal.com/en-us/fkf-premier-league/table/7wssxdqi4xihseeam8grqa2b8",
+      "https://www.goal.com/en-us/psl/table/yv73ms6v1995b5wny16jcfi3",
+      "https://www.goal.com/en-us/s%C3%BCper-lig/table/482ofyysbdbeoxauk19yg7tdt",
+    "https://www.goal.com/en-us/segunda-divisi%C3%B3n/table/3is4bkgf3loxv9qfg3hm8zfqb",
+    "https://www.goal.com/en-us/league-two/table/6321dlqv4ziuwqte4xpohijtw",
+    "https://www.goal.com/en-us/thai-league-1/table/iu1vi94p4p28oozl1h9bvplr",
+    "https://www.goal.com/en-us/vleague-1/table/aho73e5udydy96iun3tkzdzsi",
+    "",
 ]
-"""

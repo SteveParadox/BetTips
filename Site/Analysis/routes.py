@@ -70,9 +70,9 @@ def home_or_away():
 
     return render_template( 'any_win.html', anywin=anywin)
 
-@analysis.route('/championship-draws', methods=['GET', 'POST'])
+@analysis.route('/draws/prediction', methods=['GET', 'POST'])
 def championshipDraw():
-    return handle_prediction_view(Championship, 'championship-draws.html')
+    return render_template( 'championship-draws.html')
 
 
 @analysis.route('/search', methods=['GET', 'POST'])
