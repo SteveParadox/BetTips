@@ -8,7 +8,11 @@ import os
 import time
 from Site.models import InForm, BetAgainst, BettingTips, Bts, HighScoring, HighConceding, Teams
 from .form import RandomPickForm
+from dotenv import load_dotenv
+
+load_dotenv()
 edit = Blueprint('edit', __name__)
+
 
 
 @edit.route('/', methods=['GET','POST'])
@@ -51,3 +55,19 @@ def last_pred():
 
 
     return render_template('previous.html', data=data, bts_data=bts_data, bpicks_data=bpicks_data)
+
+@edit.route('/fixture')
+def fixture():
+    api_url = "https://apiv3.apifootball.com/?action=get_events&from=2023-09-11&to=2023-09-12&APIkey=os.environ.get('Api_Key')"
+
+    try:
+        response = requests.get(api_url)
+
+        if response.status_code == 200:
+            data = response.json()
+            return jsonify(data)
+        else:
+            return "Error: Unable to fetch data from the API", response.status_code
+    except Exception as e:
+        return str(e)
+
