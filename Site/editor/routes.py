@@ -8,6 +8,8 @@ import os
 import time
 from Site.models import InForm, BetAgainst, BettingTips, Bts, HighScoring, HighConceding, Teams
 from .form import RandomPickForm
+import requests
+
 from dotenv import load_dotenv
 
 load_dotenv()
