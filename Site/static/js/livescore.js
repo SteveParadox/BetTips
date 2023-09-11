@@ -14,7 +14,11 @@ function socketsLive(){
       socket.onmessage = function(e) {
           alert( e.data );
           if (e.data) {
-              var data = JSON.parse(e.data);
+              var jsonData = JSON.parse(e.data);
+            
+              var scoreData = jsonData[0].match_hometeam_name + ' vs ' + jsonData[0].match_awayteam_name;
+                console.log(scoreData)
+              document.getElementById('data-container').innerHTML = scoreData;
           } 
           else {
               console.log('No new data!');

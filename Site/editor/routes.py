@@ -95,7 +95,7 @@ def handle_connect():
     socket_url = f'wss://wss.apifootball.com/livescore?Widgetkey={APIkey}&timezone=+01:00'
     
     def on_message(message):
-        emit('data', message)  # Emit the received data to the connected client
+        emit('data', message)  
 
     socket = None
 
