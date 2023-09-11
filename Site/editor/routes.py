@@ -82,7 +82,7 @@ def fixture():
                     "stage_name": match_data["stage_name"]
                 }
                 extracted_data.append(data)
-                return jsonify({'list':extracted_data})
+            return jsonify({'list':extracted_data})
         else:
             return "Error: Unable to fetch data from the API", response.status_code
     except Exception as e:
