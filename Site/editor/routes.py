@@ -85,7 +85,7 @@ def fixture():
                 "stage_name": match_data["stage_name"],
                 "home_odd": odd_data["odd_1"],
                 "draw_odd": odd_data['odd_x'],
-                "away_data": odd_data['odd_2']
+                "away_odd": odd_data['odd_2']
             }
             extracted_data.append(data)
         return render_template('fixture.html', extracted_data=extracted_data)
