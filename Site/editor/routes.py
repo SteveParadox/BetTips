@@ -59,14 +59,33 @@ def last_pred():
 
     return render_template('previous.html', data=data, bts_data=bts_data, bpicks_data=bpicks_data)
 
+import os
+from datetime import datetime, timedelta
+
+def get_date_strings():
+    today_date = datetime.now().date()
+    one_day_from_today = today_date + timedelta(days=1)
+    today_date_str = today_date.strftime('%Y-%m-%d')
+    one_day_from_today_str = one_day_from_today.strftime('%Y-%m-%d')
+    return today_date_str, one_day_from_today_str
+
 @edit.route('/fixture')
-def fixture():
-    api_url = f"https://apiv3.apifootball.com/?action=get_events&from=2023-09-11&to=2023-09-12&APIkey={os.environ.get('Api_Key')}"
-    odds_url=f"https://apiv3.apifootball.com/?action=get_odds&from=2023-09-11&to=2023-09-12&APIkey={os.environ.get('Api_Key')}"
+@edit.route('/fixture/<date_type>')
+def fixture(date_type=None):
+    today_date_str, one_day_from_today_str = get_date_strings()
+
+    if date_type == 'tomorrow':
+        two_days_from_today = datetime.strptime(one_day_from_today_str, '%Y-%m-%d') + timedelta(days=1)
+        two_days_from_today_str = two_days_from_today.strftime('%Y-%m-%d')
+
+        api_url = f"https://apiv3.apifootball.com/?action=get_events&from={one_day_from_today_str}&to={two_days_from_today_str}&APIkey={os.environ.get('Api_Key')}"
+        odds_url = f"https://apiv3.apifootball.com/?action=get_odds&from=2023-09-12&to=2023-09-13&APIkey={os.environ.get('Api_Key')}"
+    else:
+        api_url = f"https://apiv3.apifootball.com/?action=get_events&from={today_date_str}&to={one_day_from_today_str}&APIkey={os.environ.get('Api_Key')}"
+        odds_url = f"https://apiv3.apifootball.com/?action=get_odds&from=2023-09-11&to=2023-09-12&APIkey={os.environ.get('Api_Key')}"
 
     response = requests.get(api_url)
     response_odds = requests.get(odds_url)
-
 
     if response.status_code == 200 and response_odds.status_code == 200:
         data = response.json()
@@ -88,6 +107,7 @@ def fixture():
         return render_template('fixture.html', extracted_data=extracted_data)
     else:
         return "Error: Unable to fetch data from the API", response.status_code
+
 
 @io.on('connect')
 def handle_connect():
