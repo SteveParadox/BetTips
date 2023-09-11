@@ -63,36 +63,32 @@ def fixture():
     api_url = f"https://apiv3.apifootball.com/?action=get_events&from=2023-09-11&to=2023-09-12&APIkey={os.environ.get('Api_Key')}"
     odds_url=f"https://apiv3.apifootball.com/?action=get_odds&from=2023-09-11&to=2023-09-12&APIkey={os.environ.get('Api_Key')}"
 
-    try:
-        response = requests.get(api_url)
-        response_odds = requests.get(api_url)
+    response = requests.get(api_url)
+    response_odds = requests.get(api_url)
 
 
-        if response.status_code == 200 and response_odds.status_code == 200:
-            data = response.json()
-            data_odd = response_odds.json()
-            extracted_data = []
-            for match_data, odd_data in zip(data, data_odd):
-                data = {
-                    "country_name": match_data["country_name"],
-                    "league_name": match_data["league_name"],
-                    "league_year": match_data["league_year"],
-                    "match_date": match_data["match_date"],
-                    "match_time": match_data["match_time"],
-                    "match_hometeam_name": match_data["match_hometeam_name"],
-                    "match_awayteam_name": match_data["match_awayteam_name"],
-                    "match_stadium": match_data["match_stadium"],
-                    "match_round": match_data["match_round"],
-                    "stage_name": match_data["stage_name"],
-                    "home_odd": odd_data['odd_1'],
-                    "draw_odd": odd_data['odd_x'],
-                    "away_data": odd_data['odd_2']
-
-                }
-                extracted_data.append(data)
-            return render_template('fixture.html', extracted_data=extracted_data)
-        else:
-            return "Error: Unable to fetch data from the API", response.status_code
-    except Exception as e:
-        return str(e)
+    if response.status_code == 200 and response_odds.status_code == 200:
+        data = response.json()
+        data_odd = response_odds.json()
+        extracted_data = []
+        for match_data, odd_data in zip(data, data_odd):
+            data = {
+                "country_name": match_data["country_name"],
+                "league_name": match_data["league_name"],
+                "league_year": match_data["league_year"],
+                "match_date": match_data["match_date"],
+                "match_time": match_data["match_time"],
+                "match_hometeam_name": match_data["match_hometeam_name"],
+                "match_awayteam_name": match_data["match_awayteam_name"],
+                "match_stadium": match_data["match_stadium"],
+                "match_round": match_data["match_round"],
+                "stage_name": match_data["stage_name"],
+                "home_odd": odd_data['odd_1'],
+                "draw_odd": odd_data['odd_x'],
+                "away_data": odd_data['odd_2']
+            }
+            extracted_data.append(data)
+        return render_template('fixture.html', extracted_data=extracted_data)
+    else:
+        return "Error: Unable to fetch data from the API", response.status_code
 
