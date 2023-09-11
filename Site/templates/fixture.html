@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}
+{% block content %}
+<style>
+    .in_form {
+        font-size: 30px;
+        margin-top: 2rem;
+        text-align: center;
+    }
+</style>
+
+<div id="about">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12">
+                <div class="about-box">
+                    <h3 class="in_form">Today Fixtures</h3>
+                    <table>
+                    
+                        <thead>
+                            <tr>
+                                <th scope="col">Fixture</th>
+                                <th scope="col">League</th>
+                                <th scope="col">Prediction</th>
+                            </tr>
+                        </thead>
+                        {% for match in extracted_data %}
+                        <tbody>
+                            <tr>
+                                    <td data-label="Team">{{ match.match_hometeam_name }} vs {{ match.match_awayteam_name }}</td>
+                                    <td data-label="League">{{ match.league_name }} {{ match.league_year }}</td>                            
+                            </tr>
+                    
+                        </tbody>
+                        {% endfor %}
+                    </table>
+                </div>
+                <h6><a href="{{url_for('edit.last_pred', data=data)}}"> Last Prediction </a></h6>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{%endblock content%}
