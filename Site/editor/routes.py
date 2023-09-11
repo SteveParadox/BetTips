@@ -63,8 +63,8 @@ import os
 from datetime import datetime, timedelta
 
 def get_date_strings():
-    today_date = datetime.now().date()
-    one_day_from_today = today_date + timedelta(days=1)
+    today_date = datetime.now().date() + timedelta(days=1)
+    one_day_from_today = today_date + timedelta(days=2)
     today_date_str = today_date.strftime('%Y-%m-%d')
     one_day_from_today_str = one_day_from_today.strftime('%Y-%m-%d')
     return today_date_str, one_day_from_today_str
