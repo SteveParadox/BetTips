@@ -69,9 +69,8 @@ def fixture():
 
     if response.status_code == 200 and response_odds.status_code == 200:
         data = response.json()
-        data_odd = response_odds.json()
         extracted_data = []
-        for match_data, odd_data in zip(data, data_odd):
+        for match_data in data:
             data = {
                 "country_name": match_data["country_name"],
                 "league_name": match_data["league_name"],
@@ -82,10 +81,7 @@ def fixture():
                 "match_awayteam_name": match_data["match_awayteam_name"],
                 "match_stadium": match_data["match_stadium"],
                 "match_round": match_data["match_round"],
-                "stage_name": match_data["stage_name"],
-                "home_odd": odd_data["odd_1"],
-                "draw_odd": odd_data['odd_x'],
-                "away_odd": odd_data['odd_2']
+                "stage_name": match_data["stage_name"]
             }
             extracted_data.append(data)
         return render_template('fixture.html', extracted_data=extracted_data)
