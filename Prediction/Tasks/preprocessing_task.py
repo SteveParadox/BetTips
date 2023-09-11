@@ -10,6 +10,8 @@ from Prediction import db
 import os
 from dotenv import load_dotenv
 from tqdm import tqdm
+import requests
+
 load_dotenv()
 
 def get_data():
