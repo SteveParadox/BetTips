@@ -2,13 +2,14 @@
 from flask import Flask, render_template, redirect, request, url_for, Blueprint, abort, jsonify # importing libraries from framework
 import uuid # using random string generator
 from ..models import * # importing classes from models.py 
-from Site import db, app # importing database and app configuration from folder package
+from Site import db, app, io # importing database and app configuration from folder package
 import datetime
 import os
 import time
 from Site.models import InForm, BetAgainst, BettingTips, Bts, HighScoring, HighConceding, Teams
 from .form import RandomPickForm
 import requests
+from flask_socketio import emit
 
 from dotenv import load_dotenv
 
@@ -88,3 +89,27 @@ def fixture():
     else:
         return "Error: Unable to fetch data from the API", response.status_code
 
+@io.on('connect')
+def handle_connect():
+    APIkey = os.environ.get('Api_Key')
+    socket_url = f'wss://wss.apifootball.com/livescore?Widgetkey={APIkey}&timezone=+01:00'
+    
+    def on_message(message):
+        emit('data', message)  # Emit the received data to the connected client
+
+    socket = None
+
+    try:
+        socket = io.AsyncClient()
+        socket.connect(socket_url)
+
+        @socket.on('message')
+        def handle_message(data):
+            on_message(data)
+
+        socket.wait()
+    except Exception as e:
+        print(f"WebSocket connection error: {e}")
+    finally:
+        if socket:
+            socket.disconnect()

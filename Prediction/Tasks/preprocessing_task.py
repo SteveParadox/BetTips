@@ -7,6 +7,10 @@ from ..url_list import urls
 from Prediction.process import teams, df_analysis
 import math
 from Prediction import db
+import os
+from dotenv import load_dotenv
+from tqdm import tqdm
+load_dotenv()
 
 def get_data():
     teams = Teams.query.all()
@@ -88,3 +92,10 @@ def hello(self):
 def db_refresh(self):
     db.drop_all()
     db.create_all()
+
+@shared_task(bind=True, base=AbortableTask)
+def team_id(self):
+    for i in tqdm(range(1,741), desc="Loading... "):
+        api_url = f"https://apiv3.apifootball.com/?action=get_teams&league_id={i}&APIkey={os.environ.get('Api_Key')}"
+        response = requests.get(api_url)
+        

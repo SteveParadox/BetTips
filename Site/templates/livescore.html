@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Livescore</title>
+</head>
+<body>
+    <div id="data-container"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script>
+    <script src= "{{ url_for('static', filename='js/livescore.js') }}"></script>
+
+    <script>
+        var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+        socket.on('connect', function() {
+            console.log('Connected to the WebSocket server');
+        });
+
+        socket.on('data', function(data) {
+            // Handle incoming data, e.g., update the data container
+            document.getElementById('data-container').innerHTML = data;
+        });
+    </script>
+</body>
+</html>

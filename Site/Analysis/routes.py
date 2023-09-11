@@ -95,3 +95,7 @@ def team_detail(name):
     team = Teams.query.filter_by(name=name).first()
 
     return render_template('team.html',team=team )
+
+@app.route('/livescore')
+def live():
+    return render_template('livescore.html')  
