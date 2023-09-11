@@ -96,6 +96,6 @@ def team_detail(name):
 
     return render_template('team.html',team=team )
 
-@app.route('/livescore')
+@analysis.route('/livescore')
 def live():
     return render_template('livescore.html')  
