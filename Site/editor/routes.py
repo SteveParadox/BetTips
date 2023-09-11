@@ -64,7 +64,7 @@ def fixture():
     odds_url=f"https://apiv3.apifootball.com/?action=get_odds&from=2023-09-11&to=2023-09-12&APIkey={os.environ.get('Api_Key')}"
 
     response = requests.get(api_url)
-    response_odds = requests.get(api_url)
+    response_odds = requests.get(odds_url)
 
 
     if response.status_code == 200 and response_odds.status_code == 200:
