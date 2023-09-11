@@ -7,7 +7,7 @@ function socketsLive(){
     
       console.log('Connecting...');	
       socket.onopen = function(e) {
-          alert('Connected');
+          ///alert('Connected');
           console.log('Connected');
           console.log('Waiting data...');
       }		  
