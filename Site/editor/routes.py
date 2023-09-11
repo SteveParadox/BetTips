@@ -67,7 +67,22 @@ def fixture():
 
         if response.status_code == 200:
             data = response.json()
-            return jsonify(data)
+            extracted_data = []
+            for match_data in data:
+                data = {
+                    "country_name": match_data["country_name"],
+                    "league_name": match_data["league_name"],
+                    "league_year": match_data["league_year"],
+                    "match_date": match_data["match_date"],
+                    "match_time": match_data["match_time"],
+                    "match_hometeam_name": match_data["match_hometeam_name"],
+                    "match_awayteam_name": match_data["match_awayteam_name"],
+                    "match_stadium": match_data["match_stadium"],
+                    "match_round": match_data["match_round"],
+                    "stage_name": match_data["stage_name"]
+                }
+                extracted_data.append(data)
+                return jsonify({'list':extracted_data})
         else:
             return "Error: Unable to fetch data from the API", response.status_code
     except Exception as e:
