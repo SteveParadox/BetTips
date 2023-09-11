@@ -1,25 +1,57 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Livescore</title>
-</head>
-<body>
-    <div id="data-container"></div>
+{% extends 'layout.html' %}
+{% block content %}
+<style>
+    .in_form {
+        font-size: 30px;
+        margin-top: 2rem;
+        text-align: center;
+    }
+</style>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script>
-    <script src= "{{ url_for('static', filename='js/livescore.js') }}"></script>
+<div id="about">
+    <div class="container">
+        <div class="row">
 
-    <script>
-        var socket = io.connect('http://' + document.domain + ':' + location.port);
+            <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12">
+                <div class="about-box">
+                    <h3 class="in_form">Live</h3>
 
-        socket.on('connect', function() {
-            console.log('Connected to the WebSocket server');
-        });
+                    <table>
+                    
+                        <thead>
+                            <tr>
+                                <th scope="col">Score</th>
+                            </tr>
+                        </thead>
+                        <div id="data-container"></div>
 
-        socket.on('data', function(data) {
-            // Handle incoming data, e.g., update the data container
-            document.getElementById('data-container').innerHTML = data;
-        });
-    </script>
-</body>
-</html>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script>
+<script src="{{ url_for('static', filename='js/livescore.js') }}"></script>
+
+<script>
+    var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+    socket.on('connect', function() {
+        console.log('Connected to the WebSocket server');
+    });
+
+    socket.on('data', function(data) {
+        // Parse the incoming JSON data (if necessary)
+        var jsonData = JSON.parse(data);
+
+        // Extract and format the data you want to display (modify this based on your data structure)
+        var scoreData = jsonData[0].match_hometeam_name + ' vs ' + jsonData[0].match_awayteam_name;
+
+        // Update the data container element with the formatted data
+        document.getElementById('data-container').innerHTML = scoreData;
+    });
+</script>
+
+{%endblock content%}
