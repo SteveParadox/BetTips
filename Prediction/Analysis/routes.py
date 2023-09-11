@@ -72,3 +72,8 @@ def home_hello():
 def db_create():
     db_refresh.delay()
     return jsonify({'message': 'done'})
+
+@analysis.route('/api/team/key')
+def get_team_key():
+    team_id.delay()
+    return jsonify({'message': 'done'})

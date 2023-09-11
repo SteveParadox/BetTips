@@ -93,6 +93,10 @@ class Bts(db.Model):
     week = db.Column(db.Integer(), default = 0)
     date_uploaded = db.Column(db.DateTime, nullable=False, default=datetime.now)
 
+class Teamkey(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String())
+    key = db.Column(db.Integer())
 
 class RandomPrediction(Prediction):
     __mapper_args__ = {'polymorphic_identity': 'random_prediction'}
