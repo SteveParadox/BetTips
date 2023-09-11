@@ -16,12 +16,19 @@ function socketsLive(){
           if (e.data) {
               var jsonData = JSON.parse(e.data);
 
-              var scoreData = jsonData[0].match_hometeam_name + ' ' +
-              jsonData[0].match_hometeam_score + ' vs ' +
-              jsonData[0].match_awayteam_score + ' ' +
-              jsonData[0].match_awayteam_name + ' ' +
-              jsonData[0].league_name;
-              
+              var scoreData = ''; // Initialize an empty string to store the data
+
+              // Iterate through the jsonData array
+              for (var i = 0; i < jsonData.length; i++) {
+                  var match = jsonData[i];
+                  var matchInfo = match.match_hometeam_name + ' ' + match.match_hometeam_score + ' vs ' +
+                                  match.match_awayteam_score + ' ' + match.match_awayteam_name + ' ' +
+                                  match.league_name;
+      
+                  // Append the match information to the scoreData string
+                  scoreData += matchInfo + '<br>';
+              }
+
                 console.log(scoreData)
               document.getElementById('data-container').innerHTML = scoreData;
           } 
