@@ -16,7 +16,12 @@ function socketsLive(){
           if (e.data) {
               var jsonData = JSON.parse(e.data);
 
-              var scoreData = jsonData[0].match_hometeam_name +' ' + jsonData[0].match_hometeam_score + ' vs ' + jsonData[0].match_awayteam_score +' '+ jsonData[0].match_awayteam_name +' '+ jsonData[0].league_name;
+              var scoreData = jsonData[0].match_hometeam_name + ' ' +
+              jsonData[0].match_hometeam_score + ' vs ' +
+              jsonData[0].match_awayteam_score + ' ' +
+              jsonData[0].match_awayteam_name + ' ' +
+              jsonData[0].league_name;
+              
                 console.log(scoreData)
               document.getElementById('data-container').innerHTML = scoreData;
           } 
