@@ -72,7 +72,6 @@ def fixture():
         data_odd = response_odds.json()
         extracted_data = []
         for match_data, odd_data in zip(data, data_odd):
-            print(odd_data)
             data = {
                 "country_name": match_data["country_name"],
                 "league_name": match_data["league_name"],
