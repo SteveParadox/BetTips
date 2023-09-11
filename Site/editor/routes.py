@@ -60,7 +60,7 @@ def last_pred():
 
 @edit.route('/fixture')
 def fixture():
-    api_url = "https://apiv3.apifootball.com/?action=get_events&from=2023-09-11&to=2023-09-12&APIkey=os.environ.get('Api_Key')"
+    api_url = f"https://apiv3.apifootball.com/?action=get_events&from=2023-09-11&to=2023-09-12&APIkey={os.environ.get('Api_Key')}"
 
     try:
         response = requests.get(api_url)
