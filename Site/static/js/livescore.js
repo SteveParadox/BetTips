@@ -15,7 +15,7 @@ function socketsLive(){
           ///alert( e.data );
           if (e.data) {
               var jsonData = JSON.parse(e.data);
-
+                console.log(jsonData);
               var scoreData = ''; // Initialize an empty string to store the data
 
               // Iterate through the jsonData array

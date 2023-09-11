@@ -99,3 +99,4 @@ def team_id(self):
         api_url = f"https://apiv3.apifootball.com/?action=get_teams&league_id={i}&APIkey={os.environ.get('Api_Key')}"
         response = requests.get(api_url)
         
+
