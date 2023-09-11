@@ -15,8 +15,8 @@ function socketsLive(){
           alert( e.data );
           if (e.data) {
               var data = JSON.parse(e.data);
-              console.log(data);
-          } else {
+          } 
+          else {
               console.log('No new data!');
           }
       }

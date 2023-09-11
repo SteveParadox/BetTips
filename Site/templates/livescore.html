@@ -44,6 +44,7 @@
 
     socket.on('data', function(data) {
         // Parse the incoming JSON data (if necessary)
+        console.log(data)
         var jsonData = JSON.parse(data);
 
         // Extract and format the data you want to display (modify this based on your data structure)
