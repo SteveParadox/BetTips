@@ -12,7 +12,7 @@ function socketsLive(){
           console.log('Waiting data...');
       }		  
       socket.onmessage = function(e) {
-          alert( e.data );
+          ///alert( e.data );
           if (e.data) {
               var jsonData = JSON.parse(e.data);
 
