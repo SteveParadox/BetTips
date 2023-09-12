@@ -3,8 +3,8 @@ from flask import Flask, render_template, redirect, request, url_for, Blueprint,
 import uuid # using random string generator
 from ..models import * # importing classes from models.py 
 from Site import db, app, io # importing database and app configuration from folder package
-import datetime
 import os
+from datetime import datetime, timedelta
 import time
 from Site.models import InForm, BetAgainst, BettingTips, Bts, HighScoring, HighConceding, Teams
 from .form import RandomPickForm
@@ -20,7 +20,7 @@ edit = Blueprint('edit', __name__)
 
 @edit.route('/', methods=['GET','POST'])
 def home():
-    seven_days_ago = datetime.datetime.now() - datetime.timedelta(days=7)
+    seven_days_ago = datetime.now() - timedelta(days=7)
     pick = RandomPrediction.query.all()
     prediction = RandomPrediction.query.filter(RandomPrediction.date_uploaded >= seven_days_ago).all()
     form = RandomPickForm()
@@ -59,8 +59,7 @@ def last_pred():
 
     return render_template('previous.html', data=data, bts_data=bts_data, bpicks_data=bpicks_data)
 
-import os
-from datetime import datetime, timedelta
+
 
 def get_date_strings():
     today_date = datetime.now().date() + timedelta(days=1)
