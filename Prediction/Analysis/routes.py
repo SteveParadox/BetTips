@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, request, url_for, Blueprint, abort, jsonify # importing libraries from framework
 import uuid 
-from ..models import  Teams, InForm, Bts, BettingTips, HighScoring, HighConceding, TeamsSchema, AnyteamSchema
+from ..models import  Teams, InForm, Bts, BettingTips, HighScoring, HighConceding, TeamsSchema, AnyteamSchema, TeamkeySchema
 from Prediction import db, app 
 import datetime
 from Prediction.Tasks.preprocessing_task import *
@@ -77,3 +77,10 @@ def db_create():
 def get_team_key():
     team_id.delay()
     return jsonify({'message': 'done'})
+
+@analysis.route('/api/team_key')
+def team_key():
+    results = Teamkey.query.all()
+    teams_schema = TeamkeySchema(many=True)
+    res = teams_schema.dump(results)
+    return jsonify(res)

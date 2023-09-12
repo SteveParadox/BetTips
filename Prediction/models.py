@@ -141,3 +141,11 @@ class AnyteamSchema(SQLAlchemyAutoSchema):
 
 anyteam_schema = AnyteamSchema()
 anyteams_schema = AnyteamSchema(many=True)
+
+class TeamkeySchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = Teamkey
+
+
+teamkey_schema = TeamkeySchema()
+teamkey_schema = TeamkeySchema(many=True)
