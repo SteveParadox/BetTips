@@ -97,17 +97,35 @@ def db_refresh(self):
 
 @shared_task(bind=True, base=AbortableTask)
 def team_id(self):
-    for i in tqdm(range(1,741), desc="Loading... "):
-        api_url = f"https://apiv3.apifootball.com/?action=get_teams&league_id={i}&APIkey={os.environ.get('Api_Key')}"
-        response = requests.get(api_url)
-        if response.status_code == 200:
-            data = response.json()
-            for match_data in data:
-                teamkey = Teamkey(
-                    name = match_data["team_name"],
-                    key = match_data["team_key"],
-                )
-                db.session.add(teamkey)
-            db.session.commit()
-        
+    key_ = Teamkey.query.all()
+    if key_ is None:
+        for i in tqdm(range(1, 120), desc="Loading... "):
+            api_url = f"https://apiv3.apifootball.com/?action=get_teams&league_id={i}&APIkey={os.environ.get('Api_Key')}"
+            response = requests.get(api_url)
+            if response.status_code == 200:
+                data = response.json()
+                for match_data in data:
+                    teamkey = Teamkey(
+                        name = match_data["team_name"],
+                        key = int(match_data["team_key"]),
+                    )
+                    db.session.add(teamkey)
+                db.session.commit()
+    else:
+        key_data = Teamkey.query.order_by(Teamkey.key.desc()).first()
+        if key_data.key < 741:
+            for i in tqdm(range(key_data.key, key_data.key + 100), desc="Loading... "):
+                api_url = f"https://apiv3.apifootball.com/?action=get_teams&league_id={i}&APIkey={os.environ.get('Api_Key')}"
+                response = requests.get(api_url)
+                if response.status_code == 200:
+                    data = response.json()
+                    for match_data in data:
+                        teamkey = Teamkey(
+                            name = match_data["team_name"],
+                            key = match_data["team_key"],
+                        )
+                        db.session.add(teamkey)
+                    db.session.commit()
+
+            
 
