@@ -63,14 +63,17 @@
                         <thead>
                             <tr>
                                 <th scope="col">Home Team</th>
+                                <th scope="col">Result</th>
+
                                 <th scope="col">Away Team</th>
                             </tr>
                         </thead>
                         {% for match in extend %}
                         <tbody>
                             <tr>
-                                    <td data-label="Home Team">{{ match.hometeam }}  | {{ match.hometeam_score }}</td>
-                                    <td data-label="Away Team">{{ match.awayteam }} | {{ match.awayteam_score }}</td>                            
+                                    <td data-label="Home Team">{{ match.hometeam }}  | </td>
+                                    <td data-label="Result">{{ match.hometeam_score }}    vs    {{ match.awayteam_score }} </td>
+                                    <td data-label="Away Team">{{ match.awayteam }}</td>                            
                             </tr>
                     
                         </tbody>
