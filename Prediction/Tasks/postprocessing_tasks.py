@@ -55,13 +55,14 @@ def high_conceding_rate(self):
     _, high_conceding_teams, _ = high_gf_ga(match_fix, data)
     for high_ga in high_conceding_teams:
         team = Teams.query.filter_by(name=high_ga).first()
-        high_conceding = HighConceding(
-                    team = team.name,
-                    league = team.league_name,
-                    goal_conceded = team.ga,
-                    conceding_rate = round((team.ga / team.played), 2)
-        )
-        db.session.add(high_conceding)
+        if team is not None:
+            high_conceding = HighConceding(
+                        team = team.name,
+                        league = team.league_name,
+                        goal_conceded = team.ga,
+                        conceding_rate = round((team.ga / team.played), 2)
+            )
+            db.session.add(high_conceding)
     db.session.commit()
 
 
