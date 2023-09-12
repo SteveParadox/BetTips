@@ -124,3 +124,7 @@ def team_detail(name):
 def live():
     return render_template('livescore.html')  
 
+@analysis.route('/teams/performance')
+def team_performance():
+    return render_template('team_performance.html')  
+

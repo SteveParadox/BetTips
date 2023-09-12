@@ -47,15 +47,15 @@
     <!-- header -->
     <header>
         <!-- header inner -->
-        <div class="header-top">
-            <div class="header">
+        <div class="header-top2">
+            <div class="header2">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col logo_section">
                             <div class="full">
                                 <div class="center-desk">
                                     <div class="logo" >
-                                        <a style="font-size: 17px;" href="{{ url_for('edit.home') }}"><img style="height: 17px;" alt='' src="static/favicon/favicon-32x32.png">BettingFixed</a>
+                                        <a style="font-size: 34px;" href="{{ url_for('edit.home') }}"><img style="height: 36px;" alt='' src="static/favicon/favicon-32x32.png">BettingFixed</a>
                                     </div>
                                 </div>
                             </div>
@@ -65,11 +65,9 @@
                                 <div class="limit-box">
                                     <nav class="main-menu">
                                         <ul class="menu-area-main">
-                                            <li><a href="{{ url_for('analysis.team_performance') }}" class="deg">Team Performance</a></li>
-                                            <li><a href="{{ url_for('analysis.bettingTips') }}" class="deg">Betting Tips</a></li>
-                                            <li><a href="{{ url_for('analysis.bothTeamScoreTips') }}" class="deg">Both Teams To Score Tips</a></li>
-                                            <li class="active"><a href="{{ url_for('analysis.home_or_away') }}" class="deg"> Home Or Away</a></li>
-                                            <li><a href="{{ url_for('analysis.championshipDraw') }}" class="deg">Draw/Under 2.5</a></li>
+                                            <li><a href="{{ url_for('analysis.mostInFormTeams') }}" class="deg">In Form Teams</a></li>
+                                            <li><a href="{{ url_for('analysis.teamsWithHighGoalStats') }}" class="deg">High Goal Scoring Teams</a></li>
+                                            <li><a href="{{ url_for('analysis.teamsWithHighConcedingRate') }}" class="deg">High Goal Conceding Teams</a></li>
                                             <li><a href="{{ url_for('analysis.team_statistics')}}" class="deg">Team Statistics</a></li>
 
                                         </ul>
@@ -82,6 +80,32 @@
             </div>
             <!-- end header inner -->
 
+            <!-- end header -->
+            <section class="slider_section">
+                <div class="banner_main">
+
+                    <div class="container">
+
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 ">
+                                <div class="text-bg">
+                                    <h1>Get  <br> <strong class="b_bold">Betting Tips </strong></h1>
+                                   
+                                    <a href="https://web.bet9ja.com/Sport/Default.aspx">Book Online</a>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                                <div class="text-img">
+                                    <figure><img src="static/images/hpg-logo-preview.png" /></figure>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        </section>
         </div>
         </div>
     </header>
@@ -135,8 +159,26 @@
                                 </div>
                             </div>
                            
+                            <div class="col-lg-4 col-md-4 col-sm-6">
+                                <div class="address">
+                                    <h3 style="font-size: 15px;">Menu</h3>
+                                    <ul class="Menu_footer">
+                                        <li><a href="{{ url_for('analysis.mostInFormTeams') }}" style="font-size: 13px;">In Form Teams</a></li>
+                                        <li><a href="{{ url_for('analysis.bettingTips') }}" style="font-size: 13px;">Betting Tips</a></li>
+                                        <li><a href="{{ url_for('analysis.teamsWithHighGoalStats') }}" style="font-size: 13px;">High Goal Scoring Teams</a></li>
+                                        <li><a href="{{ url_for('analysis.bothTeamScoreTips') }}" style="font-size: 13px;">Both Teams To Score Tips</a></li>
+                                        <li><a href="{{ url_for('analysis.teamsWithHighConcedingRate') }}" style="font-size: 13px;">High Goal Conceding Teams</a></li>
+                                        <li class="active"><a href="{{ url_for('analysis.home_or_away') }}" class="deg"> Home Or Away</a></li>
+                                        <li><a href="{{ url_for('analysis.championshipDraw') }}" style="font-size: 13px;">Draw/Under 2.5</a></li>
+                                        <li><a href="{{ url_for('analysis.team_statistics')}}" style="font-size: 13px;">Team Statistics</a></li>
+
+                                    </ul>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
+                    
                     
                 </div>
 
@@ -157,6 +199,7 @@
     <script src= "{{ url_for('static', filename='js/plugin.js') }}"></script>
     <script src= "{{ url_for('static', filename='js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
     <script src= "{{ url_for('static', filename='js/custom.js') }}"></script>
+
 </body>
 
 </html>
