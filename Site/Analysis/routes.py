@@ -128,3 +128,6 @@ def live():
 def team_performance():
     return render_template('team_performance.html')  
 
+@analysis.route('/fixture/prediction')
+def fixture_prediction():
+    return render_template('pred.html')  
