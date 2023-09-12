@@ -106,14 +106,14 @@ def team_detail(name):
             extend = []
             for i in data["firstTeam_lastResults"]:
                 data_json = {
-                    league_name : i["league_name"],
-                    match_date : i["match_date"],
-                    hometeam : i["match_hometeam_name"],
-                    awayteam : i["match_awayteam_name"],
-                    hometeam_score : i["match_hometeam_score"],
-                    awayteam_score : i["match_awayteam_score"],
-                    hometeam_halftime_score : i["match_hometeam_halftime_score"],
-                    awayteam_halftime_score : i["match_awayteam_halftime_score"]
+                    "league_name" : i["league_name"],
+                    "match_date" : i["match_date"],
+                    "hometeam" : i["match_hometeam_name"],
+                    "awayteam" : i["match_awayteam_name"],
+                    "hometeam_score" : i["match_hometeam_score"],
+                    "awayteam_score" : i["match_awayteam_score"],
+                    "hometeam_halftime_score" : i["match_hometeam_halftime_score"],
+                    "awayteam_halftime_score" : i["match_awayteam_halftime_score"]
                 }
                 extend.append(data_json)
 
