@@ -58,6 +58,24 @@
                         </tbody>
                        
                     </table>
+                    <table>
+                    
+                        <thead>
+                            <tr>
+                                <th scope="col">Home Team</th>
+                                <th scope="col">Away Team</th>
+                            </tr>
+                        </thead>
+                        {% for match in extend %}
+                        <tbody>
+                            <tr>
+                                    <td data-label="Home Team">{{ match.hometeam }}  | {{ match.hometeam_score }}</td>
+                                    <td data-label="Away Team">{{ match.awayteam }} | {{ match.awayteam_score }}</td>                            
+                            </tr>
+                    
+                        </tbody>
+                        {% endfor %}
+                    </table>
                 </div>
             </div>
         </div>

@@ -4,7 +4,10 @@ from ..models import *
 from Site import db, app 
 import datetime
 from Site.editor.form import NotificationForm
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
 # registering blueprint 
 analysis = Blueprint('analysis', __name__)
@@ -93,9 +96,30 @@ def search():
 @analysis.route('/<string:name>', methods=['GET'])
 def team_detail(name):
     team = Teams.query.filter_by(name=name).first()
+    team_key = Teamkey.query.filter_by(name=team.name).first()
+    if team_key:
+        url = f"https://apiv3.apifootball.com/?action=get_H2H&firstTeamId={team_key.key}&secondTeamId={151}&APIkey={os.environ.get('Api_Key')}"
+        
+        response = requests.get(url)
+        if response.status_code == 200:
+            data = response.json()
+            extend = []
+            for i in data["firstTeam_lastResults"]:
+                data_json = {
+                    league_name = i["league_name"],
+                    match_date = i["match_date"],
+                    hometeam = i["match_hometeam_name"],
+                    awayteam = i["match_awayteam_name"],
+                    hometeam_score = i["match_hometeam_score"],
+                    awayteam_score = i["match_awayteam_score"],
+                    hometeam_halftime_score = i["match_hometeam_halftime_score"],
+                    awayteam_halftime_score = i["match_awayteam_halftime_score"]
+                }
+                extend.append(data_json)
 
-    return render_template('team.html',team=team )
+            return render_template('team.html',team=team, extend=extend)
 
 @analysis.route('/livescore')
 def live():
     return render_template('livescore.html')  
+
