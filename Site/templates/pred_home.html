@@ -1,0 +1,43 @@
+{% extends 'pred.html' %}
+{% block content %}
+
+
+<div id="about" >
+    <div class="container">
+        <div class="row">
+
+            <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12">
+                <div class="about-box">
+                    <h3 class="in_form"> Free Betting Tips This Week</h3>
+                    <table>
+                    
+                        <thead>
+                            <tr>
+                                <th scope="col">Team</th>
+                                <th scope="col">Competition</th>
+                                <th scope="col">Prediction</th>
+                                <th scope="col">% Confidence</th>
+                            </tr>
+                        </thead>
+                        {% for picks in betting_tips %}
+                        <tbody>
+                            <tr>
+                                <td data-label="Team">{{ picks.team }}</td>
+                                <td data-label="League">{{ picks.competition }}</td>
+                                <td data-label="prediction">{{picks.prediction}}</td>
+                                <td data-label="confidence">{{picks.Confidence}}</td>
+
+                            </tr>
+                        </tbody>
+                        {% endfor %}
+                    </table>
+                </div>
+                <h6><a href="{{url_for('edit.last_pred', bpicks_data=bpicks_data)}}"> Last Prediction </a></h6>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+{%endblock content%}
