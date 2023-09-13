@@ -69,7 +69,8 @@
      font-size: 14px 
 }
  h6 {
-     font-size: 13px 
+     font-size: 13px;
+     margin-bottom: 2rem;
 }
  *, *::after, *::before {
      -webkit-box-sizing: border-box;
@@ -354,7 +355,6 @@
      float: left;
 }
  nav.main-menu {
-     float: right;
      margin-left: 0;
 }
  .menu-area-main li:hover a, .menu-area-main li:focus a {
@@ -1589,7 +1589,7 @@
 }
  .footer {
      background: black;
-     padding-top: 90px;
+     padding-top: 40px;
 }
  .footer .address h3 {
      color: #fff;
@@ -1761,8 +1761,8 @@
      color: #002aeb;
 }
  .copyright {
-     padding: 20px 0px;
-     margin-top: 55px;
+     padding: 15px 0px;
+     margin-top: 15px;
 }
  .copyright p {
      color: #fff;
