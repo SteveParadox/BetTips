@@ -130,4 +130,6 @@ def team_performance():
 
 @analysis.route('/fixture/prediction')
 def fixture_prediction():
-    return render_template('pred.html')  
+    betting_tips = BettingTips.query.order_by(BettingTips.date_uploaded.desc()).all()[:25]
+
+    return render_template('pred_home.html', betting_tips=betting_tips)
