@@ -107,22 +107,23 @@ def anyteamwin(self):
     for pred in predictions:
         pred_ = pred.split(' vs ')
         team = Teams.query.filter_by(name=pred_[0]).first()
+        if team is not None:
 
-        if h_a_list:
-            h_a = h_a_list[0]  # Get the first element
-            h_or_a = H_or_A(
-                fixture=str(pred),
-                league=team.league_name,
-                week=h_a.week + 1
-            )
-            h_a_list.pop(0) 
-        else:
-            h_or_a = H_or_A(
-                fixture=str(pred),
-                league=team.league_name
-            )
-        
-        db.session.add(h_or_a)
+            if h_a_list:
+                h_a = h_a_list[0]  # Get the first element
+                h_or_a = H_or_A(
+                    fixture=str(pred),
+                    league=team.league_name,
+                    week=h_a.week + 1
+                )
+                h_a_list.pop(0) 
+            else:
+                h_or_a = H_or_A(
+                    fixture=str(pred),
+                    league=team.league_name
+                )
+            
+            db.session.add(h_or_a)
 
     db.session.commit()
 
