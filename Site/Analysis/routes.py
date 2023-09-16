@@ -117,6 +117,7 @@ def team_detail(name):
                     "awayteam_halftime_score" : i["match_awayteam_halftime_score"]
                 }
                 extend.append(data_json)
+                print(extend)
 
             return render_template('team.html',team=team, extend=extend)
 

@@ -1,8 +1,39 @@
 {% extends 'perf.html' %}
 {% block content %}
 
+<div id="about" >
+    <div class="container">
+        <div class="row">
 
-
-
+            <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12">
+                <div class="about-box">
+                    <h3 class="in_form">In Form Teams</h3>
+                    
+                    <table>
+                  
+                        <thead>
+                            <tr>
+                                <th scope="col">Team</th>
+                                <th scope="col">League</th>
+                                <th scope="col">Win %</th>
+                            </tr>
+                        </thead>
+                        {% for picks in in_form %}
+                        <tbody>
+                            <tr>
+                                <td data-label="Team"><a href="{{url_for('analysis.team_detail', name=picks.team)}}" >{{picks.team}} </a></td>
+                                <td data-label="League">{{ picks.league }}</td>
+                                <td data-label="Win">{{ picks.win_percent }}</td>
+                            </tr>
+                           
+                        </tbody>
+                        {% endfor %}
+                    </table>
+                    </div>
+                    </div>
+                    </div>
+                    </div>
+</div>                    
+           
 
 {%endblock content%}

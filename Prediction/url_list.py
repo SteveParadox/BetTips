@@ -86,5 +86,5 @@ draw_urls =[
     "https://www.goal.com/en-us/league-two/table/6321dlqv4ziuwqte4xpohijtw",
     "https://www.goal.com/en-us/thai-league-1/table/iu1vi94p4p28oozl1h9bvplr",
     "https://www.goal.com/en-us/vleague-1/table/aho73e5udydy96iun3tkzdzsi",
-    "",
+  
 ]
