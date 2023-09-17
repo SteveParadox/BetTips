@@ -100,11 +100,11 @@ def team_detail(name):
     team_key = Teamkey.query.filter_by(name=team.name).first()
     if team_key:
         url = f"https://apiv3.apifootball.com/?action=get_H2H&firstTeamId={team_key.key}&secondTeamId={151}&APIkey={os.environ.get('Api_Key')}"
-        
+        extend = []
         response = requests.get(url)
         if response.status_code == 200:
             data = response.json()
-            extend = []
+            
             for i in data["firstTeam_lastResults"]:
                 data_json = {
                     "league_name" : i["league_name"],
@@ -120,7 +120,7 @@ def team_detail(name):
                 
                 print(extend)
 
-            return render_template('team.html',team=team, extend=extend)
+        return render_template('team.html',team=team, extend=extend)
 
 @analysis.route('/livescore')
 def live():
