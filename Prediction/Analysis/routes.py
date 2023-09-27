@@ -19,7 +19,7 @@ def add_teams():
 @analysis.route('/api')
 def home():
     f=[]
-    for i in tqdm(range(1, 12), desc="Loading... "):
+    for i in tqdm(range(1,3), desc="Loading... "):
         api_url = f"https://apiv3.apifootball.com/?action=get_teams&league_id={i}&APIkey={os.environ.get('Api_Key')}"
         response = requests.get(api_url)
         f.append(response.json())
