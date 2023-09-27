@@ -102,6 +102,7 @@ def team_id(self):
         for i in tqdm(range(1, 120), desc="Loading... "):
             api_url = f"https://apiv3.apifootball.com/?action=get_teams&league_id={i}&APIkey={os.environ.get('Api_Key')}"
             response = requests.get(api_url)
+            
             if response.status_code == 200:
                 data = response.json()
                 for match_data in data:

@@ -5,6 +5,7 @@ from Prediction import db, app
 import datetime
 from Prediction.Tasks.preprocessing_task import *
 from Prediction.Tasks.postprocessing_tasks import *
+from tqdm import tqdm
 
 
 # registering blueprint 
@@ -17,7 +18,12 @@ def add_teams():
 
 @analysis.route('/api')
 def home():
-    return jsonify({'message': 'Heheheheh'})
+    f=[]
+    for i in tqdm(range(1, 12), desc="Loading... "):
+        api_url = f"https://apiv3.apifootball.com/?action=get_teams&league_id={i}&APIkey={os.environ.get('Api_Key')}"
+        response = requests.get(api_url)
+        f.append(response.json())
+    return jsonify({'message': f})
 
 @analysis.route('/api/all_teams')
 def teams():
