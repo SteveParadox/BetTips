@@ -115,7 +115,6 @@ def team_id(self):
 
             else:
                 print(f"API Request Error for league_id={i}: Status Code {response.status_code}")
-
     else:
         key_data = Teamkey.query.order_by(Teamkey.key.desc()).first()
         if key_data.key < 741:
@@ -130,7 +129,8 @@ def team_id(self):
                             key = match_data["team_key"],
                         )
                         db.session.add(teamkey)
-            db.session.commit()
-
+                    db.session.commit()
+                else:
+                    print(f"API Request Error for league_id={i}: Status Code {response.status_code}")
             
 
