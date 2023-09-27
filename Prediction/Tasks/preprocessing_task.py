@@ -110,7 +110,7 @@ def team_id(self):
                         key = int(match_data["team_key"]),
                     )
                     db.session.add(teamkey)
-                db.session.commit()
+        db.session.commit()
     else:
         key_data = Teamkey.query.order_by(Teamkey.key.desc()).first()
         if key_data.key < 741:
